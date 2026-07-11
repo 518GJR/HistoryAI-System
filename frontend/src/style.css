@@ -66,6 +66,7 @@ h1 {
 
 .message p {
   margin: 4px 0 0;
+  white-space: pre-line;
 }
 
 .message.user {
@@ -85,6 +86,20 @@ h1 {
   font-size: 12px;
   font-weight: 700;
   opacity: 0.82;
+}
+
+.source-list {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  list-style: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.68);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.source-list li + li {
+  margin-top: 4px;
 }
 
 .input-area {

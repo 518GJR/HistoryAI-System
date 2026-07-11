@@ -2,7 +2,7 @@
 
 ## 项目介绍
 
-本项目是一个毕业设计第一版代码骨架，目标是构建面向中小学历史知识点的智能问答与知识梳理系统。当前版本已完成基础前后端结构、数据库模型、问答接口、简单聊天页面，以及基于本地 JSON 历史知识库的第一版关键词检索问答闭环。
+本项目是一个毕业设计第一版代码骨架，目标是构建面向中小学历史知识点的智能问答与知识梳理系统。当前版本 v0.4 已完成基础前后端结构、数据库模型、问答接口、简单聊天页面、基于本地 JSON 历史知识库的关键词检索问答闭环、知识来源返回，以及 RAG 和问答接口测试。
 
 ## 技术架构
 
@@ -11,6 +11,7 @@
 - 数据库：MySQL
 - ORM：SQLAlchemy
 - 环境变量：python-dotenv
+- 测试框架：pytest
 - 预留模块：AI 问答服务、RAG 知识库检索服务、语音识别与语音合成服务
 
 ## 项目结构
@@ -30,6 +31,9 @@ HistoryAI-System/
 │   │       ├── ai_service.py
 │   │       ├── rag_service.py
 │   │       └── speech_service.py
+│   ├── tests/
+│   │   ├── test_rag_service.py
+│   │   └── test_question_api.py
 │   └── requirements.txt
 ├── frontend/
 ├── data/
@@ -111,7 +115,14 @@ POST /api/question
 
 ```json
 {
-  "answer": "你提出的问题是：秦始皇为什么统一六国？。当前系统已收到问题，后续版本将结合历史知识库生成更完整的回答。"
+  "answer": "你提出的问题是：秦始皇为什么统一六国？\n根据当前历史知识库，找到以下相关内容：...",
+  "sources": [
+    {
+      "title": "秦始皇统一六国",
+      "dynasty": "秦朝",
+      "score": 17
+    }
+  ]
 }
 ```
 
@@ -131,6 +142,30 @@ CREATE DATABASE history_ai DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode
 
 当前版本已创建用户表和历史知识表的 SQLAlchemy 模型，后续可继续添加 Alembic 数据库迁移或自动建表脚本。
 
+## 历史知识数据结构
+
+`data/history_knowledge.json` 当前兼容旧字段并扩展了更适合中小学历史学习的结构：
+
+```json
+{
+  "title": "知识点名称",
+  "dynasty": "朝代",
+  "time": "时间",
+  "people": ["相关人物"],
+  "event": "历史事件",
+  "reason": "原因",
+  "impact": "影响",
+  "keywords": ["关键词"],
+  "content": "兼容旧版的知识点正文"
+}
+```
+
+当前知识库已覆盖：
+
+- 中国古代史：秦始皇统一六国、汉武帝巩固大一统、商鞅变法、贞观之治、郑和下西洋等。
+- 中国近现代史：鸦片战争、洋务运动、辛亥革命、五四运动、新中国成立等。
+- 世界史：文艺复兴、新航路开辟、英国资产阶级革命、法国大革命、第一次工业革命等。
+
 ## 当前问答流程
 
 当前 `POST /api/question` 已形成第一版可用闭环：
@@ -140,9 +175,11 @@ CREATE DATABASE history_ai DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode
 ↓
 rag_service.py 读取 data/history_knowledge.json
 ↓
-按标题、朝代、关键词进行基础关键词检索
+按标题、关键词、朝代、人物、事件、原因、影响等字段进行加权检索
 ↓
-ai_service.py 将命中的历史知识整理为回答
+返回 Top 3 相关知识点和命中分数
+↓
+ai_service.py 将命中的历史知识整理为回答，并返回 sources 来源
 ```
 
 示例问题：
@@ -185,10 +222,28 @@ npm run dev
 http://localhost:5173
 ```
 
+## 测试
+
+当前 v0.4 已新增 pytest 测试，覆盖：
+
+- RAG 正常知识命中
+- 多知识点排序和 Top 3 返回
+- 无匹配问题
+- `/api/question` 接口正常命中
+- `/api/question` 接口多来源排序
+- `/api/question` 接口无匹配提示
+
+运行方式：
+
+```bash
+cd HistoryAI-System/backend
+python -m pytest tests
+```
+
 ## 下一步开发建议
 
-1. 扩充 `data/history_knowledge.json`，覆盖更多中小学历史知识点。
-2. 添加数据库初始化脚本，将 JSON 知识点导入 MySQL。
+1. 添加数据库初始化脚本，将 JSON 知识点导入 MySQL。
+2. 增加问答历史记录，保存用户问题、回答和知识来源。
 3. 优化 RAG 检索策略，支持同义词、分词和更精确的排序。
 4. 接入大模型 API，将检索到的知识点和用户问题组合成提示词。
 5. 添加语音功能：在 `speech_service.py` 中实现语音转文字和文字转语音，并新增上传音频接口。

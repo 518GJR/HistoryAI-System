@@ -10,7 +10,7 @@
 
 本项目用于毕业设计，目标是构建一个面向中小学历史学习场景的智能系统，支持用户通过文本或语音提出历史问题，系统结合历史知识库进行检索、问答和知识梳理。
 
-当前阶段目标是完成第一版基础代码骨架，先保证前后端结构清晰、接口可扩展、数据库模型可继续演进，暂不实现复杂 AI 算法。
+当前阶段版本为 v0.4，目标是在不引入复杂 AI 算法的前提下，提升历史知识库规模和系统可靠性，完成更丰富的历史知识数据覆盖，并为 RAG 检索和问答接口添加基础测试。
 
 ## 3. 当前技术栈
 
@@ -20,6 +20,7 @@
 - ORM：SQLAlchemy
 - 接口数据校验：Pydantic
 - 环境变量管理：python-dotenv
+- 测试框架：pytest
 - 后端服务运行：Uvicorn
 - 预留能力：AI 问答、RAG 知识库检索、语音识别、语音合成
 
@@ -49,6 +50,15 @@
 - 实现基于 `data/history_knowledge.json` 的关键词检索
 - 将问答接口改为“知识检索 + 回答生成”的第一版闭环
 - 补充 Vite 配置，支持 Vue 单文件组件生产构建
+- 扩展历史知识 JSON 数据结构，增加时间、人物、事件、原因、影响等字段
+- 实现 RAG 加权评分机制
+- RAG 检索返回 Top 3 相关知识点
+- 问答接口返回 `sources` 知识来源
+- 前端聊天页面展示知识来源和命中分数
+- 扩充历史知识库，覆盖中国古代史、中国近现代史和世界史常见知识点
+- 添加 RAG 检索函数测试
+- 添加 `/api/question` 问答接口测试
+- 测试覆盖正常命中、多知识点排序和无匹配问题
 
 ## 5. 当前文件结构
 
@@ -75,8 +85,13 @@ HistoryAI-System/
 │           ├── ai_service.py
 │           ├── rag_service.py
 │           └── speech_service.py
+│   └── tests/
+│       ├── test_rag_service.py
+│       └── test_question_api.py
 ├── frontend/
 │   ├── package.json
+│   ├── package-lock.json
+│   ├── vite.config.js
 │   ├── index.html
 │   └── src/
 │       ├── main.js
@@ -91,7 +106,16 @@ HistoryAI-System/
 - 后端根路径健康检查：`GET /`
 - 用户模块测试接口：`GET /api/user/ping`
 - 历史问答接口：`POST /api/question`
-- 历史知识检索：基于本地 JSON 文件按标题、朝代和关键词匹配
+- 历史知识检索：基于本地 JSON 文件按标题、关键词、朝代、人物、事件、原因、影响等字段加权匹配
+- 检索结果：返回 Top 3 相关知识点和命中分数
+- 历史知识库：覆盖中国古代史、中国近现代史和世界史常见考点
+- 自动化测试：
+  - RAG 正常知识命中
+  - RAG 多知识点排序和 Top 3 返回
+  - RAG 无匹配问题
+  - `/api/question` 正常命中
+  - `/api/question` 多来源排序
+  - `/api/question` 无匹配提示
 - 问答接口请求格式：
 
 ```json
@@ -104,7 +128,14 @@ HistoryAI-System/
 
 ```json
 {
-  "answer": "..."
+  "answer": "...",
+  "sources": [
+    {
+      "title": "秦始皇统一六国",
+      "dynasty": "秦朝",
+      "score": 17
+    }
+  ]
 }
 ```
 
@@ -113,6 +144,7 @@ HistoryAI-System/
   - 点击发送按钮
   - 调用后端问答接口
   - 显示用户问题和 AI 回答
+  - 展示命中的知识来源和分数
 
 - 数据库基础能力：
   - 配置 MySQL 连接字符串
@@ -130,18 +162,18 @@ HistoryAI-System/
 - 尚未实现语音转文字
 - 尚未实现文字转语音
 - 尚未实现知识点结构化梳理页面
-- 尚未添加单元测试和接口测试
-- 尚未配置 `.gitignore`
-- 尚未配置环境变量文件 `.env`
+- 已添加第一版 RAG 单元测试和问答接口测试
+- `.gitignore` 已配置
+- `.env` 和 `.env.example` 已配置
 
 ## 8. 下一步开发计划
 
-1. 扩充 `data/history_knowledge.json`，增加更多历史知识点。
-2. 添加数据库初始化脚本或 Alembic 迁移。
-3. 实现历史知识数据导入功能，把 `data/history_knowledge.json` 写入 MySQL。
+1. 添加数据库初始化脚本或 Alembic 迁移。
+2. 实现历史知识数据导入功能，把 `data/history_knowledge.json` 写入 MySQL。
+3. 增加问答历史记录表和保存接口。
 4. 优化 RAG 检索，支持分词、同义词和更准确的相关性排序。
 5. 接入大模型 API，基于“用户问题 + 检索知识点”生成自然语言回答。
-6. 前端增加更清晰的知识来源展示、错误提示和问答记录展示。
+6. 前端增加历史记录视图和更清晰的知识来源展示。
 7. 后续接入语音上传接口，实现语音转文字和文字转语音。
 
 ## 9. 开发记录更新要求
@@ -242,3 +274,97 @@ HistoryAI-System/
 - 增加知识来源展示
 - 优化检索算法，支持分词、同义词和相关性排序
 - 接入大模型 API 生成更自然的学习型回答
+
+### 2026-07-11 v0.3
+
+新增功能：
+
+- 优化 `data/history_knowledge.json` 数据结构，新增 `time`、`people`、`event`、`reason`、`impact` 字段
+- 保留 `title`、`dynasty`、`keywords`、`content` 字段，兼容已有 RAG 检索和旧数据
+- 修改 `rag_service.py`，实现按字段加权评分
+- 标题匹配权重最高，关键词次之，朝代再次，同时支持人物、事件、原因、影响等字段匹配
+- RAG 检索结果限制为 Top 3，并返回 `score` 命中分数
+- 修改问答响应结构，新增 `sources` 知识来源字段
+- 前端聊天页面展示知识来源标题、朝代和分数
+- 回答内容按“事件、原因、影响、补充说明”组织，更适合中小学历史学习
+
+修改文件：
+
+- `data/history_knowledge.json`
+- `backend/app/schemas.py`
+- `backend/app/api/question.py`
+- `backend/app/services/rag_service.py`
+- `backend/app/services/ai_service.py`
+- `frontend/src/App.vue`
+- `frontend/src/style.css`
+- `README.md`
+- `PROJECT_STATUS.md`
+
+当前版本：
+
+- v0.3：历史知识问答体验增强版
+
+下一步计划：
+
+- 扩充历史知识数据，增加中国古代史、近代史和世界史常见考点
+- 添加接口测试，覆盖 RAG 命中、无命中和 Top 3 排序
+- 实现 JSON 数据导入 MySQL
+- 增加问答历史记录表和保存接口
+- 后续接入语音识别和语音合成能力
+
+### 2026-07-11 v0.4
+
+新增功能：
+
+- 扩充 `data/history_knowledge.json` 历史知识库
+- 新增中国古代史知识点：商鞅变法、唐太宗贞观之治、郑和下西洋
+- 新增中国近现代史知识点：鸦片战争、洋务运动、辛亥革命、五四运动、新中国成立
+- 新增世界史知识点：文艺复兴、新航路开辟、英国资产阶级革命、法国大革命、第一次工业革命
+- 保持所有知识点字段格式一致：`title`、`dynasty`、`time`、`people`、`event`、`reason`、`impact`、`keywords`、`content`
+- 新增 `backend/tests/test_rag_service.py`
+- 新增 `backend/tests/test_question_api.py`
+- 新增 pytest 测试依赖和 FastAPI 测试客户端依赖
+
+修改文件：
+
+- `data/history_knowledge.json`
+- `backend/requirements.txt`
+- `backend/tests/test_rag_service.py`
+- `backend/tests/test_question_api.py`
+- `README.md`
+- `PROJECT_STATUS.md`
+
+测试结果：
+
+- JSON 格式校验通过
+- 前端 `npm run build` 构建通过
+- pytest 测试输出显示 6 个用例全部通过
+- 本轮测试覆盖：正常知识命中、多知识点排序、无匹配问题、`/api/question` 接口命中、接口多来源排序、接口无匹配提示
+
+当前版本：
+
+- v0.4：历史知识库扩充与测试增强版
+
+当前完成度：
+
+- 项目基础骨架：已完成
+- 后端基础接口：已完成
+- 前端基础聊天页面：已完成
+- 数据库模型定义：已完成
+- 环境变量配置：已完成
+- 第一版 JSON 关键词 RAG：已完成
+- 第一版历史知识问答闭环：已完成
+- 知识来源展示：已完成
+- 历史知识库扩充：已完成
+- 第一版测试覆盖：已完成
+- 语音功能：未完成
+- 用户系统：未完成
+- 综合完成度：约 40%
+
+下一步计划：
+
+- v0.5 优先实现数据库初始化和历史知识导入 MySQL
+- 增加问答历史记录表，保存用户问题、回答和来源知识点
+- 增加历史记录查询接口
+- 前端增加历史记录展示区域
+- 后续再接入分词检索、大模型 API 和语音能力

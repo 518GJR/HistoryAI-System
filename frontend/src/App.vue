@@ -15,6 +15,11 @@
         >
           <span class="role-label">{{ message.role === "user" ? "我" : "AI" }}</span>
           <p>{{ message.content }}</p>
+          <ul v-if="message.sources && message.sources.length" class="source-list">
+            <li v-for="source in message.sources" :key="source.title">
+              {{ source.title }} · {{ source.dynasty || "未标注朝代" }} · 分数 {{ source.score }}
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -76,6 +81,8 @@ async function sendQuestion() {
       id: Date.now() + 1,
       role: "assistant",
       content: data.answer || "暂时没有生成回答。",
+      // 保存后端返回的知识来源，方便用户判断回答依据
+      sources: data.sources || [],
     });
   } catch (error) {
     messages.value.push({
