@@ -1,0 +1,18 @@
+# Python 虚拟环境
+.venv/
+backend/.venv/
+
+# Python 缓存文件
+__pycache__/
+*.pyc
+
+# Node 依赖
+node_modules/
+frontend/node_modules/
+
+# 前端构建产物
+dist/
+frontend/dist/
+
+# 本地环境变量文件
+.env

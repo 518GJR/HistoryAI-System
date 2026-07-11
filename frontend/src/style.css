@@ -1,0 +1,156 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Microsoft YaHei", Arial, sans-serif;
+  color: #1f2937;
+  background: #f3f6fb;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.chat-panel {
+  width: min(920px, 100%);
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #d9e2ef;
+  border-radius: 8px;
+  box-shadow: 0 18px 50px rgba(31, 41, 55, 0.08);
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 28px 32px 20px;
+  border-bottom: 1px solid #e5edf7;
+  background: #ffffff;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.message-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 32px;
+  overflow-y: auto;
+}
+
+.message {
+  max-width: 76%;
+  padding: 14px 16px;
+  border-radius: 8px;
+  line-height: 1.7;
+}
+
+.message p {
+  margin: 4px 0 0;
+}
+
+.message.user {
+  align-self: flex-end;
+  color: #ffffff;
+  background: #2563eb;
+}
+
+.message.assistant {
+  align-self: flex-start;
+  color: #1f2937;
+  background: #eef4ff;
+}
+
+.role-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.82;
+}
+
+.input-area {
+  display: flex;
+  gap: 12px;
+  padding: 20px 32px 28px;
+  border-top: 1px solid #e5edf7;
+  background: #ffffff;
+}
+
+input {
+  flex: 1;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #2563eb;
+}
+
+button {
+  min-width: 96px;
+  height: 46px;
+  border: 0;
+  border-radius: 6px;
+  color: #ffffff;
+  background: #2563eb;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 12px;
+  }
+
+  .chat-panel {
+    min-height: calc(100vh - 24px);
+  }
+
+  .panel-header,
+  .message-list,
+  .input-area {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .message {
+    max-width: 92%;
+  }
+
+  .input-area {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+}
