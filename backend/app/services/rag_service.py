@@ -1,6 +1,9 @@
 import json
 from pathlib import Path
 
+from app.database import SessionLocal
+from app.models import HistoryKnowledge
+
 
 # 历史知识 JSON 文件路径，保持读取现有 data 目录，不改变项目结构
 DATA_FILE = Path(__file__).resolve().parents[3] / "data" / "history_knowledge.json"
@@ -22,7 +25,7 @@ FIELD_WEIGHTS = {
 TOP_K = 3
 
 
-def load_history_knowledge() -> list[dict]:
+def load_history_knowledge_from_json() -> list[dict]:
     """读取本地历史知识 JSON 数据。"""
     if not DATA_FILE.exists():
         return []
@@ -31,6 +34,70 @@ def load_history_knowledge() -> list[dict]:
         data = json.load(file)
 
     return data if isinstance(data, list) else []
+
+
+def _parse_json_list(value) -> list[str]:
+    """解析数据库中以 JSON 字符串存储的列表字段。"""
+    if value is None:
+        return []
+
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return []
+
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            return [text]
+
+        if isinstance(parsed, list):
+            return [str(item).strip() for item in parsed if str(item).strip()]
+
+        if isinstance(parsed, str) and parsed.strip():
+            return [parsed.strip()]
+
+    return []
+
+
+def _knowledge_model_to_dict(knowledge: HistoryKnowledge) -> dict:
+    """将数据库模型转换为当前 RAG 兼容的数据结构。"""
+    return {
+        "title": knowledge.title or "",
+        "dynasty": knowledge.dynasty or "",
+        "time": knowledge.time or "",
+        "people": _parse_json_list(knowledge.people),
+        "event": knowledge.event or "",
+        "reason": knowledge.reason or "",
+        "impact": knowledge.impact or "",
+        "keywords": _parse_json_list(knowledge.keywords),
+        "content": knowledge.content or "",
+    }
+
+
+def load_history_knowledge_from_db() -> list[dict]:
+    """从 MySQL 读取历史知识数据。"""
+    db = SessionLocal()
+    try:
+        knowledge_rows = db.query(HistoryKnowledge).all()
+        return [_knowledge_model_to_dict(row) for row in knowledge_rows]
+    finally:
+        db.close()
+
+
+def load_history_knowledge() -> list[dict]:
+    """优先从 MySQL 读取历史知识，失败或无数据时回退本地 JSON。"""
+    try:
+        db_data = load_history_knowledge_from_db()
+        if db_data:
+            return db_data
+    except Exception:
+        pass
+
+    return load_history_knowledge_from_json()
 
 
 def _normalize_keywords(keywords) -> list[str]:
@@ -93,7 +160,7 @@ def _score_item(question_text: str, item: dict) -> tuple[int, list[str]]:
 def retrieve_history_knowledge(question: str) -> list[dict]:
     """根据用户问题检索相关历史知识。
 
-    v0.3 使用加权关键词匹配，并返回分数最高的 Top 3 相关知识。
+    v0.5.2 优先读取 MySQL 知识库，失败或无数据时回退本地 JSON。
     """
     question_text = question.strip()
     if not question_text:
