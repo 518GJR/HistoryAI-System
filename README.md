@@ -2,7 +2,7 @@
 
 ## 项目介绍
 
-本项目是一个毕业设计第一版代码骨架，目标是构建面向中小学历史知识点的智能问答与知识梳理系统。当前版本 v0.4 已完成基础前后端结构、数据库模型、问答接口、简单聊天页面、基于本地 JSON 历史知识库的关键词检索问答闭环、知识来源返回，以及 RAG 和问答接口测试。
+本项目是一个毕业设计第一版代码骨架，目标是构建面向中小学历史知识点的智能问答与知识梳理系统。当前版本 v0.5.1 已完成基础前后端结构、数据库模型、问答接口、简单聊天页面、基于本地 JSON 历史知识库的关键词检索问答闭环、知识来源返回、RAG 和问答接口测试，以及 v0.5 第一阶段数据库初始化和 JSON 导入 MySQL 脚本。当前问答主链路仍使用本地 JSON 知识库，后续将逐步切换为优先 MySQL、失败或无数据时回退 JSON。
 
 ## 技术架构
 
@@ -24,9 +24,13 @@ HistoryAI-System/
 │   │   ├── database.py
 │   │   ├── models.py
 │   │   ├── schemas.py
+│   │   ├── init_db.py
 │   │   ├── api/
 │   │   │   ├── user.py
 │   │   │   └── question.py
+│   │   ├── scripts/
+│   │   │   ├── __init__.py
+│   │   │   └── import_history_knowledge.py
 │   │   └── services/
 │   │       ├── ai_service.py
 │   │       ├── rag_service.py
@@ -140,7 +144,9 @@ DATABASE_URL=mysql+pymysql://root:password@localhost:3306/history_ai?charset=utf
 CREATE DATABASE history_ai DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-当前版本已创建用户表和历史知识表的 SQLAlchemy 模型，后续可继续添加 Alembic 数据库迁移或自动建表脚本。
+当前版本已创建用户表、历史知识表和问答历史表的 SQLAlchemy 模型，并提供数据库初始化脚本 `backend/app/init_db.py`。后续可继续添加 Alembic 数据库迁移方案。
+
+`backend/app/init_db.py` 用于根据当前 SQLAlchemy 模型创建数据表；`backend/app/scripts/import_history_knowledge.py` 用于把 `data/history_knowledge.json` 导入 MySQL 的 `history_knowledge` 表。当前 `POST /api/question` 仍沿用本地 JSON 检索流程，暂未从 MySQL 读取问答知识。
 
 ## 历史知识数据结构
 
@@ -224,7 +230,7 @@ http://localhost:5173
 
 ## 测试
 
-当前 v0.4 已新增 pytest 测试，覆盖：
+当前版本已新增 pytest 测试，覆盖：
 
 - RAG 正常知识命中
 - 多知识点排序和 Top 3 返回
@@ -242,16 +248,18 @@ python -m pytest tests
 
 ## 下一步开发建议
 
-1. 添加数据库初始化脚本，将 JSON 知识点导入 MySQL。
-2. 增加问答历史记录，保存用户问题、回答和知识来源。
-3. 优化 RAG 检索策略，支持同义词、分词和更精确的排序。
-4. 接入大模型 API，将检索到的知识点和用户问题组合成提示词。
-5. 添加语音功能：在 `speech_service.py` 中实现语音转文字和文字转语音，并新增上传音频接口。
-6. 完善用户模块：添加注册、登录、问答历史记录和知识点收藏功能。
+1. 确认 MySQL 环境可用后运行 `python -m app.init_db` 创建数据表。
+2. 运行 `python -m app.scripts.import_history_knowledge` 导入历史知识数据。
+3. 将 RAG 检索数据源改为优先 MySQL，失败或无数据时回退 `data/history_knowledge.json`。
+4. 增加问答历史保存和查询接口，保存用户问题、回答和知识来源。
+5. 优化 RAG 检索策略，支持同义词、分词和更精确的排序。
+6. 接入大模型 API，将检索到的知识点和用户问题组合成提示词。
+7. 添加语音功能：在 `speech_service.py` 中实现语音转文字和文字转语音，并新增上传音频接口。
+8. 完善用户模块：添加注册、登录、问答历史记录和知识点收藏功能。
 
-## v0.5 第一阶段：数据库基础建设
+## v0.5.1：文档同步整理
 
-本阶段在不破坏 v0.4 问答功能的前提下，补充 MySQL 数据库基础能力。当前 `POST /api/question` 仍沿用本地 `data/history_knowledge.json` 检索流程，JSON 知识库继续作为备用数据源。
+本阶段在不破坏 v0.4 问答功能的前提下，补充并同步 MySQL 数据库基础能力相关文档。当前 `POST /api/question` 仍沿用本地 `data/history_knowledge.json` 检索流程，JSON 知识库继续作为当前问答主链路数据源。
 
 ### 已新增能力
 

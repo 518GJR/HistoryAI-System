@@ -10,7 +10,7 @@
 
 本项目用于毕业设计，目标是构建一个面向中小学历史学习场景的智能系统，支持用户通过文本或语音提出历史问题，系统结合历史知识库进行检索、问答和知识梳理。
 
-当前阶段版本为 v0.4，目标是在不引入复杂 AI 算法的前提下，提升历史知识库规模和系统可靠性，完成更丰富的历史知识数据覆盖，并为 RAG 检索和问答接口添加基础测试。
+当前阶段版本为 v0.5.1，已在 v0.4 问答闭环和测试覆盖的基础上，完成 v0.5 第一阶段数据库基础建设，并同步整理项目文档。当前问答主链路仍使用本地 JSON 知识库检索，数据库初始化和 JSON 导入 MySQL 脚本已补充，后续将切换为优先 MySQL、失败或无数据时回退 JSON 的检索流程。
 
 ## 3. 当前技术栈
 
@@ -59,6 +59,11 @@
 - 添加 RAG 检索函数测试
 - 添加 `/api/question` 问答接口测试
 - 测试覆盖正常命中、多知识点排序和无匹配问题
+- 完善 `HistoryKnowledge` 数据库模型，补齐结构化历史知识字段
+- 创建问答历史表模型 `QuestionHistory`
+- 创建数据库初始化脚本 `backend/app/init_db.py`
+- 创建 JSON 导入 MySQL 脚本 `backend/app/scripts/import_history_knowledge.py`
+- 完成 v0.5.1 文档同步整理，修正版本和任务状态说明
 
 ## 5. 当前文件结构
 
@@ -76,10 +81,14 @@ HistoryAI-System/
 │       ├── database.py
 │       ├── models.py
 │       ├── schemas.py
+│       ├── init_db.py
 │       ├── api/
 │       │   ├── __init__.py
 │       │   ├── user.py
 │       │   └── question.py
+│       ├── scripts/
+│       │   ├── __init__.py
+│       │   └── import_history_knowledge.py
 │       └── services/
 │           ├── __init__.py
 │           ├── ai_service.py
@@ -150,15 +159,18 @@ HistoryAI-System/
   - 配置 MySQL 连接字符串
   - 定义用户表模型
   - 定义历史知识表模型
+  - 定义问答历史表模型
+  - 提供数据库初始化脚本 `backend/app/init_db.py`
+  - 提供 JSON 导入 MySQL 脚本 `backend/app/scripts/import_history_knowledge.py`
 
 ## 7. 未完成任务
 
 - 尚未实现真实大模型问答
 - 已实现第一版 JSON 关键词检索，尚未实现向量检索或分词检索
-- 尚未将 `data/history_knowledge.json` 自动导入 MySQL
-- 尚未创建数据库迁移脚本
+- 已创建 `data/history_knowledge.json` 导入 MySQL 脚本，尚未接入问答主链路
+- 已创建数据库初始化脚本，尚未引入 Alembic 迁移方案
 - 尚未实现用户注册、登录和鉴权
-- 尚未实现问答历史记录
+- 已创建问答历史表模型，尚未实现问答历史保存和查询接口
 - 尚未实现语音转文字
 - 尚未实现文字转语音
 - 尚未实现知识点结构化梳理页面
@@ -168,13 +180,14 @@ HistoryAI-System/
 
 ## 8. 下一步开发计划
 
-1. 添加数据库初始化脚本或 Alembic 迁移。
-2. 实现历史知识数据导入功能，把 `data/history_knowledge.json` 写入 MySQL。
-3. 增加问答历史记录表和保存接口。
-4. 优化 RAG 检索，支持分词、同义词和更准确的相关性排序。
-5. 接入大模型 API，基于“用户问题 + 检索知识点”生成自然语言回答。
-6. 前端增加历史记录视图和更清晰的知识来源展示。
-7. 后续接入语音上传接口，实现语音转文字和文字转语音。
+1. 在确认 MySQL 环境可用后运行 `python -m app.init_db` 创建数据表。
+2. 运行 `python -m app.scripts.import_history_knowledge` 导入历史知识数据。
+3. 将 RAG 数据读取改为优先 MySQL，失败或无数据时回退 `data/history_knowledge.json`。
+4. 增加问答历史保存和查询接口。
+5. 优化 RAG 检索，支持分词、同义词和更准确的相关性排序。
+6. 接入大模型 API，基于“用户问题 + 检索知识点”生成自然语言回答。
+7. 前端增加历史记录视图和更清晰的知识来源展示。
+8. 后续接入语音上传接口，实现语音转文字和文字转语音。
 
 ## 9. 开发记录更新要求
 
@@ -402,4 +415,29 @@ HistoryAI-System/
 - 在确认 MySQL 环境可用后运行 `python -m app.init_db` 创建数据表。
 - 运行 `python -m app.scripts.import_history_knowledge` 导入历史知识。
 - v0.5 第二阶段将 RAG 数据读取改为优先 MySQL、失败或无数据时回退 JSON。
+- v0.5 第三阶段实现问答历史保存和查询接口。
+
+### 2026-07-12 v0.5.1 文档同步整理
+
+新增功能：
+- 同步当前版本说明为 v0.5.1。
+- 补充 `backend/app/init_db.py` 数据库初始化脚本说明。
+- 补充 `backend/app/scripts/import_history_knowledge.py` JSON 导入 MySQL 脚本说明。
+- 修正已完成但仍标记未完成的数据库初始化、JSON 导入脚本和问答历史模型相关任务状态。
+
+修改文件：
+- `PROJECT_STATUS.md`
+- `README.md`
+
+验证结果：
+- 本次仅修改文档，不修改 `backend/app/api/question.py`。
+- 本次仅修改文档，不修改 `backend/app/services/rag_service.py`。
+- 本次仅修改文档，不修改前端文件。
+
+当前版本：
+- v0.5.1：文档同步整理版。
+
+下一步计划：
+- 确认 MySQL 环境可用后运行数据库初始化和 JSON 导入脚本。
+- v0.5 第二阶段将 RAG 数据读取改为优先 MySQL，失败或无数据时回退 JSON。
 - v0.5 第三阶段实现问答历史保存和查询接口。
