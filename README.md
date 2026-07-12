@@ -248,3 +248,48 @@ python -m pytest tests
 4. 接入大模型 API，将检索到的知识点和用户问题组合成提示词。
 5. 添加语音功能：在 `speech_service.py` 中实现语音转文字和文字转语音，并新增上传音频接口。
 6. 完善用户模块：添加注册、登录、问答历史记录和知识点收藏功能。
+
+## v0.5 第一阶段：数据库基础建设
+
+本阶段在不破坏 v0.4 问答功能的前提下，补充 MySQL 数据库基础能力。当前 `POST /api/question` 仍沿用本地 `data/history_knowledge.json` 检索流程，JSON 知识库继续作为备用数据源。
+
+### 已新增能力
+
+- 完善 `HistoryKnowledge` SQLAlchemy 模型，支持 `time`、`people`、`event`、`reason`、`impact` 等结构化字段。
+- 新增 `QuestionHistory` 问答历史模型，为后续保存用户问题、回答和来源快照做准备。
+- 新增数据库初始化脚本，用于根据 SQLAlchemy 模型创建数据表。
+- 新增 JSON 导入 MySQL 脚本，用于把 `data/history_knowledge.json` 写入 `history_knowledge` 表。
+
+### 初始化数据库
+
+请先确认项目根目录 `.env` 中已经配置 MySQL 连接：
+
+```text
+DATABASE_URL=mysql+pymysql://root:password@localhost:3306/history_ai?charset=utf8mb4
+```
+
+进入后端目录后运行：
+
+```bash
+cd HistoryAI-System/backend
+python -m app.init_db
+```
+
+### 导入历史知识 JSON
+
+初始化数据表后运行：
+
+```bash
+cd HistoryAI-System/backend
+python -m app.scripts.import_history_knowledge
+```
+
+导入脚本会按照 `title` 判断知识点是否已存在：
+
+- 不存在则新增；
+- 已存在则更新；
+- `people` 和 `keywords` 使用 JSON 字符串保存到数据库字段中。
+
+### 兼容说明
+
+v0.5 第一阶段暂不修改 `backend/app/api/question.py`、`backend/app/services/rag_service.py` 和前端页面，因此 v0.4 的问答、RAG 检索、知识来源展示和 pytest 接口测试逻辑保持不变。

@@ -368,3 +368,38 @@ HistoryAI-System/
 - 增加历史记录查询接口
 - 前端增加历史记录展示区域
 - 后续再接入分词检索、大模型 API 和语音能力
+
+### 2026-07-12 v0.5 第一阶段
+
+新增功能：
+- 完善 `HistoryKnowledge` 数据库模型，补齐 `time`、`people`、`event`、`reason`、`impact`、`updated_at` 字段。
+- 新增 `QuestionHistory` 数据库模型，为后续问答历史记录保存做准备。
+- 新增数据库初始化脚本 `backend/app/init_db.py`。
+- 新增 JSON 导入 MySQL 脚本 `backend/app/scripts/import_history_knowledge.py`。
+- 保留 `data/history_knowledge.json` 作为 v0.4 问答流程的备用知识库，当前未修改问答接口、RAG 服务和前端页面。
+
+修改文件：
+- `backend/app/models.py`
+- `backend/app/init_db.py`
+- `backend/app/scripts/__init__.py`
+- `backend/app/scripts/import_history_knowledge.py`
+- `README.md`
+- `PROJECT_STATUS.md`
+
+验证结果：
+- Python 语法检查通过。
+- 数据库模型导入检查通过。
+- v0.4 问答主链路文件未修改。
+
+当前完成度：
+- v0.5 数据库基础建设：已完成第一阶段。
+- MySQL 建表脚本：已完成。
+- JSON 导入 MySQL 脚本：已完成。
+- RAG 切换数据库检索：未开始，下一阶段处理。
+- 问答历史接口与前端展示：未开始，后续阶段处理。
+
+下一步计划：
+- 在确认 MySQL 环境可用后运行 `python -m app.init_db` 创建数据表。
+- 运行 `python -m app.scripts.import_history_knowledge` 导入历史知识。
+- v0.5 第二阶段将 RAG 数据读取改为优先 MySQL、失败或无数据时回退 JSON。
+- v0.5 第三阶段实现问答历史保存和查询接口。
