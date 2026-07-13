@@ -1,50 +1,80 @@
 <template>
   <main class="page">
-    <section class="chat-panel">
-      <header class="panel-header">
-        <p class="eyebrow">HistoryAI</p>
-        <h1>中小学历史知识问答</h1>
-      </header>
+    <div class="workspace">
+      <section class="chat-panel">
+        <header class="panel-header">
+          <p class="eyebrow">HistoryAI</p>
+          <h1>中小学历史知识问答</h1>
+        </header>
 
-      <div class="message-list">
-        <div
-          v-for="message in messages"
-          :key="message.id"
-          class="message"
-          :class="message.role"
-        >
-          <span class="role-label">{{ message.role === "user" ? "我" : "AI" }}</span>
-          <p>{{ message.content }}</p>
-          <ul v-if="message.sources && message.sources.length" class="source-list">
-            <li v-for="source in message.sources" :key="source.title">
-              {{ source.title }} · {{ source.dynasty || "未标注朝代" }} · 分数 {{ source.score }}
-            </li>
-          </ul>
+        <div class="message-list">
+          <div
+            v-for="message in messages"
+            :key="message.id"
+            class="message"
+            :class="message.role"
+          >
+            <span class="role-label">{{ message.role === "user" ? "我" : "AI" }}</span>
+            <p>{{ message.content }}</p>
+            <ul v-if="message.sources && message.sources.length" class="source-list">
+              <li v-for="source in message.sources" :key="source.title">
+                {{ source.title }} · {{ source.dynasty || "未标注朝代" }} · 分数 {{ source.score }}
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
 
-      <form class="input-area" @submit.prevent="sendQuestion">
-        <input
-          v-model="question"
-          type="text"
-          placeholder="请输入历史问题，例如：秦始皇为什么统一六国？"
-        />
-        <button type="submit" :disabled="loading || !question.trim()">
-          {{ loading ? "发送中" : "发送" }}
-        </button>
-      </form>
-    </section>
+        <form class="input-area" @submit.prevent="sendQuestion">
+          <input
+            v-model="question"
+            type="text"
+            placeholder="请输入历史问题，例如：秦始皇为什么统一六国？"
+          />
+          <button type="submit" :disabled="loading || !question.trim()">
+            {{ loading ? "发送中" : "发送" }}
+          </button>
+        </form>
+      </section>
+
+      <aside class="history-panel">
+        <header class="history-header">
+          <div>
+            <p class="eyebrow">History</p>
+            <h2>最近问答</h2>
+          </div>
+          <span class="history-count">{{ histories.length }}/20</span>
+        </header>
+
+        <p v-if="historyError" class="history-error">{{ historyError }}</p>
+        <p v-else-if="historyLoading" class="history-state">正在加载历史记录...</p>
+        <p v-else-if="!histories.length" class="history-state">暂无历史记录</p>
+
+        <div v-else class="history-list">
+          <article v-for="history in histories" :key="history.id" class="history-card">
+            <time class="history-time">{{ formatTime(history.created_at) }}</time>
+            <h3>{{ history.question }}</h3>
+            <p>{{ summarize(history.answer) }}</p>
+            <span class="history-source-count">
+              来源 {{ Array.isArray(history.sources) ? history.sources.length : 0 }} 条
+            </span>
+          </article>
+        </div>
+      </aside>
+    </div>
   </main>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
-// 后端接口地址，开发阶段默认连接本地 FastAPI 服务
 const API_URL = "http://localhost:8000/api/question";
+const HISTORY_API_URL = "http://localhost:8000/api/question/history?limit=20";
 
 const question = ref("");
 const loading = ref(false);
+const histories = ref([]);
+const historyLoading = ref(false);
+const historyError = ref("");
 const messages = ref([
   {
     id: 1,
@@ -53,7 +83,44 @@ const messages = ref([
   },
 ]);
 
-// 发送问题到后端，并将回答展示到聊天窗口
+function summarize(text) {
+  if (!text) return "暂无回答内容";
+  return text.length > 96 ? `${text.slice(0, 96)}...` : text;
+}
+
+function formatTime(value) {
+  if (!value) return "时间未知";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "时间未知";
+
+  return date.toLocaleString("zh-CN", {
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+async function loadHistories() {
+  historyLoading.value = true;
+  historyError.value = "";
+
+  try {
+    const response = await fetch(HISTORY_API_URL);
+    if (!response.ok) {
+      throw new Error("history request failed");
+    }
+
+    const data = await response.json();
+    histories.value = Array.isArray(data.histories) ? data.histories : [];
+  } catch (error) {
+    historyError.value = "历史记录暂时无法加载，请确认后端服务已启动。";
+  } finally {
+    historyLoading.value = false;
+  }
+}
+
 async function sendQuestion() {
   const text = question.value.trim();
   if (!text) return;
@@ -81,9 +148,10 @@ async function sendQuestion() {
       id: Date.now() + 1,
       role: "assistant",
       content: data.answer || "暂时没有生成回答。",
-      // 保存后端返回的知识来源，方便用户判断回答依据
       sources: data.sources || [],
     });
+
+    await loadHistories();
   } catch (error) {
     messages.value.push({
       id: Date.now() + 1,
@@ -94,4 +162,8 @@ async function sendQuestion() {
     loading.value = false;
   }
 }
+
+onMounted(() => {
+  loadHistories();
+});
 </script>
