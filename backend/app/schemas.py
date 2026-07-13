@@ -1,29 +1,48 @@
+from datetime import datetime
+
 from pydantic import BaseModel, Field
 
 
 class QuestionRequest(BaseModel):
-    """问答接口请求体。"""
+    """Request body for the question-answering API."""
 
-    question: str = Field(..., min_length=1, description="用户输入的历史问题")
+    question: str = Field(..., min_length=1, description="User history question")
 
 
 class KnowledgeSource(BaseModel):
-    """问答来源知识点，用于前端后续展示引用来源。"""
+    """Knowledge source returned by the question-answering API."""
 
-    title: str = Field(..., description="知识点名称")
-    dynasty: str = Field("", description="所属朝代")
-    score: int = Field(..., description="RAG 检索命中分数")
+    title: str = Field(..., description="Knowledge title")
+    dynasty: str = Field("", description="Dynasty or historical period")
+    score: int = Field(..., description="RAG match score")
 
 
 class QuestionResponse(BaseModel):
-    """问答接口响应体。"""
+    """Response body for the question-answering API."""
 
-    answer: str = Field(..., description="系统生成的回答")
-    sources: list[KnowledgeSource] = Field(default_factory=list, description="命中的历史知识来源")
+    answer: str = Field(..., description="Generated answer")
+    sources: list[KnowledgeSource] = Field(
+        default_factory=list,
+        description="Matched history knowledge sources",
+    )
+
+
+class QuestionHistoryResponse(BaseModel):
+    """Serialized question history record for later history APIs."""
+
+    id: int = Field(..., description="Question history record ID")
+    user_id: int | None = Field(None, description="User ID")
+    question: str = Field(..., description="User history question")
+    answer: str = Field(..., description="Generated answer")
+    sources: list[KnowledgeSource] = Field(
+        default_factory=list,
+        description="Saved knowledge source snapshot",
+    )
+    created_at: datetime = Field(..., description="Created time")
 
 
 class UserCreate(BaseModel):
-    """用户创建请求体，当前仅作为后续功能预留。"""
+    """User creation request body reserved for later user features."""
 
     username: str
     password: str
