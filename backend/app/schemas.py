@@ -41,6 +41,15 @@ class QuestionHistoryResponse(BaseModel):
     created_at: datetime = Field(..., description="Created time")
 
 
+class QuestionHistoryListResponse(BaseModel):
+    """Response body for question history list API."""
+
+    histories: list[QuestionHistoryResponse] = Field(
+        default_factory=list,
+        description="Question history records",
+    )
+
+
 class UserCreate(BaseModel):
     """User creation request body reserved for later user features."""
 
