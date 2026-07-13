@@ -2,7 +2,9 @@
 
 ## 项目介绍
 
-本项目是一个毕业设计第一版代码骨架，目标是构建面向中小学历史知识点的智能问答与知识梳理系统。当前版本 v0.5.1 已完成基础前后端结构、数据库模型、问答接口、简单聊天页面、基于本地 JSON 历史知识库的关键词检索问答闭环、知识来源返回、RAG 和问答接口测试，以及 v0.5 第一阶段数据库初始化和 JSON 导入 MySQL 脚本。当前问答主链路仍使用本地 JSON 知识库，后续将逐步切换为优先 MySQL、失败或无数据时回退 JSON。
+本项目是一个毕业设计项目，目标是构建面向中小学历史知识点的智能问答与知识梳理系统。当前版本为 **v0.5.5**，已完成基础前后端结构、数据库模型、历史知识 RAG 检索、问答接口、问答历史保存与查询接口、前端聊天页面和前端历史问答展示。
+
+当前系统支持用户在前端输入历史问题，后端检索历史知识库并生成结构化回答，同时保存问答历史。前端会展示当前聊天内容和最近 20 条历史问答。
 
 ## 技术架构
 
@@ -40,10 +42,42 @@ HistoryAI-System/
 │   │   └── test_question_api.py
 │   └── requirements.txt
 ├── frontend/
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── vite.config.js
+│   ├── index.html
+│   └── src/
+│       ├── main.js
+│       ├── App.vue
+│       └── style.css
 ├── data/
 │   └── history_knowledge.json
-└── README.md
+├── README.md
+└── PROJECT_STATUS.md
 ```
+
+## 已实现功能
+
+- FastAPI 后端服务入口
+- Vue3 + Vite 前端页面
+- MySQL 数据库连接配置
+- `User` 用户模型
+- `HistoryKnowledge` 历史知识模型
+- `QuestionHistory` 问答历史模型
+- 数据库初始化脚本：`backend/app/init_db.py`
+- 历史知识 JSON 导入 MySQL 脚本：`backend/app/scripts/import_history_knowledge.py`
+- 历史问答接口：`POST /api/question`
+- 问答历史查询接口：`GET /api/question/history`
+- RAG 历史知识检索
+- RAG 检索结果 Top 3 返回
+- 问答接口返回知识来源 `sources`
+- 问答接口自动保存用户问题、系统回答和来源快照
+- 前端聊天页面展示用户问题、AI 回答和知识来源
+- 前端历史问答区域展示最近 20 条历史记录
+- 前端历史记录展示问题、回答摘要、创建时间和来源数量
+- 桌面端聊天区和历史区左右布局
+- 移动端聊天区和历史区上下布局
+- RAG 与问答接口自动化测试
 
 ## 后端运行
 
@@ -77,7 +111,7 @@ pip install -r requirements.txt
 copy ..\.env.example ..\.env
 ```
 
-然后根据本地 MySQL 配置修改项目根目录下的 `.env`：
+根据本地 MySQL 配置修改项目根目录下的 `.env`：
 
 ```text
 DATABASE_URL=mysql+pymysql://root:password@localhost:3306/history_ai?charset=utf8mb4
@@ -101,7 +135,33 @@ http://localhost:8000
 http://localhost:8000/docs
 ```
 
-问答接口：
+## 数据库配置
+
+运行前请先在 MySQL 中创建数据库：
+
+```sql
+CREATE DATABASE history_ai DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+初始化数据表：
+
+```bash
+cd HistoryAI-System/backend
+python -m app.init_db
+```
+
+导入历史知识 JSON：
+
+```bash
+cd HistoryAI-System/backend
+python -m app.scripts.import_history_knowledge
+```
+
+`backend/app/init_db.py` 用于根据当前 SQLAlchemy 模型创建数据表。`backend/app/scripts/import_history_knowledge.py` 用于把 `data/history_knowledge.json` 导入 MySQL 的 `history_knowledge` 表。
+
+## API 说明
+
+### 历史问答接口
 
 ```text
 POST /api/question
@@ -119,7 +179,7 @@ POST /api/question
 
 ```json
 {
-  "answer": "你提出的问题是：秦始皇为什么统一六国？\n根据当前历史知识库，找到以下相关内容：...",
+  "answer": "你提出的问题是：秦始皇为什么统一六国？...",
   "sources": [
     {
       "title": "秦始皇统一六国",
@@ -130,77 +190,63 @@ POST /api/question
 }
 ```
 
-## 数据库配置
+说明：
 
-当前数据库连接通过项目根目录 `.env` 配置，`backend/app/database.py` 会使用 `python-dotenv` 自动读取：
+- 接口会先调用 RAG 检索历史知识。
+- 然后根据命中的知识点生成回答。
+- 最后自动保存问答历史到 `question_history` 表。
+- 返回格式保持 `answer` 和 `sources`，兼容前端聊天页面。
+
+### 问答历史查询接口
 
 ```text
-DATABASE_URL=mysql+pymysql://root:password@localhost:3306/history_ai?charset=utf8mb4
+GET /api/question/history?limit=20
 ```
 
-运行前请先在 MySQL 中创建数据库：
-
-```sql
-CREATE DATABASE history_ai DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
-
-当前版本已创建用户表、历史知识表和问答历史表的 SQLAlchemy 模型，并提供数据库初始化脚本 `backend/app/init_db.py`。后续可继续添加 Alembic 数据库迁移方案。
-
-`backend/app/init_db.py` 用于根据当前 SQLAlchemy 模型创建数据表；`backend/app/scripts/import_history_knowledge.py` 用于把 `data/history_knowledge.json` 导入 MySQL 的 `history_knowledge` 表。当前 `POST /api/question` 仍沿用本地 JSON 检索流程，暂未从 MySQL 读取问答知识。
-
-## 历史知识数据结构
-
-`data/history_knowledge.json` 当前兼容旧字段并扩展了更适合中小学历史学习的结构：
+响应示例：
 
 ```json
 {
-  "title": "知识点名称",
-  "dynasty": "朝代",
-  "time": "时间",
-  "people": ["相关人物"],
-  "event": "历史事件",
-  "reason": "原因",
-  "impact": "影响",
-  "keywords": ["关键词"],
-  "content": "兼容旧版的知识点正文"
+  "histories": [
+    {
+      "id": 1,
+      "user_id": null,
+      "question": "秦始皇为什么统一六国？",
+      "answer": "你提出的问题是：秦始皇为什么统一六国？...",
+      "sources": [
+        {
+          "title": "秦始皇统一六国",
+          "dynasty": "秦朝",
+          "score": 17
+        }
+      ],
+      "created_at": "2026-07-13T20:30:00"
+    }
+  ]
 }
 ```
 
-当前知识库已覆盖：
+说明：
 
-- 中国古代史：秦始皇统一六国、汉武帝巩固大一统、商鞅变法、贞观之治、郑和下西洋等。
-- 中国近现代史：鸦片战争、洋务运动、辛亥革命、五四运动、新中国成立等。
-- 世界史：文艺复兴、新航路开辟、英国资产阶级革命、法国大革命、第一次工业革命等。
+- 默认返回最近 20 条历史记录。
+- 支持 `limit` 参数。
+- 当前无登录系统，不按 `user_id` 过滤。
+- `sources` 返回列表格式。
 
 ## 当前问答流程
 
-当前 `POST /api/question` 已形成第一版可用闭环：
-
 ```text
 用户问题
-↓
-rag_service.py 读取 data/history_knowledge.json
-↓
-按标题、关键词、朝代、人物、事件、原因、影响等字段进行加权检索
-↓
-返回 Top 3 相关知识点和命中分数
-↓
-ai_service.py 将命中的历史知识整理为回答，并返回 sources 来源
+-> POST /api/question
+-> rag_service.py 优先读取 MySQL 历史知识数据
+-> 数据库失败或无数据时回退 data/history_knowledge.json
+-> 按标题、关键词、朝代、人物、事件、原因、影响、正文等字段加权检索
+-> 返回 Top 3 相关知识点和命中分数
+-> ai_service.py 将命中的历史知识整理为回答
+-> 保存 question_history
+-> 返回 answer 和 sources
+-> 前端展示聊天内容并刷新历史记录
 ```
-
-示例问题：
-
-```text
-秦始皇为什么统一六国？
-```
-
-可匹配知识点：
-
-```text
-秦始皇统一六国、秦朝、统一六国、中央集权
-```
-
-如果没有匹配到知识点，系统会提示当前知识库暂时没有相关内容，并建议用户换用历史人物、朝代或事件名称继续提问。
 
 ## 前端运行
 
@@ -228,16 +274,39 @@ npm run dev
 http://localhost:5173
 ```
 
+构建前端：
+
+```bash
+npm run build
+```
+
+## 前端历史记录展示
+
+v0.5.5 已在前端增加历史问答展示区域：
+
+- 页面加载时调用 `GET /api/question/history?limit=20`
+- 展示最近 20 条问答历史
+- 每条历史显示：
+  - 用户问题
+  - AI 回答摘要
+  - 创建时间
+  - 来源数量
+- 发送新问题并成功获得回答后自动刷新历史列表
+- 桌面端为聊天区和历史区左右布局
+- 移动端为上下布局
+
 ## 测试
 
-当前版本已新增 pytest 测试，覆盖：
+当前测试覆盖：
 
 - RAG 正常知识命中
-- 多知识点排序和 Top 3 返回
-- 无匹配问题
+- RAG 多知识点排序和 Top 3 返回
+- RAG 无匹配问题
 - `/api/question` 接口正常命中
 - `/api/question` 接口多来源排序
 - `/api/question` 接口无匹配提示
+- `/api/question/history` 返回历史列表
+- POST 后可通过 GET 查询到历史记录
 
 运行方式：
 
@@ -248,56 +317,25 @@ python -m pytest tests
 
 ## 下一步开发建议
 
-1. 确认 MySQL 环境可用后运行 `python -m app.init_db` 创建数据表。
-2. 运行 `python -m app.scripts.import_history_knowledge` 导入历史知识数据。
-3. 将 RAG 检索数据源改为优先 MySQL，失败或无数据时回退 `data/history_knowledge.json`。
-4. 增加问答历史保存和查询接口，保存用户问题、回答和知识来源。
-5. 优化 RAG 检索策略，支持同义词、分词和更精确的排序。
-6. 接入大模型 API，将检索到的知识点和用户问题组合成提示词。
-7. 添加语音功能：在 `speech_service.py` 中实现语音转文字和文字转语音，并新增上传音频接口。
-8. 完善用户模块：添加注册、登录、问答历史记录和知识点收藏功能。
+1. 优化历史记录交互，支持点击历史记录查看完整问答。
+2. 增加问答历史删除、清空、分页和按用户筛选能力。
+3. 完善用户模块，增加注册、登录、鉴权和用户级历史记录。
+4. 优化 RAG 检索策略，支持分词、同义词和更准确的排序。
+5. 接入大模型 API，将检索到的知识点和用户问题组合成提示词。
+6. 添加语音能力，在 `speech_service.py` 中实现语音转文字和文字转语音，并新增上传音频接口。
 
-## v0.5.1：文档同步整理
+## v0.5.5：前端历史问答展示
 
-本阶段在不破坏 v0.4 问答功能的前提下，补充并同步 MySQL 数据库基础能力相关文档。当前 `POST /api/question` 仍沿用本地 `data/history_knowledge.json` 检索流程，JSON 知识库继续作为当前问答主链路数据源。
+本阶段在已完成问答历史保存和查询接口的基础上，补充前端历史展示能力。用户可以在聊天页面右侧看到最近 20 条问答历史，发送新问题后历史列表会自动刷新。
 
-### 已新增能力
+修改文件：
 
-- 完善 `HistoryKnowledge` SQLAlchemy 模型，支持 `time`、`people`、`event`、`reason`、`impact` 等结构化字段。
-- 新增 `QuestionHistory` 问答历史模型，为后续保存用户问题、回答和来源快照做准备。
-- 新增数据库初始化脚本，用于根据 SQLAlchemy 模型创建数据表。
-- 新增 JSON 导入 MySQL 脚本，用于把 `data/history_knowledge.json` 写入 `history_knowledge` 表。
+- `frontend/src/App.vue`
+- `frontend/src/style.css`
+- `README.md`
+- `PROJECT_STATUS.md`
 
-### 初始化数据库
+验证结果：
 
-请先确认项目根目录 `.env` 中已经配置 MySQL 连接：
-
-```text
-DATABASE_URL=mysql+pymysql://root:password@localhost:3306/history_ai?charset=utf8mb4
-```
-
-进入后端目录后运行：
-
-```bash
-cd HistoryAI-System/backend
-python -m app.init_db
-```
-
-### 导入历史知识 JSON
-
-初始化数据表后运行：
-
-```bash
-cd HistoryAI-System/backend
-python -m app.scripts.import_history_knowledge
-```
-
-导入脚本会按照 `title` 判断知识点是否已存在：
-
-- 不存在则新增；
-- 已存在则更新；
-- `people` 和 `keywords` 使用 JSON 字符串保存到数据库字段中。
-
-### 兼容说明
-
-v0.5 第一阶段暂不修改 `backend/app/api/question.py`、`backend/app/services/rag_service.py` 和前端页面，因此 v0.4 的问答、RAG 检索、知识来源展示和 pytest 接口测试逻辑保持不变。
+- 前端 `npm run build` 构建通过。
+- 本次文档同步仅修改 `README.md` 和 `PROJECT_STATUS.md`。
