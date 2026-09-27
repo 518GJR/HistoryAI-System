@@ -1,4 +1,5 @@
 import json
+import logging
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
@@ -11,11 +12,13 @@ from app.schemas import (
     QuestionRequest,
     QuestionResponse,
 )
-from app.services.ai_service import generate_answer
+from app.services.ai_service import generate_answer_result
+from app.services.knowledge_service import build_knowledge_outline
 from app.services.rag_service import retrieve_history_knowledge
 
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 
 def _parse_sources(sources_text: str | None) -> list[dict]:
@@ -53,9 +56,9 @@ def _parse_sources(sources_text: str | None) -> list[dict]:
 
 @router.post("/question", response_model=QuestionResponse)
 def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
-    """Answer a history question and save the generated QA record."""
+    """Run RAG, generate an answer, and save history without blocking delivery."""
     knowledge_items = retrieve_history_knowledge(request.question)
-    answer = generate_answer(request.question, knowledge_items)
+    answer, answer_mode = generate_answer_result(request.question, knowledge_items)
 
     sources = [
         {
@@ -65,6 +68,7 @@ def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
         }
         for item in knowledge_items
     ]
+    outline = build_knowledge_outline(request.question, knowledge_items)
 
     question_history = QuestionHistory(
         user_id=None,
@@ -72,10 +76,25 @@ def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
         answer=answer,
         sources=json.dumps(sources, ensure_ascii=False),
     )
-    db.add(question_history)
-    db.commit()
+    history_saved = True
+    try:
+        db.add(question_history)
+        db.commit()
+    except Exception as exc:
+        history_saved = False
+        try:
+            db.rollback()
+        except Exception:
+            logger.exception("Question history rollback also failed")
+        logger.warning("History save failed; returning generated answer: %s", exc)
 
-    return QuestionResponse(answer=answer, sources=sources)
+    return QuestionResponse(
+        answer=answer,
+        sources=sources,
+        history_saved=history_saved,
+        answer_mode=answer_mode,
+        knowledge_outline=outline,
+    )
 
 
 @router.get("/question/history", response_model=QuestionHistoryListResponse)

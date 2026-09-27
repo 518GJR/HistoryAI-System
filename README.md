@@ -1,341 +1,177 @@
-# 面向中小学历史知识点的语音驱动问答与知识梳理系统
+# HistoryAI-System
 
-## 项目介绍
+面向中小学历史知识点的语音驱动问答与知识梳理系统。当前核心架构版本为 **v0.6.0**。
 
-本项目是一个毕业设计项目，目标是构建面向中小学历史知识点的智能问答与知识梳理系统。当前版本为 **v0.5.5**，已完成基础前后端结构、数据库模型、历史知识 RAG 检索、问答接口、问答历史保存与查询接口、前端聊天页面和前端历史问答展示。
+## 当前状态
 
-当前系统支持用户在前端输入历史问题，后端检索历史知识库并生成结构化回答，同时保存问答历史。前端会展示当前聊天内容和最近 20 条历史问答。
+### 已实现
 
-## 技术架构
+- 文字问答：问题 → 本地/MySQL RAG → 外部大模型 → `answer + sources`
+- 大模型不可用、未配置或响应异常时，自动回退原有知识模板回答
+- ASR：浏览器录音上传 → 后端转写 → 识别文字回填，用户可修改
+- TTS：AI 回答 → 后端合成音频字节流 → 前端自动播放/手动重试
+- 语音闭环：录音 → ASR → 修改文字 → 提问 → RAG → AI 回答 → sources → TTS
+- 基础知识梳理：主题、时间、人物、事件、原因、内容/经过、结果/影响、相关知识点
+- 问答历史保存和最近 20 条记录展示
+- 历史记录写入失败时仍返回已经生成的答案，并返回 `history_saved=false`
+- AI、ASR、TTS 使用环境变量配置，不在代码中硬编码 API Key
 
-- 后端：Python + FastAPI
-- 前端：Vue3 + Vite
-- 数据库：MySQL
-- ORM：SQLAlchemy
-- 环境变量：python-dotenv
-- 测试框架：pytest
-- 预留模块：AI 问答服务、RAG 知识库检索服务、语音识别与语音合成服务
+### 验证状态
 
-## 项目结构
+- 自动化测试：**17 passed**
+- AI、ASR、TTS 外部 HTTP 调用：已使用 `httpx.MockTransport` 完成 Mock 自动测试
+- RAG、知识梳理、问答/语音 API、数据库写入失败降级：自动测试通过
+- 前端：`npm run build` 通过
+- 真实 AI 服务：**尚未验证**
+- 真实 ASR 服务：**尚未验证**
+- 真实 TTS 服务：**尚未验证**
+- 浏览器真实麦克风端到端流程：代码已实现，需配置真实 ASR/TTS 后现场验证
 
-```text
-HistoryAI-System/
-├── backend/
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── database.py
-│   │   ├── models.py
-│   │   ├── schemas.py
-│   │   ├── init_db.py
-│   │   ├── api/
-│   │   │   ├── user.py
-│   │   │   └── question.py
-│   │   ├── scripts/
-│   │   │   ├── __init__.py
-│   │   │   └── import_history_knowledge.py
-│   │   └── services/
-│   │       ├── ai_service.py
-│   │       ├── rag_service.py
-│   │       └── speech_service.py
-│   ├── tests/
-│   │   ├── test_rag_service.py
-│   │   └── test_question_api.py
-│   └── requirements.txt
-├── frontend/
-│   ├── package.json
-│   ├── package-lock.json
-│   ├── vite.config.js
-│   ├── index.html
-│   └── src/
-│       ├── main.js
-│       ├── App.vue
-│       └── style.css
-├── data/
-│   └── history_knowledge.json
-├── README.md
-└── PROJECT_STATUS.md
-```
+Mock 测试通过不等于真实云服务已验证。不同供应商的 OpenAI-compatible 接口仍可能在模型名、音频格式或参数上存在差异。
 
-## 已实现功能
+## 技术栈
 
-- FastAPI 后端服务入口
-- Vue3 + Vite 前端页面
-- MySQL 数据库连接配置
-- `User` 用户模型
-- `HistoryKnowledge` 历史知识模型
-- `QuestionHistory` 问答历史模型
-- 数据库初始化脚本：`backend/app/init_db.py`
-- 历史知识 JSON 导入 MySQL 脚本：`backend/app/scripts/import_history_knowledge.py`
-- 历史问答接口：`POST /api/question`
-- 问答历史查询接口：`GET /api/question/history`
-- RAG 历史知识检索
-- RAG 检索结果 Top 3 返回
-- 问答接口返回知识来源 `sources`
-- 问答接口自动保存用户问题、系统回答和来源快照
-- 前端聊天页面展示用户问题、AI 回答和知识来源
-- 前端历史问答区域展示最近 20 条历史记录
-- 前端历史记录展示问题、回答摘要、创建时间和来源数量
-- 桌面端聊天区和历史区左右布局
-- 移动端聊天区和历史区上下布局
-- RAG 与问答接口自动化测试
+- 后端：Python、FastAPI、SQLAlchemy、MySQL
+- 前端：Vue 3、Vite
+- RAG：MySQL 优先，本地 `data/history_knowledge.json` 回退；字段加权 Top 3 检索
+- 外部服务：OpenAI-compatible Chat Completions、Audio Transcriptions、Audio Speech
+- 测试：pytest、FastAPI TestClient、httpx MockTransport
 
-## 后端运行
-
-进入后端目录：
-
-```bash
-cd HistoryAI-System/backend
-```
-
-创建并激活 Python 虚拟环境：
-
-```bash
-python -m venv .venv
-```
-
-Windows PowerShell：
-
-```bash
-.\.venv\Scripts\Activate.ps1
-```
-
-安装依赖：
-
-```bash
-pip install -r requirements.txt
-```
-
-配置环境变量：
-
-```bash
-copy ..\.env.example ..\.env
-```
-
-根据本地 MySQL 配置修改项目根目录下的 `.env`：
+## 核心流程
 
 ```text
-DATABASE_URL=mysql+pymysql://root:password@localhost:3306/history_ai?charset=utf8mb4
+文字或录音
+  → POST /api/speech/asr（录音时）
+  → 可编辑问题文字
+  → POST /api/question
+  → RAG Top 3
+  → 外部大模型基于检索资料生成回答
+  → 失败时模板 fallback
+  → answer + sources + knowledge_outline
+  → 尝试保存历史（失败不阻塞回答）
+  → POST /api/speech/tts
+  → 浏览器播放音频
 ```
 
-启动 FastAPI 服务：
+## 新增和现有 API
 
-```bash
-uvicorn app.main:app --reload
+- `GET /`：健康检查
+- `GET /api/user/ping`：原用户模块测试接口
+- `POST /api/question`：RAG 历史问答
+- `GET /api/question/history?limit=20`：问答历史
+- `POST /api/speech/asr`：上传 multipart 音频，字段名 `audio`
+- `POST /api/speech/tts`：提交 `{"text": "..."}`，返回音频
+- `GET /api/knowledge/outline?topic=秦始皇统一六国`：结构化知识梳理
+
+`POST /api/question` 主要响应字段：
+
+```json
+{
+  "answer": "基于检索资料生成的回答",
+  "sources": [
+    {"title": "秦始皇统一六国", "dynasty": "秦朝", "score": 17}
+  ],
+  "answer_mode": "ai",
+  "history_saved": true,
+  "knowledge_outline": {
+    "topic": "秦始皇统一六国",
+    "time": "公元前230年-公元前221年",
+    "people": ["秦始皇", "商鞅"],
+    "event": "...",
+    "reason": "...",
+    "process": "...",
+    "result_impact": "...",
+    "related_points": [],
+    "sources": []
+  }
+}
 ```
 
-后端默认地址：
+`answer_mode` 为 `ai` 表示外部模型成功返回，为 `fallback` 表示使用本地模板。
 
-```text
-http://localhost:8000
+## 配置
+
+复制根目录环境变量示例：
+
+```powershell
+Copy-Item .env.example .env
 ```
 
-接口文档地址：
+必须按所选供应商填写：
 
-```text
-http://localhost:8000/docs
-```
+- `AI_API_KEY`、`AI_MODEL`、`AI_BASE_URL`
+- `ASR_API_KEY`、`ASR_MODEL`、`ASR_BASE_URL`
+- `TTS_API_KEY`、`TTS_MODEL`、`TTS_BASE_URL`
+- 可选：`TTS_VOICE`、`TTS_FORMAT`
 
-## 数据库配置
+填好后将对应的 `AI_PROVIDER`、`ASR_PROVIDER`、`TTS_PROVIDER` 改为 `openai_compatible`。可以为三个能力配置同一家或不同供应商。API Key 只放在本地 `.env`，不要提交到 Git。
 
-运行前请先在 MySQL 中创建数据库：
+## 安装与启动
+
+### 1. 数据库
+
+创建 MySQL 数据库：
 
 ```sql
 CREATE DATABASE history_ai DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-初始化数据表：
+初始化并导入知识：
 
-```bash
-cd HistoryAI-System/backend
+```powershell
+cd backend
 python -m app.init_db
-```
-
-导入历史知识 JSON：
-
-```bash
-cd HistoryAI-System/backend
 python -m app.scripts.import_history_knowledge
 ```
 
-`backend/app/init_db.py` 用于根据当前 SQLAlchemy 模型创建数据表。`backend/app/scripts/import_history_knowledge.py` 用于把 `data/history_knowledge.json` 导入 MySQL 的 `history_knowledge` 表。
+数据库不可用时，RAG 会回退本地 JSON；但历史列表会需要数据库。
 
-## API 说明
+### 2. 后端
 
-### 历史问答接口
-
-```text
-POST /api/question
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload
 ```
 
-请求示例：
+接口文档：<http://localhost:8000/docs>
 
-```json
-{
-  "question": "秦始皇为什么统一六国？"
-}
-```
+### 3. 前端
 
-响应示例：
-
-```json
-{
-  "answer": "你提出的问题是：秦始皇为什么统一六国？...",
-  "sources": [
-    {
-      "title": "秦始皇统一六国",
-      "dynasty": "秦朝",
-      "score": 17
-    }
-  ]
-}
-```
-
-说明：
-
-- 接口会先调用 RAG 检索历史知识。
-- 然后根据命中的知识点生成回答。
-- 最后自动保存问答历史到 `question_history` 表。
-- 返回格式保持 `answer` 和 `sources`，兼容前端聊天页面。
-
-### 问答历史查询接口
-
-```text
-GET /api/question/history?limit=20
-```
-
-响应示例：
-
-```json
-{
-  "histories": [
-    {
-      "id": 1,
-      "user_id": null,
-      "question": "秦始皇为什么统一六国？",
-      "answer": "你提出的问题是：秦始皇为什么统一六国？...",
-      "sources": [
-        {
-          "title": "秦始皇统一六国",
-          "dynasty": "秦朝",
-          "score": 17
-        }
-      ],
-      "created_at": "2026-07-13T20:30:00"
-    }
-  ]
-}
-```
-
-说明：
-
-- 默认返回最近 20 条历史记录。
-- 支持 `limit` 参数。
-- 当前无登录系统，不按 `user_id` 过滤。
-- `sources` 返回列表格式。
-
-## 当前问答流程
-
-```text
-用户问题
--> POST /api/question
--> rag_service.py 优先读取 MySQL 历史知识数据
--> 数据库失败或无数据时回退 data/history_knowledge.json
--> 按标题、关键词、朝代、人物、事件、原因、影响、正文等字段加权检索
--> 返回 Top 3 相关知识点和命中分数
--> ai_service.py 将命中的历史知识整理为回答
--> 保存 question_history
--> 返回 answer 和 sources
--> 前端展示聊天内容并刷新历史记录
-```
-
-## 前端运行
-
-进入前端目录：
-
-```bash
-cd HistoryAI-System/frontend
-```
-
-安装依赖：
-
-```bash
+```powershell
+cd frontend
 npm install
-```
-
-启动开发服务：
-
-```bash
 npm run dev
 ```
 
-前端默认地址：
+页面：<http://localhost:5173>
 
-```text
-http://localhost:5173
-```
+录音需要浏览器麦克风权限；localhost 可用于本地安全上下文。
 
-构建前端：
+## 老师检查演示顺序
 
-```bash
-npm run build
-```
-
-## 前端历史记录展示
-
-v0.5.5 已在前端增加历史问答展示区域：
-
-- 页面加载时调用 `GET /api/question/history?limit=20`
-- 展示最近 20 条问答历史
-- 每条历史显示：
-  - 用户问题
-  - AI 回答摘要
-  - 创建时间
-  - 来源数量
-- 发送新问题并成功获得回答后自动刷新历史列表
-- 桌面端为聊天区和历史区左右布局
-- 移动端为上下布局
+1. 启动 MySQL，执行初始化和知识导入。
+2. 在根目录 `.env` 配好真实 AI/ASR/TTS 服务。
+3. 启动后端和前端，先在 `/docs` 查看四类核心 API。
+4. 在前端先输入“秦始皇为什么统一六国？”演示文字问答、sources、知识梳理和 TTS。
+5. 点击“开始录音”，说出问题，停止录音；展示 ASR 回填文字并修改后发送。
+6. 展示 AI 回答、来源、结构化梳理、音频播放和右侧历史记录。
+7. 可临时将 `AI_PROVIDER=disabled` 并重启后端，演示模板 fallback（`answer_mode=fallback`）。
 
 ## 测试
 
-当前测试覆盖：
+```powershell
+cd backend
+python -m pytest tests -q
 
-- RAG 正常知识命中
-- RAG 多知识点排序和 Top 3 返回
-- RAG 无匹配问题
-- `/api/question` 接口正常命中
-- `/api/question` 接口多来源排序
-- `/api/question` 接口无匹配提示
-- `/api/question/history` 返回历史列表
-- POST 后可通过 GET 查询到历史记录
-
-运行方式：
-
-```bash
-cd HistoryAI-System/backend
-python -m pytest tests
+cd ..\frontend
+npm run build
 ```
 
-## 下一步开发建议
+当前结果：`17 passed`；Vite 生产构建通过。
 
-1. 优化历史记录交互，支持点击历史记录查看完整问答。
-2. 增加问答历史删除、清空、分页和按用户筛选能力。
-3. 完善用户模块，增加注册、登录、鉴权和用户级历史记录。
-4. 优化 RAG 检索策略，支持分词、同义词和更准确的排序。
-5. 接入大模型 API，将检索到的知识点和用户问题组合成提示词。
-6. 添加语音能力，在 `speech_service.py` 中实现语音转文字和文字转语音，并新增上传音频接口。
+## 本轮未做
 
-## v0.5.5：前端历史问答展示
-
-本阶段在已完成问答历史保存和查询接口的基础上，补充前端历史展示能力。用户可以在聊天页面右侧看到最近 20 条问答历史，发送新问题后历史列表会自动刷新。
-
-修改文件：
-
-- `frontend/src/App.vue`
-- `frontend/src/style.css`
-- `README.md`
-- `PROJECT_STATUS.md`
-
-验证结果：
-
-- 前端 `npm run build` 构建通过。
-- 本次文档同步仅修改 `README.md` 和 `PROJECT_STATUS.md`。
+本轮没有实现大规模题目评估、人工评分、登录注册、高级向量数据库、复杂知识图谱或部署。

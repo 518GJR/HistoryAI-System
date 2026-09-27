@@ -1,17 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import question, user
+from app.api import knowledge, question, speech, user
 
 
-# 创建 FastAPI 应用实例
 app = FastAPI(
     title="面向中小学历史知识点的语音驱动问答与知识梳理系统",
-    description="毕业设计项目后端服务，当前版本提供基础问答接口骨架。",
-    version="0.1.0",
+    description="支持 RAG 历史问答、结构化知识梳理、ASR 与 TTS 的毕业设计后端。",
+    version="0.6.0",
 )
 
-# 配置跨域，方便前端本地开发时访问后端接口
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -20,9 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 注册业务路由
 app.include_router(user.router, prefix="/api/user", tags=["用户模块"])
 app.include_router(question.router, prefix="/api", tags=["历史问答模块"])
+app.include_router(speech.router, prefix="/api", tags=["语音模块"])
+app.include_router(knowledge.router, prefix="/api", tags=["知识梳理模块"])
 
 
 @app.get("/")

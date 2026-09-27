@@ -137,3 +137,32 @@ def test_question_history_api_can_query_record_after_post():
     assert histories[0]["question"] == question
     assert isinstance(histories[0]["sources"], list)
     assert histories[0]["sources"] == post_response.json()["sources"]
+
+
+def test_question_answer_survives_history_save_failure():
+    class BrokenDb:
+        def add(self, value):
+            pass
+
+        def commit(self):
+            raise RuntimeError("mock database failure")
+
+        def rollback(self):
+            pass
+
+        def close(self):
+            pass
+
+    def override_broken_db():
+        yield BrokenDb()
+
+    previous = app.dependency_overrides[get_db]
+    app.dependency_overrides[get_db] = override_broken_db
+    try:
+        response = client.post("/api/question", json={"question": "秦始皇统一六国"})
+    finally:
+        app.dependency_overrides[get_db] = previous
+
+    assert response.status_code == 200
+    assert response.json()["answer"]
+    assert response.json()["history_saved"] is False
