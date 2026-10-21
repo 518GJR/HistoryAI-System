@@ -1,5 +1,7 @@
 """Build a demonstrable structured study outline from RAG results."""
 
+from app.services.rag_service import knowledge_item_to_source
+
 
 def build_knowledge_outline(topic: str, knowledge_items: list[dict]) -> dict | None:
     """Use the highest-scoring item as the main outline and retain related points."""
@@ -7,14 +9,7 @@ def build_knowledge_outline(topic: str, knowledge_items: list[dict]) -> dict | N
         return None
 
     main = knowledge_items[0]
-    sources = [
-        {
-            "title": item.get("title", ""),
-            "dynasty": item.get("dynasty", ""),
-            "score": int(item.get("score", 0) or 0),
-        }
-        for item in knowledge_items
-    ]
+    sources = [knowledge_item_to_source(item) for item in knowledge_items]
     related_points = [
         item.get("title", "")
         for item in knowledge_items[1:]

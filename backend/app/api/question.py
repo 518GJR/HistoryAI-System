@@ -1,7 +1,9 @@
 import json
 import logging
+from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
+from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -11,14 +13,28 @@ from app.schemas import (
     QuestionHistoryResponse,
     QuestionRequest,
     QuestionResponse,
+    KnowledgeSource,
 )
 from app.services.ai_service import generate_answer_result
 from app.services.knowledge_service import build_knowledge_outline
-from app.services.rag_service import retrieve_history_knowledge
+from app.services.rag_service import (
+    KnowledgeDataError,
+    knowledge_item_to_source,
+    retrieve_history_knowledge,
+)
 
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
+
+
+def _serialize_created_at(value: datetime, dialect_name: str) -> datetime:
+    """Mark known SQLite UTC values; preserve unknown legacy DB semantics."""
+    if value.tzinfo is None and dialect_name == "sqlite":
+        return value.replace(tzinfo=timezone.utc)
+    if value.tzinfo is None:
+        return value
+    return value.astimezone(timezone.utc)
 
 
 def _parse_sources(sources_text: str | None) -> list[dict]:
@@ -38,18 +54,16 @@ def _parse_sources(sources_text: str | None) -> list[dict]:
         if not isinstance(source, dict):
             continue
 
+        source_snapshot = dict(source)
         try:
-            score = int(source.get("score", 0) or 0)
+            source_snapshot["score"] = int(source.get("score", 0) or 0)
         except (TypeError, ValueError):
-            score = 0
+            source_snapshot["score"] = 0
 
-        sources.append(
-            {
-                "title": str(source.get("title", "")),
-                "dynasty": str(source.get("dynasty", "")),
-                "score": score,
-            }
-        )
+        try:
+            sources.append(KnowledgeSource.model_validate(source_snapshot).model_dump())
+        except ValidationError:
+            continue
 
     return sources
 
@@ -57,17 +71,21 @@ def _parse_sources(sources_text: str | None) -> list[dict]:
 @router.post("/question", response_model=QuestionResponse)
 def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
     """Run RAG, generate an answer, and save history without blocking delivery."""
-    knowledge_items = retrieve_history_knowledge(request.question)
-    answer, answer_mode = generate_answer_result(request.question, knowledge_items)
+    try:
+        knowledge_items = retrieve_history_knowledge(request.question)
+    except KnowledgeDataError as exc:
+        raise HTTPException(status_code=503, detail="所选知识库不可用，请检查配置和数据文件") from exc
+    answer, answer_mode, used_evidence = generate_answer_result(
+        request.question, knowledge_items
+    )
 
-    sources = [
-        {
-            "title": item.get("title", ""),
-            "dynasty": item.get("dynasty", ""),
-            "score": item.get("score", 0),
-        }
-        for item in knowledge_items
-    ]
+    sources = [knowledge_item_to_source(item) for item in knowledge_items]
+    sources_by_id = {source["knowledge_id"]: source for source in sources}
+    for evidence in used_evidence:
+        for knowledge_id in evidence.get("knowledge_ids", []):
+            source = sources_by_id.get(knowledge_id)
+            if source is not None:
+                source.setdefault("used_evidence", []).append(evidence)
     outline = build_knowledge_outline(request.question, knowledge_items)
 
     question_history = QuestionHistory(
@@ -93,6 +111,7 @@ def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
         sources=sources,
         history_saved=history_saved,
         answer_mode=answer_mode,
+        used_evidence=used_evidence,
         knowledge_outline=outline,
     )
 
@@ -110,6 +129,7 @@ def get_question_history(
         .all()
     )
 
+    dialect_name = db.get_bind().dialect.name
     histories = [
         QuestionHistoryResponse(
             id=row.id,
@@ -117,7 +137,7 @@ def get_question_history(
             question=row.question,
             answer=row.answer,
             sources=_parse_sources(row.sources),
-            created_at=row.created_at,
+            created_at=_serialize_created_at(row.created_at, dialect_name),
         )
         for row in history_rows
     ]

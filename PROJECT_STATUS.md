@@ -4,26 +4,41 @@
 
 - 项目：面向中小学历史知识点的语音驱动问答与知识梳理系统
 - 版本：**v0.6.0 核心架构演示版**
-- 日期：2026-09-27
+- 状态核对日期：**2026-10-15**
+- 当前阶段：**A 阶段已完成代码与离线测试验证**
+- 当前边界：七年级上册第 1—3 课；B—E 阶段尚未实施
+
+本文记录已实现情况、验证证据和当前缺口。总体范围、阶段和验收条件见 [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)。
 
 ## 2. 已实现
 
 - 原有 Vue 文字问答和历史记录功能保留
-- RAG 优先读取 MySQL，失败或无数据时回退本地 JSON
-- RAG 按标题、关键词、朝代、人物、事件、原因、影响、正文加权并返回 Top 3
-- 真实大模型调用代码：OpenAI-compatible `/chat/completions`
+- `KNOWLEDGE_MODE=demo` 保留 MySQL 优先、原有 15 条 JSON 回退行为
+- `KNOWLEDGE_MODE=textbook` 只读独立教材 JSON，缺失、解析失败或数据无效时明确报错，无匹配时返回空结果，不回退演示库
+- RAG 按标题、课名、小标题、关键词、时期、人物、事件、原因、影响、正文加权并返回 Top 3
+- 外部大模型调用代码：OpenAI-compatible `/chat/completions`
 - 模型仅接收用户问题和检索资料，系统提示要求基于资料回答
 - AI 未配置或失败时保留原模板 fallback
-- 问答返回 `answer`、`sources`、`answer_mode`、`history_saved` 和 `knowledge_outline`
+- 问答返回 `answer`、`sources`、`answer_mode`、`history_saved` 和 `knowledge_outline`；教材来源包含书名、课次、小标题、教材页码、PDF 页序及原文片段引用
 - 历史记录保存失败不会阻断答案返回
-- ASR 接口：上传浏览器音频，调用 OpenAI-compatible `/audio/transcriptions`
-- TTS 接口：提交回答文字，调用 OpenAI-compatible `/audio/speech` 并返回音频字节
+- ASR 接口：上传浏览器音频，支持 OpenAI-compatible `/audio/transcriptions` 和阿里云百炼请求格式
+- TTS 接口：提交回答文字，支持 OpenAI-compatible `/audio/speech` 和阿里云百炼 SDK
 - 前端完成录音、停止、上传、识别文字回填和修改
-- 前端完成提问、来源展示、知识梳理、TTS 自动播放和手动重试
+- 前端完成提问、教材来源定位展示、历史来源展示、知识梳理、TTS 自动播放和手动重试；旧历史缺少教材字段时仍可显示原有来源
 - 基础知识梳理包含：主题、时间、人物、事件、原因、内容/经过、结果/影响、相关知识点
 - 所有 API Key、模型名、Base URL、超时、TTS voice/format 均从环境变量读取
 
-## 3. 新增 API
+## 3. 数据现状与边界
+
+- `data/history_knowledge.json` 保留 15 条通用演示知识，不是正式教材数据。
+- `data/textbook_history_knowledge.json` 已接入七上第 1—3 课：48 个稳定知识点 ID（第 1/2/3 课分别 15/17/16 个）和 35 个可复用来源片段。
+- 教材 JSON 保留册、单元、课、教材小标题、材料类型、教材页码、PDF 页序、摘要、来源原文片段、限定词、证据类型和确定性说明；摘要与来源片段分开。
+- 清单中的 48 个 ID 已逐项比对，无缺漏或重新编号。教材正文核对范围为教材第 4—19 页，对应 PDF 页序 9—24。
+- 教材 PDF 位于本地 `local_materials/`，只用于核对，目录已加入 Git 忽略；正式教材 JSON 未被忽略，PDF 未复制到前端公开目录。
+- 版次和 ISBN 仍为空并标记待补。
+- 当前初始化使用 SQLAlchemy `create_all`，知识导入按标题插入或更新；是否需要正式迁移工具将在实际存储方案确定后判断。
+
+## 4. 现有 API
 
 - `POST /api/speech/asr`
 - `POST /api/speech/tts`
@@ -36,12 +51,12 @@
 - `GET /api/user/ping`
 - `GET /`
 
-## 4. 自动测试与构建
+## 5. 验证证据
 
 ### 已通过
 
-- 完整 pytest：**17 passed in 1.12s**
-- 前端 `npm run build`：通过
+- 2026-10-15 A 阶段实际 pytest：**35 passed in 1.32s**
+- 2026-10-15 前端 `npm run build`：通过
 - AI 成功响应和失败 fallback：MockTransport 通过
 - ASR multipart 请求和识别响应：MockTransport 通过
 - TTS 请求、voice 参数和音频响应：MockTransport 通过
@@ -49,65 +64,48 @@
 - 数据库保存失败仍返回答案：通过
 - 知识梳理字段和问答内嵌梳理：通过
 - 原有 RAG、问答、历史测试：继续通过
+- 教材/演示模式隔离、数据库数据不遮蔽教材、项目相对路径、48 ID 加载、来源贯通、旧历史兼容、无匹配以及缺失/错误数据处理：通过
 
-### 尚未验证
+### 证据边界
 
-- 未使用真实 AI API Key 发起调用
-- 未使用真实 ASR API Key/真实录音发起调用
-- 未使用真实 TTS API Key播放供应商生成的音频
-- 未完成浏览器麦克风到真实云服务的现场端到端验证
+- 本轮外部 AI、ASR、TTS 使用 MockTransport 或 SDK mock，问答历史使用内存 SQLite。
+- 本轮未连接真实 MySQL，未复测真实外部服务或浏览器麦克风端到端流程。
+- 用户此前确认2026-10-03完成真实联调；本轮未复测；仓库待补正式验收记录。
+- 待补记录包括环境说明、供应商和模型版本、测试音频、步骤、结果截图及异常记录；不能把本轮 Mock 测试写成真实服务复测通过。
+- 功能测试通过、检索命中、模型回答正确、人工评分合格和真实服务联调通过是不同证据。
 
-以上三种外部能力目前是“代码已实现 + Mock 测试通过”，不能表述为真实服务验证通过。
+## 6. 当前缺口
 
-## 5. 本轮主要文件
+### A 阶段仍未验证
 
-### 上一会话遗留（接手时已存在）
+- 未连接真实 MySQL 验证教材模式下的历史持久化；教材知识本身按设计不写入业务数据库。
+- 未在浏览器中人工复测教材来源卡片、录音和音频播放；仅完成前端生产构建。
+- 未调用真实 LLM 检查限定词保持和回答质量；本轮只验证模板回答与 Mock 链路。
+- 35 个来源片段已依据本地 PDF 提取文字并查看对应页面核对，但尚无第二人复核记录。
 
-- `backend/app/services/ai_service.py`：已加入外部模型调用雏形，但系统提示词损坏为问号
-- `backend/app/api/question.py`：已改为返回生成模式，并尝试处理 SQLAlchemy 保存异常
-- `backend/app/schemas.py`：已增加 `answer_mode`、`history_saved` 和问题长度限制
-- `backend/app/services/provider_config.py`：未跟踪的环境变量配置模块
-- `backend/tests/conftest.py`：未跟踪的外部网络隔离 fixture
+### 后续任务书能力
 
-### 本次完成/修改
+- 轻量向量检索及与关键词基线的对照。
+- 开发集与正式测试集，以及固定评分规则。
+- 学生提问的知识点标注和覆盖统计。
+- 受控匿名学习者 ID。
+- 基于小测作答证据的掌握统计。
+- 无 RAG/有 RAG、不同检索策略、不同 Prompt 和语音链路影响实验。
 
-- `backend/app/services/ai_service.py`
-- `backend/app/services/provider_config.py`
-- `backend/app/services/speech_service.py`
-- `backend/app/services/knowledge_service.py`
-- `backend/app/api/question.py`
-- `backend/app/api/speech.py`
-- `backend/app/api/knowledge.py`
-- `backend/app/schemas.py`
-- `backend/app/main.py`
-- `backend/tests/conftest.py`
-- `backend/tests/test_ai_service.py`
-- `backend/tests/test_speech_api.py`
-- `backend/tests/test_knowledge_api.py`
-- `backend/tests/test_question_api.py`
-- `frontend/src/App.vue`
-- `frontend/src/style.css`
-- `.env.example`
-- `README.md`
-- `PROJECT_STATUS.md`
+检索命中只表示系统找到了相关资料，不等于学生已经学习、覆盖或掌握该知识点。掌握情况不能由提问次数推断。
 
-`backend/requirements.txt` 无需修改：所需的 `httpx` 和 `python-multipart` 已在原依赖中。
+## 7. 配置状态
 
-## 6. 配置要求
+- 数据库和外部服务配置均从根目录 `.env` 对应的环境变量读取，代码未硬编码 API Key。
+- AI 当前使用 `openai_compatible`；ASR/TTS 支持 `openai_compatible` 或 `aliyun_bailian`。
+- 默认 `disabled` 可运行文字问答 fallback。
+- `KNOWLEDGE_MODE` 明确选择 `demo` 或 `textbook`，默认 `demo`；教材模式不会回退演示库。
+- 具体变量和启动方式见 [README.md](README.md)。
 
-需要在根目录 `.env` 配置：
+## 8. 风险与后续
 
-- `DATABASE_URL`
-- AI：`AI_PROVIDER`、`AI_API_KEY`、`AI_MODEL`、`AI_BASE_URL`
-- ASR：`ASR_PROVIDER`、`ASR_API_KEY`、`ASR_MODEL`、`ASR_BASE_URL`
-- TTS：`TTS_PROVIDER`、`TTS_API_KEY`、`TTS_MODEL`、`TTS_BASE_URL`
-- 可选：`TTS_VOICE`、`TTS_FORMAT`、各服务 `*_TIMEOUT`
-
-Provider 必须设为 `openai_compatible` 才启用对应外部服务。默认 `disabled` 可安全运行文字问答 fallback。
-
-## 7. 风险与后续
-
-- 不同 OpenAI-compatible 供应商的模型名和音频参数可能不同，正式演示前必须真实联调
+- 不同供应商的模型名和音频参数可能不同；正式演示前应按最终配置复测
 - 前端 TTS 会在回答后自动请求；浏览器禁止自动播放时仍可使用音频控件手动播放
-- 当前 RAG 是轻量关键词加权，适合演示，不是高级向量检索
-- 本轮按要求未做大规模评估、人工评分、登录注册、复杂知识图谱和部署
+- 当前 RAG 是关键词加权基线，不是嵌入或向量检索
+- A 阶段不涉及数据库表结构变化或数据迁移；是否迁移待后续实际存储需求决定
+- 复杂知识图谱、大型向量数据库、管理后台、云部署和界面大改后置

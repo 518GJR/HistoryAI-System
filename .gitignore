@@ -16,3 +16,10 @@ frontend/dist/
 
 # 本地环境变量文件
 .env
+
+# Local copyrighted/reference PDFs used only for source verification.
+# The curated textbook JSON under data/ remains trackable.
+local_materials/
+
+# Local PDF render/extraction previews.
+tmp/pdfs/

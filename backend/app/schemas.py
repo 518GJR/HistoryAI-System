@@ -10,12 +10,54 @@ class QuestionRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000, description="User history question")
 
 
+class SourceReference(BaseModel):
+    """A verifiable excerpt and its textbook/PDF location."""
+
+    source_id: str
+    material_type: str = ""
+    textbook_pages: str = ""
+    pdf_pages: str = ""
+    excerpt: str = ""
+    locator: str = ""
+
+
+class UsedEvidence(BaseModel):
+    """A verbatim evidence line actually selected for the final answer."""
+
+    evidence_id: str
+    text: str
+    knowledge_id: str = ""
+    knowledge_ids: list[str] = Field(default_factory=list)
+    source_ids: list[str] = Field(default_factory=list)
+    source_title: str = ""
+    source_titles: list[str] = Field(default_factory=list)
+    textbook_pages: str = ""
+    pdf_pages: str = ""
+
+
 class KnowledgeSource(BaseModel):
     """Knowledge source returned by the question-answering API."""
 
     title: str = Field(..., description="Knowledge title")
     dynasty: str = Field("", description="Dynasty or historical period")
-    score: int = Field(..., description="RAG match score")
+    score: int = Field(0, description="RAG match score")
+    knowledge_id: str = ""
+    book_id: str = ""
+    book_title: str = ""
+    unit_id: str = ""
+    unit_title: str = ""
+    lesson_id: str = ""
+    lesson_number: int | None = None
+    lesson_title: str = ""
+    section_title: str = ""
+    material_types: list[str] = Field(default_factory=list)
+    textbook_pages: str = ""
+    pdf_pages: str = ""
+    qualifiers: list[str] = Field(default_factory=list)
+    evidence_type: str = ""
+    certainty: str = ""
+    source_refs: list[SourceReference] = Field(default_factory=list)
+    used_evidence: list[UsedEvidence] = Field(default_factory=list)
 
 
 class KnowledgeOutline(BaseModel):
@@ -39,6 +81,7 @@ class QuestionResponse(BaseModel):
     answer_mode: str = "fallback"
     answer: str = Field(..., description="Generated answer")
     sources: list[KnowledgeSource] = Field(default_factory=list)
+    used_evidence: list[UsedEvidence] = Field(default_factory=list)
     knowledge_outline: KnowledgeOutline | None = None
 
 

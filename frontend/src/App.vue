@@ -19,17 +19,45 @@
             <p>{{ message.content }}</p>
 
             <span v-if="message.answerMode" class="mode-badge">
-              {{ message.answerMode === "ai" ? "真实模型生成" : "模板 fallback" }}
+              {{ answerModeLabel(message.answerMode) }}
             </span>
             <span v-if="message.historySaved === false" class="save-warning">
               回答已生成，但历史记录保存失败
             </span>
 
-            <ul v-if="message.sources?.length" class="source-list">
-              <li v-for="source in message.sources" :key="source.title">
-                {{ source.title }} · {{ source.dynasty || "未标注朝代" }} · 分数 {{ source.score }}
+            <h4 v-if="message.sources?.length" class="evidence-heading">检索候选来源</h4>
+            <ul v-if="message.sources?.length" class="source-list candidate-source-list">
+              <li
+                v-for="(source, index) in message.sources"
+                :key="source.knowledge_id || `${source.title}-${index}`"
+              >
+                <strong>{{ source.title }}</strong>
+                <span> · {{ source.dynasty || "未标注朝代" }} · 分数 {{ source.score }}</span>
+                <small v-if="sourceLocation(source)" class="source-location">
+                  {{ sourceLocation(source) }}
+                </small>
+                <small v-if="sourcePages(source)" class="source-pages">
+                  {{ sourcePages(source) }}
+                </small>
               </li>
             </ul>
+
+            <section v-if="message.usedEvidence?.length" class="used-evidence">
+              <h4 class="evidence-heading">实际采用证据</h4>
+              <ol>
+                <li v-for="evidence in message.usedEvidence" :key="evidence.evidence_id">
+                  <strong>{{ evidence.source_titles?.join(" / ") || evidence.source_title }}</strong>
+                  <p>{{ evidence.text }}</p>
+                  <small>
+                    知识点
+                    {{ evidence.knowledge_ids?.join("、") || evidence.knowledge_id || "未标注" }}
+                    · 原始来源
+                    {{ evidence.source_ids?.join("、") || "未标注" }}
+                  </small>
+                  <small>{{ evidencePages(evidence) }}</small>
+                </li>
+              </ol>
+            </section>
 
             <section v-if="message.outline" class="outline-card">
               <h3>基础知识梳理 · {{ message.outline.topic }}</h3>
@@ -111,6 +139,16 @@
             <span class="history-source-count">
               来源 {{ Array.isArray(history.sources) ? history.sources.length : 0 }} 条
             </span>
+            <ul v-if="history.sources?.length" class="history-source-list">
+              <li
+                v-for="(source, index) in history.sources"
+                :key="source.knowledge_id || `${source.title}-${index}`"
+              >
+                <strong>{{ source.title }}</strong>
+                <small v-if="sourceLocation(source)">{{ sourceLocation(source) }}</small>
+                <small v-if="sourcePages(source)">{{ sourcePages(source) }}</small>
+              </li>
+            </ul>
           </article>
         </div>
       </aside>
@@ -153,16 +191,48 @@ function summarize(text) {
   return text.length > 96 ? `${text.slice(0, 96)}...` : text;
 }
 
+function sourceLocation(source) {
+  const parts = [];
+  if (source?.book_title) parts.push(source.book_title);
+  if (source?.lesson_number || source?.lesson_title) {
+    const number = source.lesson_number ? `第${source.lesson_number}课` : "";
+    parts.push([number, source.lesson_title].filter(Boolean).join(" "));
+  }
+  if (source?.section_title) parts.push(source.section_title);
+  return parts.join(" · ");
+}
+
+function sourcePages(source) {
+  const parts = [];
+  if (source?.textbook_pages) parts.push(`教材第${source.textbook_pages}页`);
+  if (source?.pdf_pages) parts.push(`PDF页序${source.pdf_pages}`);
+  return parts.join(" · ");
+}
+
+function evidencePages(evidence) {
+  const parts = [];
+  if (evidence?.textbook_pages) parts.push(`教材第${evidence.textbook_pages}页`);
+  if (evidence?.pdf_pages) parts.push(`PDF页序${evidence.pdf_pages}`);
+  return parts.join(" · ");
+}
+
 function formatTime(value) {
   if (!value) return "时间未知";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "时间未知";
   return date.toLocaleString("zh-CN", {
+    timeZone: "Asia/Shanghai",
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+function answerModeLabel(mode) {
+  return mode === "evidence_selection" || mode === "ai"
+    ? "模型辅助的教材证据选择与原句组装"
+    : "模板回退";
 }
 
 async function errorDetail(response, fallback) {
@@ -172,6 +242,15 @@ async function errorDetail(response, fallback) {
   } catch {
     return fallback;
   }
+}
+
+function isNetworkConnectionError(error) {
+  return (
+    error instanceof TypeError &&
+    /failed to fetch|networkerror|network request failed|load failed/i.test(
+      error.message || "",
+    )
+  );
 }
 
 async function loadHistories() {
@@ -301,6 +380,7 @@ async function sendQuestion() {
       role: "assistant",
       content: data.answer || "暂时没有生成回答。",
       sources: data.sources || [],
+      usedEvidence: data.used_evidence || [],
       outline: data.knowledge_outline || null,
       answerMode: data.answer_mode,
       historySaved: data.history_saved,
@@ -312,10 +392,16 @@ async function sendQuestion() {
     messages.value.push(assistantMessage);
     await Promise.all([loadHistories(), synthesizeAnswer(assistantMessage)]);
   } catch (error) {
+    const networkConnectionFailed = isNetworkConnectionError(error);
+    if (networkConnectionFailed && !question.value.trim()) {
+      question.value = text;
+    }
     messages.value.push({
       id: Date.now() + 1,
       role: "assistant",
-      content: error.message || "后端服务暂时无法访问，请确认 FastAPI 已启动。",
+      content: networkConnectionFailed
+        ? "无法连接后端服务，请确认后端已启动后重试。"
+        : error.message || "问答请求失败，请稍后重试。",
       canSpeak: false,
     });
   } finally {
