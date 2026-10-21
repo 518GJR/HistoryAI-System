@@ -3,9 +3,19 @@
     <div class="workspace">
       <section class="chat-panel">
         <header class="panel-header">
-          <p class="eyebrow">HistoryAI · RAG + Voice</p>
-          <h1>中小学历史知识问答</h1>
-          <p class="header-note">支持文字提问，也可录音识别后修改再发送。</p>
+          <div class="panel-heading">
+            <p class="eyebrow">HistoryAI · RAG + Voice</p>
+            <h1>中小学历史知识问答</h1>
+            <p class="header-note">支持文字提问，也可录音识别后修改再发送。</p>
+          </div>
+          <button
+            class="new-conversation-button"
+            type="button"
+            :disabled="newConversationDisabled"
+            @click="newConversation"
+          >
+            新建对话
+          </button>
         </header>
 
         <div class="message-list">
@@ -45,7 +55,10 @@
             <section v-if="message.usedEvidence?.length" class="used-evidence">
               <h4 class="evidence-heading">实际采用证据</h4>
               <ol>
-                <li v-for="evidence in message.usedEvidence" :key="evidence.evidence_id">
+                <li
+                  v-for="evidence in message.usedEvidence"
+                  :key="evidence.historyKey || evidence.evidence_id"
+                >
                   <strong>{{ evidence.source_titles?.join(" / ") || evidence.source_title }}</strong>
                   <p>{{ evidence.text }}</p>
                   <small>
@@ -107,6 +120,7 @@
           </div>
           <div class="question-row">
             <textarea
+              ref="questionInput"
               v-model="question"
               rows="2"
               placeholder="请输入历史问题，或录音识别后在这里修改文字"
@@ -132,24 +146,19 @@
         <p v-else-if="!histories.length" class="history-state">暂无历史记录</p>
 
         <div v-else class="history-list">
-          <article v-for="history in histories" :key="history.id" class="history-card">
-            <time class="history-time">{{ formatTime(history.created_at) }}</time>
-            <h3>{{ history.question }}</h3>
-            <p>{{ summarize(history.answer) }}</p>
-            <span class="history-source-count">
-              来源 {{ Array.isArray(history.sources) ? history.sources.length : 0 }} 条
-            </span>
-            <ul v-if="history.sources?.length" class="history-source-list">
-              <li
-                v-for="(source, index) in history.sources"
-                :key="source.knowledge_id || `${source.title}-${index}`"
-              >
-                <strong>{{ source.title }}</strong>
-                <small v-if="sourceLocation(source)">{{ sourceLocation(source) }}</small>
-                <small v-if="sourcePages(source)">{{ sourcePages(source) }}</small>
-              </li>
-            </ul>
-          </article>
+          <button
+            v-for="history in histories"
+            :key="history.id"
+            class="history-card"
+            type="button"
+            :title="history.question"
+            :aria-label="`查看历史问题：${history.question}`"
+            :aria-current="selectedHistoryId === history.id ? 'true' : undefined"
+            :class="{ active: selectedHistoryId === history.id }"
+            @click="showHistory(history)"
+          >
+            <span class="history-question">{{ history.question }}</span>
+          </button>
         </div>
       </aside>
     </div>
@@ -157,7 +166,7 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 const QUESTION_API_URL = `${API_BASE_URL}/question`;
@@ -172,6 +181,8 @@ const historyLoading = ref(false);
 const historyError = ref("");
 const recording = ref(false);
 const asrLoading = ref(false);
+const selectedHistoryId = ref(null);
+const questionInput = ref(null);
 const voiceStatus = ref("点击录音后讲话，停止后会自动识别。");
 const messages = ref([
   {
@@ -181,15 +192,17 @@ const messages = ref([
     canSpeak: false,
   },
 ]);
+const newConversationDisabled = computed(
+  () =>
+    loading.value ||
+    recording.value ||
+    asrLoading.value ||
+    messages.value.some((message) => message.ttsLoading),
+);
 
 let mediaRecorder = null;
 let mediaStream = null;
 let audioChunks = [];
-
-function summarize(text) {
-  if (!text) return "暂无回答内容";
-  return text.length > 96 ? `${text.slice(0, 96)}...` : text;
-}
 
 function sourceLocation(source) {
   const parts = [];
@@ -214,19 +227,6 @@ function evidencePages(evidence) {
   if (evidence?.textbook_pages) parts.push(`教材第${evidence.textbook_pages}页`);
   if (evidence?.pdf_pages) parts.push(`PDF页序${evidence.pdf_pages}`);
   return parts.join(" · ");
-}
-
-function formatTime(value) {
-  if (!value) return "时间未知";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "时间未知";
-  return date.toLocaleString("zh-CN", {
-    timeZone: "Asia/Shanghai",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 }
 
 function answerModeLabel(mode) {
@@ -266,6 +266,74 @@ async function loadHistories() {
   } finally {
     historyLoading.value = false;
   }
+}
+
+function historyUsedEvidence(sources) {
+  const seen = new Set();
+  const evidenceItems = [];
+
+  for (const source of Array.isArray(sources) ? sources : []) {
+    for (const evidence of Array.isArray(source.used_evidence) ? source.used_evidence : []) {
+      const key = [
+        evidence.evidence_id,
+        evidence.knowledge_id,
+        evidence.source_ids?.join("|"),
+        evidence.text,
+      ].join("::");
+      if (seen.has(key)) continue;
+      seen.add(key);
+      evidenceItems.push({ ...evidence, historyKey: key });
+    }
+  }
+
+  return evidenceItems;
+}
+
+function revokeMessageAudio() {
+  messages.value.forEach((message) => {
+    if (message.audioUrl) URL.revokeObjectURL(message.audioUrl);
+  });
+}
+
+function showHistory(history) {
+  const sources = Array.isArray(history.sources) ? history.sources : [];
+  revokeMessageAudio();
+  selectedHistoryId.value = history.id;
+  messages.value = [
+    {
+      id: `history-${history.id}-question`,
+      role: "user",
+      content: history.question,
+    },
+    {
+      id: `history-${history.id}-answer`,
+      role: "assistant",
+      content: history.answer || "暂无回答内容",
+      sources,
+      usedEvidence: historyUsedEvidence(sources),
+      canSpeak: false,
+    },
+  ];
+}
+
+async function newConversation() {
+  if (newConversationDisabled.value) return;
+
+  revokeMessageAudio();
+  selectedHistoryId.value = null;
+  question.value = "";
+  voiceStatus.value = "点击录音后讲话，停止后会自动识别。";
+  messages.value = [
+    {
+      id: Date.now(),
+      role: "assistant",
+      content: "你好，我可以帮助你进行历史问答和结构化知识梳理。",
+      canSpeak: false,
+    },
+  ];
+
+  await nextTick();
+  questionInput.value?.focus();
 }
 
 async function toggleRecording() {
@@ -360,6 +428,7 @@ async function sendQuestion() {
   const text = question.value.trim();
   if (!text) return;
 
+  selectedHistoryId.value = null;
   messages.value.push({ id: Date.now(), role: "user", content: text });
   question.value = "";
   loading.value = true;
@@ -413,8 +482,6 @@ onMounted(loadHistories);
 
 onBeforeUnmount(() => {
   stopMediaStream();
-  messages.value.forEach((message) => {
-    if (message.audioUrl) URL.revokeObjectURL(message.audioUrl);
-  });
+  revokeMessageAudio();
 });
 </script>

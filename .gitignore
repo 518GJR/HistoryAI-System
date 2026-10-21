@@ -23,3 +23,10 @@ local_materials/
 
 # Local PDF render/extraction previews.
 tmp/pdfs/
+
+# Local runtime, acceptance, and evaluation scratch data.
+tmp/
+*.db
+*.sqlite
+*.sqlite3
+*.log
