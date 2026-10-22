@@ -10,11 +10,11 @@
 
 ### 已实现
 
-- 文字问答：问题 → 本地/MySQL RAG → 外部大模型 → `answer + sources`
-- 大模型不可用、未配置或响应异常时，自动回退原有知识模板回答
+- 文字问答：问题 → 本地/MySQL RAG → 资料支持判断（教材模式）→ 证据选择或模板 fallback → `answer + sources + used_evidence`
+- 外部模型当前只选择教材证据编号，最终文本由后端按教材原句组装；模型不可用、未配置或响应异常时，回退原有知识模板
 - ASR：浏览器录音上传 → 后端转写 → 识别文字回填，用户可修改
-- TTS：AI 回答 → 后端合成音频字节流 → 前端自动播放/手动重试
-- 语音闭环：录音 → ASR → 修改文字 → 提问 → RAG → AI 回答 → sources → TTS
+- TTS：问答回答 → 后端合成音频字节流 → 前端自动播放/手动重试
+- 语音闭环：录音 → ASR → 修改文字 → 提问 → RAG → 问答回答 → sources → TTS
 - 基础知识梳理：主题、时间、人物、事件、原因、内容/经过、结果/影响、相关知识点
 - 问答历史保存和最近 20 条记录展示；历史侧边栏独立滚动、只显示问题名称，长问题省略并可悬停查看全文
 - 点击历史问题只读取已保存的问题、回答、来源和实际采用证据，不重新调用问答或语音服务；“新建对话”只重置前端当前视图，不删除历史
@@ -24,6 +24,7 @@
 - `KNOWLEDGE_MODE=textbook` 仅加载教材 JSON；`KNOWLEDGE_MODE=demo` 保留 MySQL 优先、15 条演示 JSON 回退行为
 - 教材来源元数据随检索结果进入问答 API、知识梳理、历史来源快照和前端展示
 - fallback 会记录模板实际逐字渲染的教材原文：`used_evidence` 保留来源 ID、关联知识点、教材页码和 PDF 页序；未进入回答的候选不标为已采用
+- 教材模式已接入并冻结 `interpretable-v1` 最小资料支持判断：回答前检查对象、主题/维度和教材原文，回答后复核实际证据覆盖；不足时返回 `answer_mode=insufficient_support`
 - AI、ASR、TTS 使用环境变量配置，不在代码中硬编码 API Key
 
 ### 数据与验证边界
@@ -38,6 +39,7 @@
 - 浏览器麦克风端到端流程已有代码实现，本轮未进行浏览器复测
 - 2026-10-21完成七上第1—3课30题修复前浏览器初评：26题通过、3题部分通过、1题失败，样本初评通过率为86.7%；该比例不是系统整体准确率
 - 30题原题、参考要点、来源页码、评分口径和逐题修复前结果见[`docs/evaluation/2026-10-21-preliminary-30/`](docs/evaluation/2026-10-21-preliminary-30/)，教材PDF核对、第二人评分和生成路径截图核对仍待完成
+- 资料支持判断已阻断冻结新题中的一般范围外历史题和非历史题，但仍存在明显别称误拒（keyword/vector 各1题）和同人物错误主题误放（vector 1题），不得写成已全部解决
 
 功能测试通过、检索命中、模型回答正确、人工评分合格和真实服务联调通过是不同证据，不能混写。Mock 测试通过不等于本轮真实云服务验证通过。
 
@@ -57,9 +59,11 @@
   → 可编辑问题文字
   → POST /api/question
   → RAG Top 3
-  → 外部大模型基于检索资料生成回答
-  → 失败时模板 fallback
-  → answer + sources + knowledge_outline
+  → 教材模式的回答前资料支持判断
+  → 资料足够：外部模型选择证据，后端按教材原句组装
+  → 模型未配置或失败：模板 fallback
+  → 资料不足或实际证据未覆盖必需项：insufficient_support
+  → answer + sources + used_evidence + support_assessment + knowledge_outline
   → 尝试保存历史（失败不阻塞回答）
   → POST /api/speech/tts
   → 浏览器播放音频
@@ -73,47 +77,114 @@
 - `GET /api/question/history?limit=20`：问答历史
 - `POST /api/speech/asr`：上传 multipart 音频，字段名 `audio`
 - `POST /api/speech/tts`：提交 `{"text": "..."}`，返回音频
-- `GET /api/knowledge/outline?topic=秦始皇统一六国`：结构化知识梳理
+- `GET /api/knowledge/outline?topic=北京人`：结构化知识梳理
 
 `POST /api/question` 主要响应字段：
 
 ```json
 {
-  "answer": "基于检索资料生成的回答",
+  "answer": "你提出的问题是：北京人生活在距今什么年代？\n根据当前历史知识库……",
   "sources": [
     {
-      "title": "北京人用火",
+      "title": "北京人的地点与年代",
       "dynasty": "史前时期",
-      "score": 17,
-      "knowledge_id": "H7A-L01-010",
-      "book_title": "义务教育教科书·中国历史七年级上册",
+      "score": 19.0,
+      "retrieval_mode": "keyword",
+      "retrieval_unit": "knowledge_point",
+      "knowledge_id": "H7A-L01-006",
+      "knowledge_ids": ["H7A-L01-006"],
+      "book_id": "H7A",
+      "book_title": "义务教育教科书·中国历史 七年级上册",
+      "unit_id": "H7A-U01",
+      "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+      "lesson_id": "H7A-L01",
       "lesson_number": 1,
       "lesson_title": "远古时期的人类活动",
       "section_title": "北京人",
-      "textbook_pages": "6",
-      "pdf_pages": "11",
-      "source_refs": [{"source_id": "H7A-P006-B", "excerpt": "..."}]
+      "material_types": ["正文"],
+      "textbook_pages": "5—6",
+      "pdf_pages": "10—11",
+      "qualifiers": ["约"],
+      "evidence_type": "考古证据",
+      "certainty": "教材明确说明",
+      "source_refs": [
+        {
+          "source_id": "H7A-P005-A",
+          "material_type": "正文",
+          "textbook_pages": "5—6",
+          "pdf_pages": "10—11",
+          "excerpt": "……经测定，北京人生活在距今约70万—20万年。",
+          "locator": "北京人的发现"
+        }
+      ],
+      "used_evidence": [
+        {
+          "evidence_id": "E2",
+          "text": "……经测定，北京人生活在距今约70万—20万年。",
+          "knowledge_id": "H7A-L01-006",
+          "knowledge_ids": ["H7A-L01-006"],
+          "source_ids": ["H7A-P005-A"],
+          "source_title": "北京人的地点与年代",
+          "source_titles": ["北京人的地点与年代"],
+          "textbook_pages": "5—6",
+          "pdf_pages": "10—11"
+        }
+      ],
+      "supporting": true
     }
   ],
-  "answer_mode": "ai",
+  "answer_mode": "fallback",
+  "retrieval_mode": "keyword",
+  "used_evidence": [
+    {
+      "evidence_id": "E2",
+      "text": "……经测定，北京人生活在距今约70万—20万年。",
+      "knowledge_id": "H7A-L01-006",
+      "knowledge_ids": ["H7A-L01-006"],
+      "source_ids": ["H7A-P005-A"],
+      "source_title": "北京人的地点与年代",
+      "source_titles": ["北京人的地点与年代"],
+      "textbook_pages": "5—6",
+      "pdf_pages": "10—11"
+    }
+  ],
+  "support_assessment": {
+    "status": "sufficient",
+    "reason_codes": ["all_required_facets_covered"],
+    "required_facets": ["subject:北京人", "aspect:time"],
+    "covered_facets": ["subject:北京人", "aspect:time"],
+    "supporting_source_ids": ["H7A-P005-A"],
+    "supporting_knowledge_ids": ["H7A-L01-006"],
+    "unsupported_facets": [],
+    "method": "interpretable-v1",
+    "calibration_version": "development-set-v1"
+  },
   "history_saved": true,
   "knowledge_outline": {
-    "topic": "秦始皇统一六国",
-    "time": "公元前230年-公元前221年",
-    "people": ["秦始皇", "商鞅"],
-    "event": "...",
-    "reason": "...",
-    "process": "...",
-    "result_impact": "...",
+    "topic": "北京人的地点与年代",
+    "time": "距今约70万—20万年",
+    "people": ["北京人"],
+    "event": "……经测定，北京人生活在距今约70万—20万年。",
+    "reason": "",
+    "process": "……经测定，北京人生活在距今约70万—20万年。",
+    "result_impact": "",
     "related_points": [],
-    "sources": []
+    "sources": [
+      {
+        "title": "北京人的地点与年代",
+        "retrieval_mode": "keyword",
+        "retrieval_unit": "knowledge_point",
+        "knowledge_id": "H7A-L01-006",
+        "supporting": true
+      }
+    ]
   }
 }
 ```
 
-`answer_mode` 为 `ai` 表示外部模型成功返回，为 `fallback` 表示使用本地模板。
+`answer_mode=evidence_selection` 表示外部模型成功选择证据 ID，后端再按教材原句组装回答，不是教材约束的自然语言生成。`fallback` 表示外部模型未配置、调用失败、返回无效选择或没有可选证据时，使用原有本地知识模板。`insufficient_support` 表示教材模式的回答前判断或回答后证据覆盖复核未通过；此时候选 `sources` 仍保留，`used_evidence=[]`。
 
-`sources` 是检索候选，`used_evidence` 是实际进入回答的教材原文，两者不能等同。当前 vector 近邻尚未接入资料充分性判断；证据追溯完整不代表范围外错误回答已解决。
+`sources` 是检索候选，`supporting` 表示当前规则是否将该来源视为支持资料，`used_evidence` 是实际进入回答的教材原文，三者不能等同。`interpretable-v1` 已接入并冻结，但冻结后新题验证仍有误拒和误放，不表示资料充分性问题已全部解决。
 
 ## 配置
 
@@ -201,7 +272,7 @@ $env:TTS_PROVIDER = 'disabled'
 .\.venv\Scripts\python.exe -m app.scripts.verify_textbook_retrieval --output ..\docs\evaluation\2026-10-22-vector-retrieval\real-retrieval-results.json
 ```
 
-向量相似度只用于相对排序，不是答案正确概率，也没有在本轮校准成资料充分性阈值。范围外问题仍会返回最近邻，因此候选来源不能自动视为可回答依据。
+向量相似度只用于相对排序，不是答案正确概率，也未被校准为资料充分性阈值。范围外问题仍可能返回最近邻候选；教材模式现由独立的 `interpretable-v1` 判断决定候选能否进入回答。该判断已阻断一般范围外题，但仍有已记录的误拒和误放。
 
 AI 当前使用 `openai_compatible`。ASR/TTS 可使用 `openai_compatible` 或代码已支持的 `aliyun_bailian`，可以为三个能力配置同一家或不同供应商。API Key 只放在本地 `.env`，不要提交到 Git。
 
@@ -256,7 +327,7 @@ npm run dev
 3. 启动后端和前端，先在 `/docs` 查看四类核心 API。
 4. 教材验收时设置 `KNOWLEDGE_MODE=textbook`，输入“北京人用火有什么作用？”演示文字问答、教材来源、知识梳理和 TTS；演示旧数据时改回 `demo` 并重启后端。
 5. 点击“开始录音”，说出问题，停止录音；展示 ASR 回填文字并修改后发送。
-6. 展示 AI 回答、来源、结构化梳理、音频播放和右侧历史记录。
+6. 展示回答、来源、结构化梳理、音频播放和右侧历史记录。
 7. 可临时将 `AI_PROVIDER=disabled` 并重启后端，演示模板 fallback（`answer_mode=fallback`）。
 
 ## 测试
@@ -273,8 +344,16 @@ npm run build
 
 2026-10-21历史侧边栏与“新建对话”前端改动完成后，`npm run build`通过（Vite 6.4.3，10个模块转换），`git diff --check`通过。未修改后端，因此本轮未重复完整后端测试。独立滚动、历史点击、网络请求、忙碌禁用和窄屏表现仍需浏览器人工验收；真实MySQL时间语义也仍未验证。
 
-2026-10-22第一版向量检索收尾后，新增 Mock 与 API 测试并执行完整后端离线回归：`64 passed in 2.18s`，退出码 0。测试显式禁用 AI、ASR、TTS 并阻断外部 HTTP；真实本地 Embedding 检索另行执行和记录，不能与 Mock 结果混写。本轮未修改前端，因此未重复前端生产构建。
+2026-10-22 第一版向量检索阶段完整后端离线回归：`64 passed in 2.18s`，退出码 0。原始阶段记录见 [`docs/evaluation/2026-10-22-vector-retrieval/`](docs/evaluation/2026-10-22-vector-retrieval/)。
+
+2026-10-22 fallback 实际证据追溯修复后，完整后端离线回归：`67 passed in 1.89s`，退出码 0。专项测试为 `27 passed in 1.44s`；记录见 [`docs/evaluation/2026-10-22-fallback-traceability/`](docs/evaluation/2026-10-22-fallback-traceability/)。
+
+2026-10-22 最小资料支持判断接入并冻结后，最新完整后端离线回归：`73 passed, 0 failed in 2.09s`，pytest 退出码 0。TestClient 使用独立 SQLite，AI、ASR、TTS 显式设为 disabled，外部 HTTP 由夹具阻断；记录见 [`docs/evaluation/2026-10-22-support-assessment/`](docs/evaluation/2026-10-22-support-assessment/)。
+
+64、67、73 分别是三个开发节点的完整后端离线回归，不是同一节点的不同统计。自动测试通过不代表资料支持语义判断无误；冻结后新题的误拒和误放仍按原结果保留。真实本地 Embedding 检索和 TestClient API 验证另行记录，不与 Mock 结果混写；本轮未重复前端生产构建。
 
 ## 后续范围
 
-A 阶段的七上第 1—3 课教材数据和可追溯来源接入已完成代码与离线测试验证，30题修复前初评基线已经归档。第一版本地向量检索代码、真实索引和小规模检索验证已经完成；正式检索对照实验、教材约束自然语言生成、知识点标注、覆盖统计及小测掌握统计仍未完成。E20错误拒答和E10、E25、E26缺少直接回应的问题尚未修复，修复后复测必须单独保存，不覆盖基线。后续按 [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md) 分阶段开展。
+A 阶段的七上第 1—3 课教材数据和可追溯来源接入已完成代码与离线测试验证，30题修复前初评基线已归档。第一版本地向量检索、真实索引、本地 Embedding/API 验证和 `interpretable-v1` 最小资料支持判断已完成；该规则当前已冻结，但冻结后新题仍有别称误拒和同人物错误主题误放。
+
+当前外部模型只做证据 ID 选择，后端按原句组装；外部模型失败时的模板 fallback 是另一条兼容路径，两者都不等同于待实现的教材约束自然语言生成。正式检索对照实验、教材约束自然语言生成、知识点标注、覆盖统计及小测掌握统计仍未完成。E20 错误拒答和 E10、E25、E26 缺少直接回应的问题尚未修复，修复后复测必须单独保存，不覆盖基线。后续按 [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md) 分阶段开展。
