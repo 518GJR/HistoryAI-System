@@ -1,0 +1,2961 @@
+{
+  "verification_type": "support_assessment_frozen_independent_cases",
+  "generated_at": "2026-10-22T02:06:36.875410+00:00",
+  "default_retrieval_mode_unchanged": "keyword",
+  "providers": {
+    "ai": "disabled",
+    "asr": "disabled",
+    "tts": "disabled"
+  },
+  "external_http": "blocked; Hugging Face/Transformers forced offline",
+  "database": "test-owned temporary SQLite (removed after run)",
+  "cases_were_not_used_to_modify_this_version": true,
+  "case_definition": {
+    "frozen_at": "2026-10-22T10:10:00+08:00",
+    "prepared_by": "same developer who runs the verification",
+    "label": "冻结后的新题验证（非严格独立盲测）",
+    "textbook_data_sha256": "c7b206d12fe315664389a1516f8c822b62d90c32229836f9f5f2417d81b1eeb5",
+    "scoring_policy": {
+      "answer_expected": "回答必须由实际 used_evidence 支持所问主题和全部必需维度；比较题必须实际覆盖双方。",
+      "refusal_expected": "answer_mode 必须为 insufficient_support，used_evidence 必须为空。",
+      "false_reject": "教材资料充分且候选/证据预算足以覆盖，但系统拒答。",
+      "false_allow": "教材资料不足、缺少比较一方或缺少所问维度，系统仍进入回答。",
+      "semantic_review": "人工逐题对照教材原文和 used_evidence；候选命中、关键词命中或自动测试通过均不单独算语义正确。"
+    },
+    "cases": [
+      {
+        "id": "FN-01",
+        "category": "textbook_fact",
+        "question": "北京人生活在距今什么年代？",
+        "expected": "answer",
+        "reference_points": [
+          "距今约70万—20万年"
+        ],
+        "required_subjects": [
+          "北京人"
+        ],
+        "required_topics": [
+          "年代"
+        ],
+        "supporting_knowledge_ids": [
+          "H7A-L01-006"
+        ],
+        "supporting_source_ids": [
+          "H7A-P005-A"
+        ]
+      },
+      {
+        "id": "FN-02",
+        "category": "paraphrase_alias",
+        "question": "周口店龙骨山顶部洞穴中的晚期智人掌握了哪些制作技术？",
+        "expected": "answer",
+        "reference_points": [
+          "山顶洞人制作骨器",
+          "掌握磨光和钻孔技术"
+        ],
+        "required_subjects": [
+          "山顶洞人（别称描述）"
+        ],
+        "required_topics": [
+          "制作技术"
+        ],
+        "supporting_knowledge_ids": [
+          "H7A-L01-013"
+        ],
+        "supporting_source_ids": [
+          "H7A-P007-A"
+        ]
+      },
+      {
+        "id": "FN-03",
+        "category": "comparison_complete",
+        "question": "元谋人和蓝田人的发现地点与年代有何不同？",
+        "expected": "answer",
+        "reference_points": [
+          "元谋人：云南元谋，距今约170万年",
+          "蓝田人：陕西蓝田，距今约160万年"
+        ],
+        "required_subjects": [
+          "元谋人",
+          "蓝田人"
+        ],
+        "required_topics": [
+          "地点",
+          "年代"
+        ],
+        "supporting_knowledge_ids": [
+          "H7A-L01-002",
+          "H7A-L01-003"
+        ],
+        "supporting_source_ids": [
+          "H7A-P004-A",
+          "H7A-P004-B"
+        ]
+      },
+      {
+        "id": "FN-04",
+        "category": "comparison_missing_dimension",
+        "question": "北京人与山顶洞人的迁徙原因有什么不同？",
+        "expected": "refuse",
+        "reference_points": [
+          "当前教材原文未提供双方迁徙原因"
+        ],
+        "required_subjects": [
+          "北京人",
+          "山顶洞人"
+        ],
+        "required_topics": [
+          "迁徙原因"
+        ],
+        "supporting_knowledge_ids": [],
+        "supporting_source_ids": []
+      },
+      {
+        "id": "FN-05",
+        "category": "certainty_qualifier",
+        "question": "能否确定陶寺古城就是尧都？",
+        "expected": "answer",
+        "reference_points": [
+          "不能确定",
+          "教材表述为有学者推论陶寺很有可能是尧都"
+        ],
+        "required_subjects": [
+          "陶寺古城"
+        ],
+        "required_topics": [
+          "尧都",
+          "可能性限定词"
+        ],
+        "supporting_knowledge_ids": [
+          "H7A-L03-009"
+        ],
+        "supporting_source_ids": [
+          "H7A-P017-B",
+          "H7A-P017-C"
+        ]
+      },
+      {
+        "id": "FN-06",
+        "category": "same_subject_wrong_topic",
+        "question": "北京人如何发明文字？",
+        "expected": "refuse",
+        "reference_points": [
+          "教材虽有北京人资料，但没有北京人发明文字的证据"
+        ],
+        "required_subjects": [
+          "北京人"
+        ],
+        "required_topics": [
+          "发明文字"
+        ],
+        "supporting_knowledge_ids": [],
+        "supporting_source_ids": []
+      },
+      {
+        "id": "FN-07",
+        "category": "out_of_scope_history",
+        "question": "汉武帝推恩令有什么作用？",
+        "expected": "refuse",
+        "reference_points": [
+          "当前教材库仅含前三课，未收录汉武帝推恩令资料"
+        ],
+        "required_subjects": [
+          "汉武帝推恩令"
+        ],
+        "required_topics": [
+          "作用"
+        ],
+        "supporting_knowledge_ids": [],
+        "supporting_source_ids": []
+      },
+      {
+        "id": "FN-08",
+        "category": "non_history",
+        "question": "光合作用为什么需要阳光？",
+        "expected": "refuse",
+        "reference_points": [
+          "非历史问题，当前教材库无支持资料"
+        ],
+        "required_subjects": [
+          "光合作用"
+        ],
+        "required_topics": [
+          "原因"
+        ],
+        "supporting_knowledge_ids": [],
+        "supporting_source_ids": []
+      }
+    ]
+  },
+  "top_k": 3,
+  "top_k_unit_note": {
+    "keyword": "knowledge_point",
+    "vector": "deduplicated_source_excerpt"
+  },
+  "evidence_budget_warning": "Top K units differ; this is not a fair retrieval comparison experiment.",
+  "runs": {
+    "keyword": {
+      "total": 8,
+      "cases": [
+        {
+          "id": "FN-01",
+          "category": "textbook_fact",
+          "question": "北京人生活在距今什么年代？",
+          "expected": "answer",
+          "reference_points": [
+            "距今约70万—20万年"
+          ],
+          "required_subjects": [
+            "北京人"
+          ],
+          "required_topics": [
+            "年代"
+          ],
+          "supporting_knowledge_ids": [
+            "H7A-L01-006"
+          ],
+          "supporting_source_ids": [
+            "H7A-P005-A"
+          ],
+          "elapsed_ms": 27.84,
+          "retrieval_mode": "keyword",
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：北京人生活在距今什么年代？\n根据当前历史知识库，找到以下相关内容：\n直接回答：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n1. 北京人的生产与生活（史前时期，距今约70万—20万年）\n事件：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：北京人、北京人生活、距今；相关度分数：19。\n2. 北京人的地点与年代（史前时期，距今约70万—20万年）\n事件：北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第5—6页 · PDF页序10—11\n匹配关键词：北京人、在距、距今、年代；相关度分数：19。\n3. 北京人的体质（史前时期，距今约70万—20万年）\n事件：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：北京人、距今；相关度分数：12。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence": [
+            {
+              "evidence_id": "E1",
+              "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+              "knowledge_id": "H7A-L01-009",
+              "knowledge_ids": [
+                "H7A-L01-009",
+                "H7A-L01-008"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_title": "北京人的生产与生活",
+              "source_titles": [
+                "北京人的生产与生活",
+                "北京人的体质"
+              ],
+              "textbook_pages": "6",
+              "pdf_pages": "11"
+            },
+            {
+              "evidence_id": "E2",
+              "text": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+              "knowledge_id": "H7A-L01-006",
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_title": "北京人的地点与年代",
+              "source_titles": [
+                "北京人的地点与年代"
+              ],
+              "textbook_pages": "5—6",
+              "pdf_pages": "10—11"
+            }
+          ],
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "aspect:time"
+            ],
+            "covered_facets": [
+              "subject:北京人",
+              "aspect:time"
+            ],
+            "supporting_source_ids": [
+              "H7A-P006-A",
+              "H7A-P005-A"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-006",
+              "H7A-L01-008",
+              "H7A-L01-009"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "北京人的生产与生活",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-009"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "locator": "北京人的体质和生产生活"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "knowledge_id": "H7A-L01-009",
+                  "knowledge_ids": [
+                    "H7A-L01-009",
+                    "H7A-L01-008"
+                  ],
+                  "source_ids": [
+                    "H7A-P006-A"
+                  ],
+                  "source_title": "北京人的生产与生活",
+                  "source_titles": [
+                    "北京人的生产与生活",
+                    "北京人的体质"
+                  ],
+                  "textbook_pages": "6",
+                  "pdf_pages": "11"
+                }
+              ]
+            },
+            {
+              "title": "北京人的地点与年代",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E2",
+                  "text": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "knowledge_id": "H7A-L01-006",
+                  "knowledge_ids": [
+                    "H7A-L01-006"
+                  ],
+                  "source_ids": [
+                    "H7A-P005-A"
+                  ],
+                  "source_title": "北京人的地点与年代",
+                  "source_titles": [
+                    "北京人的地点与年代"
+                  ],
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11"
+                }
+              ]
+            },
+            {
+              "title": "北京人的体质",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-008"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "locator": "北京人的体质和生产生活"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "knowledge_id": "H7A-L01-009",
+                  "knowledge_ids": [
+                    "H7A-L01-009",
+                    "H7A-L01-008"
+                  ],
+                  "source_ids": [
+                    "H7A-P006-A"
+                  ],
+                  "source_title": "北京人的生产与生活",
+                  "source_titles": [
+                    "北京人的生产与生活",
+                    "北京人的体质"
+                  ],
+                  "textbook_pages": "6",
+                  "pdf_pages": "11"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FN-02",
+          "category": "paraphrase_alias",
+          "question": "周口店龙骨山顶部洞穴中的晚期智人掌握了哪些制作技术？",
+          "expected": "answer",
+          "reference_points": [
+            "山顶洞人制作骨器",
+            "掌握磨光和钻孔技术"
+          ],
+          "required_subjects": [
+            "山顶洞人（别称描述）"
+          ],
+          "required_topics": [
+            "制作技术"
+          ],
+          "supporting_knowledge_ids": [
+            "H7A-L01-013"
+          ],
+          "supporting_source_ids": [
+            "H7A-P007-A"
+          ],
+          "elapsed_ms": 16.7,
+          "retrieval_mode": "keyword",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：周口店龙骨山顶部洞穴中的晚期智人掌握了哪些制作技术？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_supported_facets"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:content",
+              "topic:tools"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:content",
+              "topic:tools"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "山顶洞人的地点与年代",
+              "score": 21.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-012"
+              ],
+              "source_ids": [
+                "H7A-P007-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P007-A",
+                  "material_type": "正文",
+                  "textbook_pages": "7",
+                  "pdf_pages": "12",
+                  "excerpt": "距今约3万年，北京人活动过的地区，又生活着一群远古人类。他们的模样和现代人相同，属于晚期智人。山顶洞人在继续使用打制石器的同时，也开始制作骨器，掌握了磨光和钻孔技术。他们可能已经知道人工取火。",
+                  "locator": "山顶洞人的地点、年代和技术"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人的地点与年代",
+              "score": 14.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人遗址价值",
+              "score": 7.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-011"
+              ],
+              "source_ids": [
+                "H7A-P006-C"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-C",
+                  "material_type": "正文",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "周口店北京人遗址是迄今所知世界上内涵最丰富、材料最齐全的直立人遗址之一。包括北京人在内的我国境内直立人遗存的发现，对研究人类起源和古人类演化的历史具有重要意义。",
+                  "locator": "北京人遗址价值"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            }
+          ]
+        },
+        {
+          "id": "FN-03",
+          "category": "comparison_complete",
+          "question": "元谋人和蓝田人的发现地点与年代有何不同？",
+          "expected": "answer",
+          "reference_points": [
+            "元谋人：云南元谋，距今约170万年",
+            "蓝田人：陕西蓝田，距今约160万年"
+          ],
+          "required_subjects": [
+            "元谋人",
+            "蓝田人"
+          ],
+          "required_topics": [
+            "地点",
+            "年代"
+          ],
+          "supporting_knowledge_ids": [
+            "H7A-L01-002",
+            "H7A-L01-003"
+          ],
+          "supporting_source_ids": [
+            "H7A-P004-A",
+            "H7A-P004-B"
+          ],
+          "elapsed_ms": 14.693,
+          "retrieval_mode": "keyword",
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：元谋人和蓝田人的发现地点与年代有何不同？\n根据当前历史知识库，找到以下相关内容：\n直接回答：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。\n1. 元谋人（史前时期，距今约170万年）\n事件：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 我国境内的古人类 · 教材第4页 · PDF页序9\n匹配关键词：元谋人、发现；相关度分数：21。\n2. 蓝田人（史前时期，距今约160万年）\n事件：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 我国境内的古人类 · 教材第4页 · PDF页序9\n匹配关键词：蓝田人、发现；相关度分数：21。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence": [
+            {
+              "evidence_id": "E1",
+              "text": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+              "knowledge_id": "H7A-L01-002",
+              "knowledge_ids": [
+                "H7A-L01-002",
+                "H7A-L01-003"
+              ],
+              "source_ids": [
+                "H7A-P004-A"
+              ],
+              "source_title": "元谋人",
+              "source_titles": [
+                "元谋人",
+                "蓝田人"
+              ],
+              "textbook_pages": "4",
+              "pdf_pages": "9"
+            },
+            {
+              "evidence_id": "E2",
+              "text": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+              "knowledge_id": "H7A-L01-002",
+              "knowledge_ids": [
+                "H7A-L01-002",
+                "H7A-L01-003"
+              ],
+              "source_ids": [
+                "H7A-P004-B"
+              ],
+              "source_title": "元谋人",
+              "source_titles": [
+                "元谋人"
+              ],
+              "textbook_pages": "4",
+              "pdf_pages": "9"
+            }
+          ],
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:元谋人",
+              "subject:蓝田人",
+              "aspect:time",
+              "aspect:place",
+              "comparison:all_subjects"
+            ],
+            "covered_facets": [
+              "subject:元谋人",
+              "subject:蓝田人",
+              "aspect:time",
+              "aspect:place",
+              "comparison:all_subjects"
+            ],
+            "supporting_source_ids": [
+              "H7A-P004-A",
+              "H7A-P004-B"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-002",
+              "H7A-L01-003"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "元谋人",
+              "score": 21.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-002"
+              ],
+              "source_ids": [
+                "H7A-P004-A",
+                "H7A-P004-B"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P004-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "4",
+                  "pdf_pages": "9",
+                  "excerpt": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "locator": "我国境内的古人类及脚注"
+                },
+                {
+                  "source_id": "H7A-P004-B",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "4",
+                  "pdf_pages": "9",
+                  "excerpt": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+                  "locator": "古人类工具与旧石器时代脚注"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "knowledge_id": "H7A-L01-002",
+                  "knowledge_ids": [
+                    "H7A-L01-002",
+                    "H7A-L01-003"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-A"
+                  ],
+                  "source_title": "元谋人",
+                  "source_titles": [
+                    "元谋人",
+                    "蓝田人"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+                  "knowledge_id": "H7A-L01-002",
+                  "knowledge_ids": [
+                    "H7A-L01-002",
+                    "H7A-L01-003"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-B"
+                  ],
+                  "source_title": "元谋人",
+                  "source_titles": [
+                    "元谋人"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                }
+              ]
+            },
+            {
+              "title": "蓝田人",
+              "score": 21.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-003"
+              ],
+              "source_ids": [
+                "H7A-P004-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P004-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "4",
+                  "pdf_pages": "9",
+                  "excerpt": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "locator": "我国境内的古人类及脚注"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "knowledge_id": "H7A-L01-002",
+                  "knowledge_ids": [
+                    "H7A-L01-002",
+                    "H7A-L01-003"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-A"
+                  ],
+                  "source_title": "元谋人",
+                  "source_titles": [
+                    "元谋人",
+                    "蓝田人"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+                  "knowledge_id": "H7A-L01-002",
+                  "knowledge_ids": [
+                    "H7A-L01-002",
+                    "H7A-L01-003"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-B"
+                  ],
+                  "source_title": "元谋人",
+                  "source_titles": [
+                    "元谋人"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FN-04",
+          "category": "comparison_missing_dimension",
+          "question": "北京人与山顶洞人的迁徙原因有什么不同？",
+          "expected": "refuse",
+          "reference_points": [
+            "当前教材原文未提供双方迁徙原因"
+          ],
+          "required_subjects": [
+            "北京人",
+            "山顶洞人"
+          ],
+          "required_topics": [
+            "迁徙原因"
+          ],
+          "supporting_knowledge_ids": [],
+          "supporting_source_ids": [],
+          "elapsed_ms": 15.495,
+          "retrieval_mode": "keyword",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：北京人与山顶洞人的迁徙原因有什么不同？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_supported_facets"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "subject:山顶洞人",
+              "aspect:reason",
+              "comparison:all_subjects"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:北京人",
+              "subject:山顶洞人",
+              "aspect:reason",
+              "comparison:all_subjects"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "北京人的地点与年代",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "山顶洞人的地点与年代",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-012"
+              ],
+              "source_ids": [
+                "H7A-P007-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P007-A",
+                  "material_type": "正文",
+                  "textbook_pages": "7",
+                  "pdf_pages": "12",
+                  "excerpt": "距今约3万年，北京人活动过的地区，又生活着一群远古人类。他们的模样和现代人相同，属于晚期智人。山顶洞人在继续使用打制石器的同时，也开始制作骨器，掌握了磨光和钻孔技术。他们可能已经知道人工取火。",
+                  "locator": "山顶洞人的地点、年代和技术"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人的发现",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            }
+          ]
+        },
+        {
+          "id": "FN-05",
+          "category": "certainty_qualifier",
+          "question": "能否确定陶寺古城就是尧都？",
+          "expected": "answer",
+          "reference_points": [
+            "不能确定",
+            "教材表述为有学者推论陶寺很有可能是尧都"
+          ],
+          "required_subjects": [
+            "陶寺古城"
+          ],
+          "required_topics": [
+            "尧都",
+            "可能性限定词"
+          ],
+          "supporting_knowledge_ids": [
+            "H7A-L03-009"
+          ],
+          "supporting_source_ids": [
+            "H7A-P017-B",
+            "H7A-P017-C"
+          ],
+          "elapsed_ms": 16.22,
+          "retrieval_mode": "keyword",
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：能否确定陶寺古城就是尧都？\n根据当前历史知识库，找到以下相关内容：\n直接回答：陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。\n有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。\n1. 陶寺研究的不确定性（史前时期，距今约4300—4000年）\n事件：陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。\n有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。\n有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。\n来源：义务教育教科书·中国历史 七年级上册 · 第3课 · 良渚古城与陶寺古城 · 教材第17页 · PDF页序22\n匹配关键词：尧、尧都、确定、是尧；相关度分数：11。\n2. 禅让传说（远古传说时期，相传黄帝之后）\n事件：相传在黄帝之后，尧、舜、禹依次成为首领。当时实行禅让制，首领传位给贤德之人。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：相传在黄帝之后，尧、舜、禹依次成为首领。当时实行禅让制，首领传位给贤德之人。\n来源：义务教育教科书·中国历史 七年级上册 · 第3课 · 远古的传说 · 教材第18页 · PDF页序23\n匹配关键词：尧；相关度分数：11。\n3. 陶寺地点与年代（史前时期，距今约4300—4000年）\n事件：陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。\n来源：义务教育教科书·中国历史 七年级上册 · 第3课 · 良渚古城与陶寺古城 · 教材第17页 · PDF页序22\n匹配关键词：陶寺古城；相关度分数：7。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence": [
+            {
+              "evidence_id": "E1",
+              "text": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+              "knowledge_id": "H7A-L03-009",
+              "knowledge_ids": [
+                "H7A-L03-009",
+                "H7A-L03-007"
+              ],
+              "source_ids": [
+                "H7A-P017-B"
+              ],
+              "source_title": "陶寺研究的不确定性",
+              "source_titles": [
+                "陶寺研究的不确定性",
+                "陶寺地点与年代"
+              ],
+              "textbook_pages": "17",
+              "pdf_pages": "22"
+            },
+            {
+              "evidence_id": "E2",
+              "text": "有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。",
+              "knowledge_id": "H7A-L03-009",
+              "knowledge_ids": [
+                "H7A-L03-009",
+                "H7A-L03-007"
+              ],
+              "source_ids": [
+                "H7A-P017-C"
+              ],
+              "source_title": "陶寺研究的不确定性",
+              "source_titles": [
+                "陶寺研究的不确定性"
+              ],
+              "textbook_pages": "17",
+              "pdf_pages": "22"
+            },
+            {
+              "evidence_id": "E3",
+              "text": "相传在黄帝之后，尧、舜、禹依次成为首领。当时实行禅让制，首领传位给贤德之人。",
+              "knowledge_id": "H7A-L03-014",
+              "knowledge_ids": [
+                "H7A-L03-014"
+              ],
+              "source_ids": [
+                "H7A-P018-C"
+              ],
+              "source_title": "禅让传说",
+              "source_titles": [
+                "禅让传说"
+              ],
+              "textbook_pages": "18",
+              "pdf_pages": "23"
+            }
+          ],
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:certainty"
+            ],
+            "covered_facets": [
+              "subject:textbook_topic",
+              "aspect:certainty"
+            ],
+            "supporting_source_ids": [
+              "H7A-P017-B",
+              "H7A-P017-C",
+              "H7A-P018-C"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L03-007",
+              "H7A-L03-009",
+              "H7A-L03-014"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "陶寺研究的不确定性",
+              "score": 11.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L03-009"
+              ],
+              "source_ids": [
+                "H7A-P017-B",
+                "H7A-P017-C"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P017-B",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "17",
+                  "pdf_pages": "22",
+                  "excerpt": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+                  "locator": "陶寺古城"
+                },
+                {
+                  "source_id": "H7A-P017-C",
+                  "material_type": "脚注",
+                  "textbook_pages": "17",
+                  "pdf_pages": "22",
+                  "excerpt": "有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。",
+                  "locator": "陶寺古城脚注"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+                  "knowledge_id": "H7A-L03-009",
+                  "knowledge_ids": [
+                    "H7A-L03-009",
+                    "H7A-L03-007"
+                  ],
+                  "source_ids": [
+                    "H7A-P017-B"
+                  ],
+                  "source_title": "陶寺研究的不确定性",
+                  "source_titles": [
+                    "陶寺研究的不确定性",
+                    "陶寺地点与年代"
+                  ],
+                  "textbook_pages": "17",
+                  "pdf_pages": "22"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。",
+                  "knowledge_id": "H7A-L03-009",
+                  "knowledge_ids": [
+                    "H7A-L03-009",
+                    "H7A-L03-007"
+                  ],
+                  "source_ids": [
+                    "H7A-P017-C"
+                  ],
+                  "source_title": "陶寺研究的不确定性",
+                  "source_titles": [
+                    "陶寺研究的不确定性"
+                  ],
+                  "textbook_pages": "17",
+                  "pdf_pages": "22"
+                }
+              ]
+            },
+            {
+              "title": "禅让传说",
+              "score": 11.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L03-014"
+              ],
+              "source_ids": [
+                "H7A-P018-C"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P018-C",
+                  "material_type": "正文（传说）",
+                  "textbook_pages": "18",
+                  "pdf_pages": "23",
+                  "excerpt": "相传在黄帝之后，尧、舜、禹依次成为首领。当时实行禅让制，首领传位给贤德之人。",
+                  "locator": "禅让传说"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E3",
+                  "text": "相传在黄帝之后，尧、舜、禹依次成为首领。当时实行禅让制，首领传位给贤德之人。",
+                  "knowledge_id": "H7A-L03-014",
+                  "knowledge_ids": [
+                    "H7A-L03-014"
+                  ],
+                  "source_ids": [
+                    "H7A-P018-C"
+                  ],
+                  "source_title": "禅让传说",
+                  "source_titles": [
+                    "禅让传说"
+                  ],
+                  "textbook_pages": "18",
+                  "pdf_pages": "23"
+                }
+              ]
+            },
+            {
+              "title": "陶寺地点与年代",
+              "score": 7.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L03-007"
+              ],
+              "source_ids": [
+                "H7A-P017-B"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P017-B",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "17",
+                  "pdf_pages": "22",
+                  "excerpt": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+                  "locator": "陶寺古城"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+                  "knowledge_id": "H7A-L03-009",
+                  "knowledge_ids": [
+                    "H7A-L03-009",
+                    "H7A-L03-007"
+                  ],
+                  "source_ids": [
+                    "H7A-P017-B"
+                  ],
+                  "source_title": "陶寺研究的不确定性",
+                  "source_titles": [
+                    "陶寺研究的不确定性",
+                    "陶寺地点与年代"
+                  ],
+                  "textbook_pages": "17",
+                  "pdf_pages": "22"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。",
+                  "knowledge_id": "H7A-L03-009",
+                  "knowledge_ids": [
+                    "H7A-L03-009",
+                    "H7A-L03-007"
+                  ],
+                  "source_ids": [
+                    "H7A-P017-C"
+                  ],
+                  "source_title": "陶寺研究的不确定性",
+                  "source_titles": [
+                    "陶寺研究的不确定性"
+                  ],
+                  "textbook_pages": "17",
+                  "pdf_pages": "22"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FN-06",
+          "category": "same_subject_wrong_topic",
+          "question": "北京人如何发明文字？",
+          "expected": "refuse",
+          "reference_points": [
+            "教材虽有北京人资料，但没有北京人发明文字的证据"
+          ],
+          "required_subjects": [
+            "北京人"
+          ],
+          "required_topics": [
+            "发明文字"
+          ],
+          "supporting_knowledge_ids": [],
+          "supporting_source_ids": [],
+          "elapsed_ms": 14.733,
+          "retrieval_mode": "keyword",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：北京人如何发明文字？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_supported_facets"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "aspect:process"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:北京人",
+              "aspect:process"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "北京人的地点与年代",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人的发现",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人的体质",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-008"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "locator": "北京人的体质和生产生活"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            }
+          ]
+        },
+        {
+          "id": "FN-07",
+          "category": "out_of_scope_history",
+          "question": "汉武帝推恩令有什么作用？",
+          "expected": "refuse",
+          "reference_points": [
+            "当前教材库仅含前三课，未收录汉武帝推恩令资料"
+          ],
+          "required_subjects": [
+            "汉武帝推恩令"
+          ],
+          "required_topics": [
+            "作用"
+          ],
+          "supporting_knowledge_ids": [],
+          "supporting_source_ids": [],
+          "elapsed_ms": 14.047,
+          "retrieval_mode": "keyword",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：汉武帝推恩令有什么作用？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_candidates"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": []
+        },
+        {
+          "id": "FN-08",
+          "category": "non_history",
+          "question": "光合作用为什么需要阳光？",
+          "expected": "refuse",
+          "reference_points": [
+            "非历史问题，当前教材库无支持资料"
+          ],
+          "required_subjects": [
+            "光合作用"
+          ],
+          "required_topics": [
+            "原因"
+          ],
+          "supporting_knowledge_ids": [],
+          "supporting_source_ids": [],
+          "elapsed_ms": 13.917,
+          "retrieval_mode": "keyword",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：光合作用为什么需要阳光？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_candidates"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:reason",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:reason",
+              "aspect:result_impact"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": []
+        }
+      ]
+    },
+    "vector": {
+      "total": 8,
+      "cases": [
+        {
+          "id": "FN-01",
+          "category": "textbook_fact",
+          "question": "北京人生活在距今什么年代？",
+          "expected": "answer",
+          "reference_points": [
+            "距今约70万—20万年"
+          ],
+          "required_subjects": [
+            "北京人"
+          ],
+          "required_topics": [
+            "年代"
+          ],
+          "supporting_knowledge_ids": [
+            "H7A-L01-006"
+          ],
+          "supporting_source_ids": [
+            "H7A-P005-A"
+          ],
+          "elapsed_ms": 21864.102,
+          "retrieval_mode": "vector",
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：北京人生活在距今什么年代？\n根据当前历史知识库，找到以下相关内容：\n直接回答：北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。\n1. 北京人的地点与年代 / 北京人的发现（史前时期，时间未标注）\n事件：北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第5—6页 · PDF页序10—11\n匹配关键词：无；相关度分数：0.595856785774231。\n2. 北京人的体质 / 北京人的生产与生活（史前时期，时间未标注）\n事件：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：无；相关度分数：0.5951751470565796。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence": [
+            {
+              "evidence_id": "E1",
+              "text": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+              "knowledge_id": "H7A-L01-006",
+              "knowledge_ids": [
+                "H7A-L01-006",
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_title": "北京人的地点与年代 / 北京人的发现",
+              "source_titles": [
+                "北京人的地点与年代 / 北京人的发现"
+              ],
+              "textbook_pages": "5—6",
+              "pdf_pages": "10—11"
+            },
+            {
+              "evidence_id": "E2",
+              "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+              "knowledge_id": "H7A-L01-008",
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_title": "北京人的体质 / 北京人的生产与生活",
+              "source_titles": [
+                "北京人的体质 / 北京人的生产与生活"
+              ],
+              "textbook_pages": "6",
+              "pdf_pages": "11"
+            }
+          ],
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "aspect:time"
+            ],
+            "covered_facets": [
+              "subject:北京人",
+              "aspect:time"
+            ],
+            "supporting_source_ids": [
+              "H7A-P005-A",
+              "H7A-P006-A"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-006",
+              "H7A-L01-007",
+              "H7A-L01-008",
+              "H7A-L01-009"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "北京人的地点与年代 / 北京人的发现",
+              "score": 0.595856785774231,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-006",
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "knowledge_id": "H7A-L01-006",
+                  "knowledge_ids": [
+                    "H7A-L01-006",
+                    "H7A-L01-007"
+                  ],
+                  "source_ids": [
+                    "H7A-P005-A"
+                  ],
+                  "source_title": "北京人的地点与年代 / 北京人的发现",
+                  "source_titles": [
+                    "北京人的地点与年代 / 北京人的发现"
+                  ],
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11"
+                },
+                {
+                  "evidence_id": "E1",
+                  "text": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "knowledge_id": "H7A-L01-006",
+                  "knowledge_ids": [
+                    "H7A-L01-006",
+                    "H7A-L01-007"
+                  ],
+                  "source_ids": [
+                    "H7A-P005-A"
+                  ],
+                  "source_title": "北京人的地点与年代 / 北京人的发现",
+                  "source_titles": [
+                    "北京人的地点与年代 / 北京人的发现"
+                  ],
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11"
+                }
+              ]
+            },
+            {
+              "title": "北京人的体质 / 北京人的生产与生活",
+              "score": 0.5951751470565796,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "locator": "北京人的体质和生产生活"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E2",
+                  "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "knowledge_id": "H7A-L01-008",
+                  "knowledge_ids": [
+                    "H7A-L01-008",
+                    "H7A-L01-009"
+                  ],
+                  "source_ids": [
+                    "H7A-P006-A"
+                  ],
+                  "source_title": "北京人的体质 / 北京人的生产与生活",
+                  "source_titles": [
+                    "北京人的体质 / 北京人的生产与生活"
+                  ],
+                  "textbook_pages": "6",
+                  "pdf_pages": "11"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "knowledge_id": "H7A-L01-008",
+                  "knowledge_ids": [
+                    "H7A-L01-008",
+                    "H7A-L01-009"
+                  ],
+                  "source_ids": [
+                    "H7A-P006-A"
+                  ],
+                  "source_title": "北京人的体质 / 北京人的生产与生活",
+                  "source_titles": [
+                    "北京人的体质 / 北京人的生产与生活"
+                  ],
+                  "textbook_pages": "6",
+                  "pdf_pages": "11"
+                }
+              ]
+            },
+            {
+              "title": "北京人遗址价值",
+              "score": 0.5076767206192017,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-011"
+              ],
+              "source_ids": [
+                "H7A-P006-C"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-C",
+                  "material_type": "正文",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "周口店北京人遗址是迄今所知世界上内涵最丰富、材料最齐全的直立人遗址之一。包括北京人在内的我国境内直立人遗存的发现，对研究人类起源和古人类演化的历史具有重要意义。",
+                  "locator": "北京人遗址价值"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            }
+          ]
+        },
+        {
+          "id": "FN-02",
+          "category": "paraphrase_alias",
+          "question": "周口店龙骨山顶部洞穴中的晚期智人掌握了哪些制作技术？",
+          "expected": "answer",
+          "reference_points": [
+            "山顶洞人制作骨器",
+            "掌握磨光和钻孔技术"
+          ],
+          "required_subjects": [
+            "山顶洞人（别称描述）"
+          ],
+          "required_topics": [
+            "制作技术"
+          ],
+          "supporting_knowledge_ids": [
+            "H7A-L01-013"
+          ],
+          "supporting_source_ids": [
+            "H7A-P007-A"
+          ],
+          "elapsed_ms": 63.553,
+          "retrieval_mode": "vector",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：周口店龙骨山顶部洞穴中的晚期智人掌握了哪些制作技术？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "partial",
+            "reason_codes": [
+              "required_facets_missing"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:content",
+              "topic:tools"
+            ],
+            "covered_facets": [
+              "aspect:content",
+              "topic:tools"
+            ],
+            "supporting_source_ids": [
+              "H7A-P007-A",
+              "H7A-P013-C",
+              "H7A-P012-B"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-013",
+              "H7A-L02-012",
+              "H7A-L02-016"
+            ],
+            "unsupported_facets": [
+              "subject:textbook_topic"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "山顶洞人的地点与年代 / 山顶洞人的技术与生活",
+              "score": 0.5993670225143433,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-012",
+                "H7A-L01-013"
+              ],
+              "source_ids": [
+                "H7A-P007-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P007-A",
+                  "material_type": "正文",
+                  "textbook_pages": "7",
+                  "pdf_pages": "12",
+                  "excerpt": "距今约3万年，北京人活动过的地区，又生活着一群远古人类。他们的模样和现代人相同，属于晚期智人。山顶洞人在继续使用打制石器的同时，也开始制作骨器，掌握了磨光和钻孔技术。他们可能已经知道人工取火。",
+                  "locator": "山顶洞人的地点、年代和技术"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": []
+            },
+            {
+              "title": "龙山文化与蛋壳陶",
+              "score": 0.4923914670944214,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L02-016"
+              ],
+              "source_ids": [
+                "H7A-P013-C"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P013-C",
+                  "material_type": "相关史事",
+                  "textbook_pages": "13",
+                  "pdf_pages": "18",
+                  "excerpt": "龙山文化是大汶口文化的后继者，距今约4400—3800年。制作这种陶杯需要使用稳定且能够高速旋转的快轮加工技术和高超的烧窑技术，表明当时社会生产力发展已经达到较高水平。",
+                  "locator": "龙山文化与蛋壳陶"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": []
+            },
+            {
+              "title": "半坡生产与生活",
+              "score": 0.47031843662261963,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L02-012"
+              ],
+              "source_ids": [
+                "H7A-P012-B"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P012-B",
+                  "material_type": "正文",
+                  "textbook_pages": "12",
+                  "pdf_pages": "17",
+                  "excerpt": "半坡人主要居住在半地穴式的房屋里，屋内有灶坑。半坡人能制作精美的磨制石器，从事农业等生产活动。他们种植粟、黍，饲养猪、狗等家畜；使用弓箭、渔叉等进行渔猎；也采集野果作为食物补充。半坡人还大量使用装饰品，并制作乐器陶埙。遗址中还出土了骨针、骨锥，陶制和石制的纺轮，可见半坡人已会纺织、制衣。",
+                  "locator": "半坡生产生活"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": []
+            }
+          ]
+        },
+        {
+          "id": "FN-03",
+          "category": "comparison_complete",
+          "question": "元谋人和蓝田人的发现地点与年代有何不同？",
+          "expected": "answer",
+          "reference_points": [
+            "元谋人：云南元谋，距今约170万年",
+            "蓝田人：陕西蓝田，距今约160万年"
+          ],
+          "required_subjects": [
+            "元谋人",
+            "蓝田人"
+          ],
+          "required_topics": [
+            "地点",
+            "年代"
+          ],
+          "supporting_knowledge_ids": [
+            "H7A-L01-002",
+            "H7A-L01-003"
+          ],
+          "supporting_source_ids": [
+            "H7A-P004-A",
+            "H7A-P004-B"
+          ],
+          "elapsed_ms": 56.701,
+          "retrieval_mode": "vector",
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：元谋人和蓝田人的发现地点与年代有何不同？\n根据当前历史知识库，找到以下相关内容：\n直接回答：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n1. 古人类研究证据 / 元谋人 / 蓝田人 / 郧县人（史前时期，时间未标注）\n事件：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 我国境内的古人类 · 教材第4页 · PDF页序9\n匹配关键词：无；相关度分数：0.5539427399635315。\n2. 古人类研究证据 / 元谋人 / 旧石器时代（史前时期，时间未标注）\n事件：通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 我国境内的古人类 · 教材第4页 · PDF页序9\n匹配关键词：无；相关度分数：0.5337549448013306。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence": [
+            {
+              "evidence_id": "E1",
+              "text": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+              "knowledge_id": "H7A-L01-001",
+              "knowledge_ids": [
+                "H7A-L01-001",
+                "H7A-L01-002",
+                "H7A-L01-003",
+                "H7A-L01-004"
+              ],
+              "source_ids": [
+                "H7A-P004-A"
+              ],
+              "source_title": "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人",
+              "source_titles": [
+                "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人"
+              ],
+              "textbook_pages": "4",
+              "pdf_pages": "9"
+            },
+            {
+              "evidence_id": "E2",
+              "text": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+              "knowledge_id": "H7A-L01-001",
+              "knowledge_ids": [
+                "H7A-L01-001",
+                "H7A-L01-002",
+                "H7A-L01-005"
+              ],
+              "source_ids": [
+                "H7A-P004-B"
+              ],
+              "source_title": "古人类研究证据 / 元谋人 / 旧石器时代",
+              "source_titles": [
+                "古人类研究证据 / 元谋人 / 旧石器时代"
+              ],
+              "textbook_pages": "4",
+              "pdf_pages": "9"
+            }
+          ],
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:元谋人",
+              "subject:蓝田人",
+              "aspect:time",
+              "aspect:place",
+              "comparison:all_subjects"
+            ],
+            "covered_facets": [
+              "subject:元谋人",
+              "subject:蓝田人",
+              "aspect:time",
+              "aspect:place",
+              "comparison:all_subjects"
+            ],
+            "supporting_source_ids": [
+              "H7A-P004-A",
+              "H7A-P004-B"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-002",
+              "H7A-L01-003"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人",
+              "score": 0.5539427399635315,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-001",
+                "H7A-L01-002",
+                "H7A-L01-003",
+                "H7A-L01-004"
+              ],
+              "source_ids": [
+                "H7A-P004-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P004-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "4",
+                  "pdf_pages": "9",
+                  "excerpt": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "locator": "我国境内的古人类及脚注"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "knowledge_id": "H7A-L01-001",
+                  "knowledge_ids": [
+                    "H7A-L01-001",
+                    "H7A-L01-002",
+                    "H7A-L01-003",
+                    "H7A-L01-004"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-A"
+                  ],
+                  "source_title": "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人",
+                  "source_titles": [
+                    "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                },
+                {
+                  "evidence_id": "E1",
+                  "text": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "knowledge_id": "H7A-L01-001",
+                  "knowledge_ids": [
+                    "H7A-L01-001",
+                    "H7A-L01-002",
+                    "H7A-L01-003",
+                    "H7A-L01-004"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-A"
+                  ],
+                  "source_title": "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人",
+                  "source_titles": [
+                    "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                }
+              ]
+            },
+            {
+              "title": "古人类研究证据 / 元谋人 / 旧石器时代",
+              "score": 0.5337549448013306,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-001",
+                "H7A-L01-002",
+                "H7A-L01-005"
+              ],
+              "source_ids": [
+                "H7A-P004-B"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P004-B",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "4",
+                  "pdf_pages": "9",
+                  "excerpt": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+                  "locator": "古人类工具与旧石器时代脚注"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "knowledge_id": "H7A-L01-001",
+                  "knowledge_ids": [
+                    "H7A-L01-001",
+                    "H7A-L01-002",
+                    "H7A-L01-003",
+                    "H7A-L01-004"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-A"
+                  ],
+                  "source_title": "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人",
+                  "source_titles": [
+                    "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                },
+                {
+                  "evidence_id": "E1",
+                  "text": "化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。",
+                  "knowledge_id": "H7A-L01-001",
+                  "knowledge_ids": [
+                    "H7A-L01-001",
+                    "H7A-L01-002",
+                    "H7A-L01-003",
+                    "H7A-L01-004"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-A"
+                  ],
+                  "source_title": "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人",
+                  "source_titles": [
+                    "古人类研究证据 / 元谋人 / 蓝田人 / 郧县人"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+                  "knowledge_id": "H7A-L01-001",
+                  "knowledge_ids": [
+                    "H7A-L01-001",
+                    "H7A-L01-002",
+                    "H7A-L01-005"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-B"
+                  ],
+                  "source_title": "古人类研究证据 / 元谋人 / 旧石器时代",
+                  "source_titles": [
+                    "古人类研究证据 / 元谋人 / 旧石器时代"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+                  "knowledge_id": "H7A-L01-001",
+                  "knowledge_ids": [
+                    "H7A-L01-001",
+                    "H7A-L01-002",
+                    "H7A-L01-005"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-B"
+                  ],
+                  "source_title": "古人类研究证据 / 元谋人 / 旧石器时代",
+                  "source_titles": [
+                    "古人类研究证据 / 元谋人 / 旧石器时代"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+                  "knowledge_id": "H7A-L01-001",
+                  "knowledge_ids": [
+                    "H7A-L01-001",
+                    "H7A-L01-002",
+                    "H7A-L01-005"
+                  ],
+                  "source_ids": [
+                    "H7A-P004-B"
+                  ],
+                  "source_title": "古人类研究证据 / 元谋人 / 旧石器时代",
+                  "source_titles": [
+                    "古人类研究证据 / 元谋人 / 旧石器时代"
+                  ],
+                  "textbook_pages": "4",
+                  "pdf_pages": "9"
+                }
+              ]
+            },
+            {
+              "title": "山顶洞人的地点与年代 / 山顶洞人的技术与生活",
+              "score": 0.4288043975830078,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-012",
+                "H7A-L01-013"
+              ],
+              "source_ids": [
+                "H7A-P007-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P007-A",
+                  "material_type": "正文",
+                  "textbook_pages": "7",
+                  "pdf_pages": "12",
+                  "excerpt": "距今约3万年，北京人活动过的地区，又生活着一群远古人类。他们的模样和现代人相同，属于晚期智人。山顶洞人在继续使用打制石器的同时，也开始制作骨器，掌握了磨光和钻孔技术。他们可能已经知道人工取火。",
+                  "locator": "山顶洞人的地点、年代和技术"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            }
+          ]
+        },
+        {
+          "id": "FN-04",
+          "category": "comparison_missing_dimension",
+          "question": "北京人与山顶洞人的迁徙原因有什么不同？",
+          "expected": "refuse",
+          "reference_points": [
+            "当前教材原文未提供双方迁徙原因"
+          ],
+          "required_subjects": [
+            "北京人",
+            "山顶洞人"
+          ],
+          "required_topics": [
+            "迁徙原因"
+          ],
+          "supporting_knowledge_ids": [],
+          "supporting_source_ids": [],
+          "elapsed_ms": 58.196,
+          "retrieval_mode": "vector",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：北京人与山顶洞人的迁徙原因有什么不同？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_supported_facets"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "subject:山顶洞人",
+              "aspect:reason",
+              "comparison:all_subjects"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:北京人",
+              "subject:山顶洞人",
+              "aspect:reason",
+              "comparison:all_subjects"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "山顶洞人的地点与年代 / 山顶洞人的技术与生活",
+              "score": 0.6031861305236816,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-012",
+                "H7A-L01-013"
+              ],
+              "source_ids": [
+                "H7A-P007-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P007-A",
+                  "material_type": "正文",
+                  "textbook_pages": "7",
+                  "pdf_pages": "12",
+                  "excerpt": "距今约3万年，北京人活动过的地区，又生活着一群远古人类。他们的模样和现代人相同，属于晚期智人。山顶洞人在继续使用打制石器的同时，也开始制作骨器，掌握了磨光和钻孔技术。他们可能已经知道人工取火。",
+                  "locator": "山顶洞人的地点、年代和技术"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人的地点与年代 / 北京人的发现",
+              "score": 0.5662633180618286,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-006",
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人的体质 / 北京人的生产与生活",
+              "score": 0.5610295534133911,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "locator": "北京人的体质和生产生活"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            }
+          ]
+        },
+        {
+          "id": "FN-05",
+          "category": "certainty_qualifier",
+          "question": "能否确定陶寺古城就是尧都？",
+          "expected": "answer",
+          "reference_points": [
+            "不能确定",
+            "教材表述为有学者推论陶寺很有可能是尧都"
+          ],
+          "required_subjects": [
+            "陶寺古城"
+          ],
+          "required_topics": [
+            "尧都",
+            "可能性限定词"
+          ],
+          "supporting_knowledge_ids": [
+            "H7A-L03-009"
+          ],
+          "supporting_source_ids": [
+            "H7A-P017-B",
+            "H7A-P017-C"
+          ],
+          "elapsed_ms": 57.795,
+          "retrieval_mode": "vector",
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：能否确定陶寺古城就是尧都？\n根据当前历史知识库，找到以下相关内容：\n直接回答：有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。\n1. 陶寺研究的不确定性（史前时期，时间未标注）\n事件：有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。\n来源：义务教育教科书·中国历史 七年级上册 · 第3课 · 良渚古城与陶寺古城 · 教材第17页 · PDF页序22\n匹配关键词：无；相关度分数：0.6300605535507202。\n2. 陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性（史前时期，时间未标注）\n事件：陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。\n来源：义务教育教科书·中国历史 七年级上册 · 第3课 · 良渚古城与陶寺古城 · 教材第17页 · PDF页序22\n匹配关键词：无；相关度分数：0.608329713344574。\n3. 良渚地点与年代 / 良渚经济与组织能力（史前时期，时间未标注）\n事件：良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。\n来源：义务教育教科书·中国历史 七年级上册 · 第3课 · 良渚古城与陶寺古城 · 教材第16页 · PDF页序21\n匹配关键词：无；相关度分数：0.5566174387931824。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence": [
+            {
+              "evidence_id": "E1",
+              "text": "有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。",
+              "knowledge_id": "H7A-L03-009",
+              "knowledge_ids": [
+                "H7A-L03-009"
+              ],
+              "source_ids": [
+                "H7A-P017-C"
+              ],
+              "source_title": "陶寺研究的不确定性",
+              "source_titles": [
+                "陶寺研究的不确定性"
+              ],
+              "textbook_pages": "17",
+              "pdf_pages": "22"
+            },
+            {
+              "evidence_id": "E2",
+              "text": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+              "knowledge_id": "H7A-L03-007",
+              "knowledge_ids": [
+                "H7A-L03-007",
+                "H7A-L03-008",
+                "H7A-L03-009"
+              ],
+              "source_ids": [
+                "H7A-P017-B"
+              ],
+              "source_title": "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性",
+              "source_titles": [
+                "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性"
+              ],
+              "textbook_pages": "17",
+              "pdf_pages": "22"
+            },
+            {
+              "evidence_id": "E3",
+              "text": "良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。",
+              "knowledge_id": "H7A-L03-004",
+              "knowledge_ids": [
+                "H7A-L03-004",
+                "H7A-L03-005"
+              ],
+              "source_ids": [
+                "H7A-P016-A"
+              ],
+              "source_title": "良渚地点与年代 / 良渚经济与组织能力",
+              "source_titles": [
+                "良渚地点与年代 / 良渚经济与组织能力"
+              ],
+              "textbook_pages": "16",
+              "pdf_pages": "21"
+            }
+          ],
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:certainty"
+            ],
+            "covered_facets": [
+              "subject:textbook_topic",
+              "aspect:certainty"
+            ],
+            "supporting_source_ids": [
+              "H7A-P017-C",
+              "H7A-P017-B",
+              "H7A-P016-A"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L03-004",
+              "H7A-L03-005",
+              "H7A-L03-007",
+              "H7A-L03-008",
+              "H7A-L03-009"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "陶寺研究的不确定性",
+              "score": 0.6300605535507202,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L03-009"
+              ],
+              "source_ids": [
+                "H7A-P017-C"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P017-C",
+                  "material_type": "脚注",
+                  "textbook_pages": "17",
+                  "pdf_pages": "22",
+                  "excerpt": "有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。",
+                  "locator": "陶寺古城脚注"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": []
+            },
+            {
+              "title": "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性",
+              "score": 0.608329713344574,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L03-007",
+                "H7A-L03-008",
+                "H7A-L03-009"
+              ],
+              "source_ids": [
+                "H7A-P017-B"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P017-B",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "17",
+                  "pdf_pages": "22",
+                  "excerpt": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+                  "locator": "陶寺古城"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "有学者从陶寺古城所处的位置和存在的时间推论，它很有可能是古史传说中尧的都城。",
+                  "knowledge_id": "H7A-L03-009",
+                  "knowledge_ids": [
+                    "H7A-L03-009"
+                  ],
+                  "source_ids": [
+                    "H7A-P017-C"
+                  ],
+                  "source_title": "陶寺研究的不确定性",
+                  "source_titles": [
+                    "陶寺研究的不确定性"
+                  ],
+                  "textbook_pages": "17",
+                  "pdf_pages": "22"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+                  "knowledge_id": "H7A-L03-007",
+                  "knowledge_ids": [
+                    "H7A-L03-007",
+                    "H7A-L03-008",
+                    "H7A-L03-009"
+                  ],
+                  "source_ids": [
+                    "H7A-P017-B"
+                  ],
+                  "source_title": "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性",
+                  "source_titles": [
+                    "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性"
+                  ],
+                  "textbook_pages": "17",
+                  "pdf_pages": "22"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+                  "knowledge_id": "H7A-L03-007",
+                  "knowledge_ids": [
+                    "H7A-L03-007",
+                    "H7A-L03-008",
+                    "H7A-L03-009"
+                  ],
+                  "source_ids": [
+                    "H7A-P017-B"
+                  ],
+                  "source_title": "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性",
+                  "source_titles": [
+                    "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性"
+                  ],
+                  "textbook_pages": "17",
+                  "pdf_pages": "22"
+                },
+                {
+                  "evidence_id": "E2",
+                  "text": "陶寺古城遗址位于山西襄汾，距今约4300—4000年。很多小型墓没有任何随葬品，城内在有的贵族墓地还发现用人殉葬的现象，说明当时不同群体之间的社会地位差异显著，阶级分化严重。城内还出土了小件青铜器和带有书写符号的陶壶，发现了有可能是观象台的遗迹。陶寺古城遗址的发现，表明当时黄河中游地区已经出现了早期国家。",
+                  "knowledge_id": "H7A-L03-007",
+                  "knowledge_ids": [
+                    "H7A-L03-007",
+                    "H7A-L03-008",
+                    "H7A-L03-009"
+                  ],
+                  "source_ids": [
+                    "H7A-P017-B"
+                  ],
+                  "source_title": "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性",
+                  "source_titles": [
+                    "陶寺地点与年代 / 陶寺社会与文化 / 陶寺研究的不确定性"
+                  ],
+                  "textbook_pages": "17",
+                  "pdf_pages": "22"
+                }
+              ]
+            },
+            {
+              "title": "良渚地点与年代 / 良渚经济与组织能力",
+              "score": 0.5566174387931824,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L03-004",
+                "H7A-L03-005"
+              ],
+              "source_ids": [
+                "H7A-P016-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P016-A",
+                  "material_type": "正文",
+                  "textbook_pages": "16",
+                  "pdf_pages": "21",
+                  "excerpt": "良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。",
+                  "locator": "良渚古城结构与组织能力"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E3",
+                  "text": "良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。",
+                  "knowledge_id": "H7A-L03-004",
+                  "knowledge_ids": [
+                    "H7A-L03-004",
+                    "H7A-L03-005"
+                  ],
+                  "source_ids": [
+                    "H7A-P016-A"
+                  ],
+                  "source_title": "良渚地点与年代 / 良渚经济与组织能力",
+                  "source_titles": [
+                    "良渚地点与年代 / 良渚经济与组织能力"
+                  ],
+                  "textbook_pages": "16",
+                  "pdf_pages": "21"
+                },
+                {
+                  "evidence_id": "E3",
+                  "text": "良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。",
+                  "knowledge_id": "H7A-L03-004",
+                  "knowledge_ids": [
+                    "H7A-L03-004",
+                    "H7A-L03-005"
+                  ],
+                  "source_ids": [
+                    "H7A-P016-A"
+                  ],
+                  "source_title": "良渚地点与年代 / 良渚经济与组织能力",
+                  "source_titles": [
+                    "良渚地点与年代 / 良渚经济与组织能力"
+                  ],
+                  "textbook_pages": "16",
+                  "pdf_pages": "21"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FN-06",
+          "category": "same_subject_wrong_topic",
+          "question": "北京人如何发明文字？",
+          "expected": "refuse",
+          "reference_points": [
+            "教材虽有北京人资料，但没有北京人发明文字的证据"
+          ],
+          "required_subjects": [
+            "北京人"
+          ],
+          "required_topics": [
+            "发明文字"
+          ],
+          "supporting_knowledge_ids": [],
+          "supporting_source_ids": [],
+          "elapsed_ms": 59.555,
+          "retrieval_mode": "vector",
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：北京人如何发明文字？\n根据当前历史知识库，找到以下相关内容：\n直接回答：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n1. 北京人的体质 / 北京人的生产与生活（史前时期，时间未标注）\n事件：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：无；相关度分数：0.5802088379859924。\n2. 北京人用火（史前时期，时间未标注）\n事件：北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：无；相关度分数：0.532194972038269。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence": [
+            {
+              "evidence_id": "E1",
+              "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+              "knowledge_id": "H7A-L01-008",
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_title": "北京人的体质 / 北京人的生产与生活",
+              "source_titles": [
+                "北京人的体质 / 北京人的生产与生活"
+              ],
+              "textbook_pages": "6",
+              "pdf_pages": "11"
+            },
+            {
+              "evidence_id": "E2",
+              "text": "北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。",
+              "knowledge_id": "H7A-L01-010",
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "source_title": "北京人用火",
+              "source_titles": [
+                "北京人用火"
+              ],
+              "textbook_pages": "6",
+              "pdf_pages": "11"
+            }
+          ],
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "aspect:process"
+            ],
+            "covered_facets": [
+              "subject:北京人",
+              "aspect:process"
+            ],
+            "supporting_source_ids": [
+              "H7A-P006-A",
+              "H7A-P006-B"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-009",
+              "H7A-L01-010"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "北京人的体质 / 北京人的生产与生活",
+              "score": 0.5802088379859924,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "locator": "北京人的体质和生产生活"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E1",
+                  "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "knowledge_id": "H7A-L01-008",
+                  "knowledge_ids": [
+                    "H7A-L01-008",
+                    "H7A-L01-009"
+                  ],
+                  "source_ids": [
+                    "H7A-P006-A"
+                  ],
+                  "source_title": "北京人的体质 / 北京人的生产与生活",
+                  "source_titles": [
+                    "北京人的体质 / 北京人的生产与生活"
+                  ],
+                  "textbook_pages": "6",
+                  "pdf_pages": "11"
+                },
+                {
+                  "evidence_id": "E1",
+                  "text": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "knowledge_id": "H7A-L01-008",
+                  "knowledge_ids": [
+                    "H7A-L01-008",
+                    "H7A-L01-009"
+                  ],
+                  "source_ids": [
+                    "H7A-P006-A"
+                  ],
+                  "source_title": "北京人的体质 / 北京人的生产与生活",
+                  "source_titles": [
+                    "北京人的体质 / 北京人的生产与生活"
+                  ],
+                  "textbook_pages": "6",
+                  "pdf_pages": "11"
+                }
+              ]
+            },
+            {
+              "title": "北京人的地点与年代 / 北京人的发现",
+              "score": 0.5747753977775574,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-006",
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人用火",
+              "score": 0.532194972038269,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-B",
+                  "material_type": "正文",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。",
+                  "locator": "北京人用火和遗址价值"
+                }
+              ],
+              "supporting": true,
+              "used_evidence": [
+                {
+                  "evidence_id": "E2",
+                  "text": "北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。",
+                  "knowledge_id": "H7A-L01-010",
+                  "knowledge_ids": [
+                    "H7A-L01-010"
+                  ],
+                  "source_ids": [
+                    "H7A-P006-B"
+                  ],
+                  "source_title": "北京人用火",
+                  "source_titles": [
+                    "北京人用火"
+                  ],
+                  "textbook_pages": "6",
+                  "pdf_pages": "11"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FN-07",
+          "category": "out_of_scope_history",
+          "question": "汉武帝推恩令有什么作用？",
+          "expected": "refuse",
+          "reference_points": [
+            "当前教材库仅含前三课，未收录汉武帝推恩令资料"
+          ],
+          "required_subjects": [
+            "汉武帝推恩令"
+          ],
+          "required_topics": [
+            "作用"
+          ],
+          "supporting_knowledge_ids": [],
+          "supporting_source_ids": [],
+          "elapsed_ms": 54.261,
+          "retrieval_mode": "vector",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：汉武帝推恩令有什么作用？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_supported_facets"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "禅让传说",
+              "score": 0.40500667691230774,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L03-014"
+              ],
+              "source_ids": [
+                "H7A-P018-C"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P018-C",
+                  "material_type": "正文（传说）",
+                  "textbook_pages": "18",
+                  "pdf_pages": "23",
+                  "excerpt": "相传在黄帝之后，尧、舜、禹依次成为首领。当时实行禅让制，首领传位给贤德之人。",
+                  "locator": "禅让传说"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "大禹治水",
+              "score": 0.3780725598335266,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L03-015"
+              ],
+              "source_ids": [
+                "H7A-P019-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P019-A",
+                  "material_type": "学史崇德（传说）",
+                  "textbook_pages": "18—19",
+                  "pdf_pages": "23—24",
+                  "excerpt": "相传，当时洪水滔天，禹的父亲鲧受尧之命治理水患。他采用封堵的方法，过了许多年都没有成功，后被处死。禹接替父亲治水，总结教训，采用疏导的方法，开凿河渠引洪水入海。经过10多年的努力，终于消除了水患。禹竭尽全力治水，公而忘私，‘三过其门而不入’，后来人们以此形容舍小家为大家的奉献精神。",
+                  "locator": "大禹治水"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "古人类研究证据 / 元谋人 / 旧石器时代",
+              "score": 0.3605145215988159,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-001",
+                "H7A-L01-002",
+                "H7A-L01-005"
+              ],
+              "source_ids": [
+                "H7A-P004-B"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P004-B",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "4",
+                  "pdf_pages": "9",
+                  "excerpt": "通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。",
+                  "locator": "古人类工具与旧石器时代脚注"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            }
+          ]
+        },
+        {
+          "id": "FN-08",
+          "category": "non_history",
+          "question": "光合作用为什么需要阳光？",
+          "expected": "refuse",
+          "reference_points": [
+            "非历史问题，当前教材库无支持资料"
+          ],
+          "required_subjects": [
+            "光合作用"
+          ],
+          "required_topics": [
+            "原因"
+          ],
+          "supporting_knowledge_ids": [],
+          "supporting_source_ids": [],
+          "elapsed_ms": 53.827,
+          "retrieval_mode": "vector",
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：光合作用为什么需要阳光？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence": [],
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_supported_facets"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:reason",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:reason",
+              "aspect:result_impact"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "彩陶及文化交流",
+              "score": 0.3318341076374054,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L02-017"
+              ],
+              "source_ids": [
+                "H7A-P014-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P014-A",
+                  "material_type": "知识拓展",
+                  "textbook_pages": "14",
+                  "pdf_pages": "19",
+                  "excerpt": "仰韶文化彩陶分布广泛，主要在黄河中游地区，影响范围可达黄河上游、下游，以及长江流域和西辽河流域。仰韶文化彩陶的跨区域发展是我国史前文化大繁荣的一个重要表现，也是黄河中游地区史前文化对周围影响的反映。",
+                  "locator": "仰韶文化彩陶"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "北京人用火",
+              "score": 0.30625876784324646,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-B",
+                  "material_type": "正文",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。",
+                  "locator": "北京人用火和遗址价值"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            },
+            {
+              "title": "大禹治水",
+              "score": 0.3059903383255005,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_ids": [
+                "H7A-L03-015"
+              ],
+              "source_ids": [
+                "H7A-P019-A"
+              ],
+              "source_refs": [
+                {
+                  "source_id": "H7A-P019-A",
+                  "material_type": "学史崇德（传说）",
+                  "textbook_pages": "18—19",
+                  "pdf_pages": "23—24",
+                  "excerpt": "相传，当时洪水滔天，禹的父亲鲧受尧之命治理水患。他采用封堵的方法，过了许多年都没有成功，后被处死。禹接替父亲治水，总结教训，采用疏导的方法，开凿河渠引洪水入海。经过10多年的努力，终于消除了水患。禹竭尽全力治水，公而忘私，‘三过其门而不入’，后来人们以此形容舍小家为大家的奉献精神。",
+                  "locator": "大禹治水"
+                }
+              ],
+              "supporting": false,
+              "used_evidence": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

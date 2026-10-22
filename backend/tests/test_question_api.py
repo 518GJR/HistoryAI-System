@@ -282,6 +282,8 @@ def test_question_api_exposes_actual_vector_mode(monkeypatch):
     assert response.status_code == 200
     data = response.json()
     assert data["retrieval_mode"] == "vector"
+    assert data["support_assessment"]["status"] == "sufficient"
+    assert data["sources"][0]["supporting"] is True
     assert data["sources"][0]["retrieval_mode"] == "vector"
     assert data["sources"][0]["retrieval_unit"] == "source_excerpt"
     assert data["sources"][0]["score"] == pytest.approx(0.8123)
@@ -303,6 +305,53 @@ def test_question_api_exposes_actual_vector_mode(monkeypatch):
 
     history = client.get("/api/question/history").json()["histories"][0]
     assert history["sources"][0]["used_evidence"] == data["used_evidence"]
+
+
+def test_vector_nearest_neighbors_are_returned_but_cannot_become_an_answer(
+    monkeypatch,
+):
+    monkeypatch.setenv("KNOWLEDGE_MODE", "textbook")
+    monkeypatch.setenv("RETRIEVAL_MODE", "vector")
+    points = rag_service.load_textbook_knowledge_from_json()
+    point_map = {point["knowledge_id"]: point for point in points}
+
+    def fake_vector_results(question, top_k):
+        results = []
+        for score, knowledge_id in zip(
+            (0.478, 0.460, 0.454),
+            ("H7A-L02-013", "H7A-L03-015", "H7A-L02-010"),
+        ):
+            item = dict(point_map[knowledge_id])
+            item.update(
+                {
+                    "knowledge_ids": [knowledge_id],
+                    "score": score,
+                    "retrieval_mode": "vector",
+                    "retrieval_unit": "source_excerpt",
+                }
+            )
+            results.append(item)
+        return results
+
+    monkeypatch.setattr(
+        "app.services.vector_service.retrieve_textbook_vectors", fake_vector_results
+    )
+
+    response = client.post(
+        "/api/question", json={"question": "秦始皇统一六国采取了哪些措施？"}
+    )
+
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data["sources"]) == 3
+    assert all(source["retrieval_mode"] == "vector" for source in data["sources"])
+    assert all(source["supporting"] is False for source in data["sources"])
+    assert data["answer_mode"] == "insufficient_support"
+    assert "当前检索资料中暂时没有匹配到" in data["answer"]
+    assert data["used_evidence"] == []
+    assert data["support_assessment"]["status"] == "insufficient"
+    assert "subject:textbook_topic" in data["support_assessment"]["unsupported_facets"]
+    assert data["knowledge_outline"] is None
 
 
 def test_question_history_api_can_query_record_after_post():

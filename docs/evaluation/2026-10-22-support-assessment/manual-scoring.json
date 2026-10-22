@@ -1,0 +1,19 @@
+{
+  "source_report": "frozen-new-results.json",
+  "review_type": "developer semantic review against frozen references and actual used_evidence",
+  "rules_changed_after_first_run": false,
+  "summary": {
+    "keyword": {"total": 8, "semantic_pass": 7, "false_rejects": 1, "false_allows": 0, "complete_comparison_evidence_coverage": "1/1", "missing_dimension_comparison_refused": "1/1"},
+    "vector": {"total": 8, "semantic_pass": 6, "false_rejects": 1, "false_allows": 1, "complete_comparison_evidence_coverage": "1/1", "missing_dimension_comparison_refused": "1/1"}
+  },
+  "cases": [
+    {"id":"FN-01","keyword":"pass_with_irrelevant_extra_evidence","vector":"pass_with_irrelevant_extra_evidence","topic_evidence_covered":true,"note":"Both answers include the required 70万—20万年 evidence, but same-subject sources that do not answer the date are also rendered."},
+    {"id":"FN-02","keyword":"false_reject","vector":"false_reject","topic_evidence_covered":false,"note":"Keyword Top K misses H7A-L01-013. Vector retrieves H7A-P007-A, but the gate leaves subject:textbook_topic unsupported for the alias-only wording."},
+    {"id":"FN-03","keyword":"pass","vector":"pass","comparison_both_sides_in_used_evidence":true,"topic_evidence_covered":true,"note":"Actual evidence covers both 元谋人 and 蓝田人 plus place and date."},
+    {"id":"FN-04","keyword":"pass_expected_refusal","vector":"pass_expected_refusal","comparison_both_sides_in_used_evidence":null,"topic_evidence_covered":null,"note":"Both modes retain candidates but refuse because migration reasons are unsupported; used_evidence is empty."},
+    {"id":"FN-05","keyword":"pass_with_irrelevant_extra_evidence","vector":"pass_with_irrelevant_extra_evidence","topic_evidence_covered":true,"qualifier_preserved":true,"note":"Both answers preserve 有学者推论/很有可能. The fallback also renders unrelated evidence; the negative conclusion is implied by the qualifier rather than stated as a short direct no."},
+    {"id":"FN-06","keyword":"pass_expected_refusal","vector":"false_allow","topic_evidence_covered":false,"note":"Vector answers with Beijing-man production/fire excerpts that do not mention invention of writing. This is the remaining same-subject wrong-topic false allow."},
+    {"id":"FN-07","keyword":"pass_expected_refusal","vector":"pass_expected_refusal","topic_evidence_covered":null,"note":"Out-of-scope history question is refused; vector nearest neighbors remain visible but are not adopted."},
+    {"id":"FN-08","keyword":"pass_expected_refusal","vector":"pass_expected_refusal","topic_evidence_covered":null,"note":"Non-history question is refused; vector nearest neighbors remain visible but are not adopted."}
+  ]
+}

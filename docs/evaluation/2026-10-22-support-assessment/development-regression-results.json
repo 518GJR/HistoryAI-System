@@ -1,0 +1,515 @@
+{
+  "verification_type": "support_assessment_frozen_independent_cases",
+  "generated_at": "2026-10-22T02:01:43.263114+00:00",
+  "default_retrieval_mode_unchanged": "keyword",
+  "providers": {
+    "ai": "disabled",
+    "asr": "disabled",
+    "tts": "disabled"
+  },
+  "database": "test-owned temporary SQLite (removed after run)",
+  "cases_were_not_used_to_modify_this_version": true,
+  "runs": {
+    "keyword": {
+      "total": 9,
+      "passed": 9,
+      "false_rejects": 0,
+      "false_allows": 0,
+      "cases": [
+        {
+          "id": "SA-I01",
+          "category": "fact",
+          "expected": "answer",
+          "question": "元谋人距今大约多少年，发现于哪里？",
+          "passed": true,
+          "elapsed_ms": 36.634,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：元谋人距今大约多少年，发现于哪里？\n根据当前历史知识库，找到以下相关内容：\n直接回答：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。\n1. 元谋人（史前时期，距今约170万年）\n事件：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n通过对元谋人、蓝田人、郧县人遗址的研究可以看出，他们已经能够制作和使用工具。主要使用打制石器的时代称为“旧石器时代”。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 我国境内的古人类 · 教材第4页 · PDF页序9\n匹配关键词：元谋人、距今、发现、现于；相关度分数：21。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 2,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:元谋人",
+              "aspect:time",
+              "aspect:place"
+            ],
+            "covered_facets": [
+              "subject:元谋人",
+              "aspect:time",
+              "aspect:place"
+            ],
+            "supporting_source_ids": [
+              "H7A-P004-A",
+              "H7A-P004-B"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-002"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "元谋人",
+              "score": 21.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-002"
+              ],
+              "source_ids": [
+                "H7A-P004-A",
+                "H7A-P004-B"
+              ],
+              "supporting": true
+            }
+          ]
+        },
+        {
+          "id": "SA-I02",
+          "category": "paraphrase",
+          "expected": "answer",
+          "question": "北京人怎样用火改善生存条件？",
+          "passed": true,
+          "elapsed_ms": 17.908,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：北京人怎样用火改善生存条件？\n根据当前历史知识库，找到以下相关内容：\n直接回答：北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。\n1. 北京人用火（史前时期，距今约70万—20万年）\n事件：北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：北京人、用火、改善、善生、生存、存条、条件；相关度分数：12。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 1,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "aspect:process",
+              "topic:fire"
+            ],
+            "covered_facets": [
+              "subject:北京人",
+              "aspect:process",
+              "topic:fire"
+            ],
+            "supporting_source_ids": [
+              "H7A-P006-B"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-010"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "北京人用火",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "北京人的地点与年代",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "supporting": false
+            },
+            {
+              "title": "北京人的发现",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "supporting": false
+            }
+          ]
+        },
+        {
+          "id": "SA-I03",
+          "category": "multi_facet",
+          "expected": "answer",
+          "question": "半坡人种植哪些作物，居住什么房屋？",
+          "passed": true,
+          "elapsed_ms": 12.891,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：半坡人种植哪些作物，居住什么房屋？\n根据当前历史知识库，找到以下相关内容：\n直接回答：半坡人主要居住在半地穴式的房屋里，屋内有灶坑。半坡人能制作精美的磨制石器，从事农业等生产活动。他们种植粟、黍，饲养猪、狗等家畜；使用弓箭、渔叉等进行渔猎；也采集野果作为食物补充。半坡人还大量使用装饰品，并制作乐器陶埙。遗址中还出土了骨针、骨锥，陶制和石制的纺轮，可见半坡人已会纺织、制衣。\n1. 半坡生产与生活（史前时期，距今约6000年）\n事件：半坡人主要居住在半地穴式的房屋里，屋内有灶坑。半坡人能制作精美的磨制石器，从事农业等生产活动。他们种植粟、黍，饲养猪、狗等家畜；使用弓箭、渔叉等进行渔猎；也采集野果作为食物补充。半坡人还大量使用装饰品，并制作乐器陶埙。遗址中还出土了骨针、骨锥，陶制和石制的纺轮，可见半坡人已会纺织、制衣。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：半坡人主要居住在半地穴式的房屋里，屋内有灶坑。半坡人能制作精美的磨制石器，从事农业等生产活动。他们种植粟、黍，饲养猪、狗等家畜；使用弓箭、渔叉等进行渔猎；也采集野果作为食物补充。半坡人还大量使用装饰品，并制作乐器陶埙。遗址中还出土了骨针、骨锥，陶制和石制的纺轮，可见半坡人已会纺织、制衣。\n来源：义务教育教科书·中国历史 七年级上册 · 第2课 · 仰韶文化和大汶口文化 · 教材第12页 · PDF页序17\n匹配关键词：半坡人、居住、房屋；相关度分数：4。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 1,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:半坡人",
+              "aspect:content",
+              "topic:agriculture",
+              "topic:housing"
+            ],
+            "covered_facets": [
+              "subject:半坡人",
+              "aspect:content",
+              "topic:agriculture",
+              "topic:housing"
+            ],
+            "supporting_source_ids": [
+              "H7A-P012-B"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L02-012"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "半坡生产与生活",
+              "score": 4.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-012"
+              ],
+              "source_ids": [
+                "H7A-P012-B"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "半坡地点与年代",
+              "score": 4.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-011"
+              ],
+              "source_ids": [
+                "H7A-P012-A"
+              ],
+              "supporting": false
+            }
+          ]
+        },
+        {
+          "id": "SA-I04",
+          "category": "fact",
+          "expected": "answer",
+          "question": "古DNA研究对人类起源研究有何意义？",
+          "passed": true,
+          "elapsed_ms": 12.324,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：古DNA研究对人类起源研究有何意义？\n根据当前历史知识库，找到以下相关内容：\n直接回答：科学家可以通过计算机的辅助和生物信息学的方法对古DNA序列进行比对和分析，寻找古DNA序列的异同，从而建立起不同古代生物之间的谱系关系，为人类起源的研究提供生物学的视角。\n1. 古DNA研究（现代研究方法，时间未标注）\n事件：科学家可以通过计算机的辅助和生物信息学的方法对古DNA序列进行比对和分析，寻找古DNA序列的异同，从而建立起不同古代生物之间的谱系关系，为人类起源的研究提供生物学的视角。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：科学家可以通过计算机的辅助和生物信息学的方法对古DNA序列进行比对和分析，寻找古DNA序列的异同，从而建立起不同古代生物之间的谱系关系，为人类起源的研究提供生物学的视角。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 课后活动与知识拓展 · 教材第8页 · PDF页序13\n匹配关键词：古DNA研究、古DNA、人类起源、研究；相关度分数：24。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 1,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:古DNA研究",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [
+              "subject:古DNA研究",
+              "aspect:result_impact"
+            ],
+            "supporting_source_ids": [
+              "H7A-P008-A"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-015"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "古DNA研究",
+              "score": 24.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-015"
+              ],
+              "source_ids": [
+                "H7A-P008-A"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "北京人遗址价值",
+              "score": 7.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-011"
+              ],
+              "source_ids": [
+                "H7A-P006-C"
+              ],
+              "supporting": false
+            }
+          ]
+        },
+        {
+          "id": "SA-I05",
+          "category": "comparison",
+          "expected": "answer",
+          "question": "蓝田人和郧县人分别在哪里发现、距今多久？",
+          "passed": true,
+          "elapsed_ms": 15.062,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：蓝田人和郧县人分别在哪里发现、距今多久？\n根据当前历史知识库，找到以下相关内容：\n直接回答：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n1. 蓝田人（史前时期，距今约160万年）\n事件：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 我国境内的古人类 · 教材第4页 · PDF页序9\n匹配关键词：蓝田人、发现、距今；相关度分数：21。\n2. 郧县人（史前时期，距今约100万年）\n事件：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：化石是研究古人类历史和古环境变迁的重要证据。元谋人是我国境内目前已知最早的古人类之一，距今约170万年。蓝田人发现于陕西蓝田，考古学家发掘出的一个完整头骨化石，距今约160万年。郧县人发现于湖北郧阳，目前考古学家发掘出的3个头骨化石，距今约100万年。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 我国境内的古人类 · 教材第4页 · PDF页序9\n匹配关键词：郧县人、发现、距今；相关度分数：21。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 1,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:蓝田人",
+              "subject:郧县人",
+              "aspect:time",
+              "aspect:place",
+              "comparison:all_subjects"
+            ],
+            "covered_facets": [
+              "subject:蓝田人",
+              "subject:郧县人",
+              "aspect:time",
+              "aspect:place",
+              "comparison:all_subjects"
+            ],
+            "supporting_source_ids": [
+              "H7A-P004-A"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-003",
+              "H7A-L01-004"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "蓝田人",
+              "score": 21.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-003"
+              ],
+              "source_ids": [
+                "H7A-P004-A"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "郧县人",
+              "score": 21.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-004"
+              ],
+              "source_ids": [
+                "H7A-P004-A"
+              ],
+              "supporting": true
+            }
+          ]
+        },
+        {
+          "id": "SA-O01",
+          "category": "out_of_scope",
+          "expected": "refuse",
+          "question": "商鞅变法为何能使秦国强大？",
+          "passed": true,
+          "elapsed_ms": 15.11,
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：商鞅变法为何能使秦国强大？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence_count": 0,
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_candidates"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:reason"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:reason"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": []
+        },
+        {
+          "id": "SA-O02",
+          "category": "out_of_scope",
+          "expected": "refuse",
+          "question": "造纸术的改进产生了哪些影响？",
+          "passed": true,
+          "elapsed_ms": 11.441,
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：造纸术的改进产生了哪些影响？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence_count": 0,
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_candidates"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": []
+        },
+        {
+          "id": "SA-O03",
+          "category": "unsupported_facet",
+          "expected": "refuse",
+          "question": "河姆渡人为什么离开原来的居住地？",
+          "passed": true,
+          "elapsed_ms": 10.478,
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：河姆渡人为什么离开原来的居住地？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence_count": 0,
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_supported_facets"
+            ],
+            "required_facets": [
+              "subject:河姆渡人",
+              "aspect:reason",
+              "topic:housing"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:河姆渡人",
+              "aspect:reason",
+              "topic:housing"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "河姆渡农业与建筑",
+              "score": 4.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-007"
+              ],
+              "source_ids": [
+                "H7A-P011-A"
+              ],
+              "supporting": false
+            },
+            {
+              "title": "河姆渡地点与年代",
+              "score": 11.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-006"
+              ],
+              "source_ids": [
+                "H7A-P011-A"
+              ],
+              "supporting": false
+            },
+            {
+              "title": "河姆渡手工业",
+              "score": 4.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-008"
+              ],
+              "source_ids": [
+                "H7A-P011-B"
+              ],
+              "supporting": false
+            }
+          ]
+        },
+        {
+          "id": "SA-O04",
+          "category": "ambiguous_reference",
+          "expected": "refuse",
+          "question": "这种制度为什么形成？",
+          "passed": true,
+          "elapsed_ms": 11.434,
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：这种制度为什么形成？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence_count": 0,
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_candidates"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:reason"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:reason"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": []
+        }
+      ]
+    }
+  }
+}

@@ -61,6 +61,21 @@ class KnowledgeSource(BaseModel):
     certainty: str = ""
     source_refs: list[SourceReference] = Field(default_factory=list)
     used_evidence: list[UsedEvidence] = Field(default_factory=list)
+    supporting: bool = False
+
+
+class SupportAssessmentResponse(BaseModel):
+    """Interpretable pre-answer support decision exposed for diagnosis."""
+
+    status: str
+    reason_codes: list[str] = Field(default_factory=list)
+    required_facets: list[str] = Field(default_factory=list)
+    covered_facets: list[str] = Field(default_factory=list)
+    supporting_source_ids: list[str] = Field(default_factory=list)
+    supporting_knowledge_ids: list[str] = Field(default_factory=list)
+    unsupported_facets: list[str] = Field(default_factory=list)
+    method: str
+    calibration_version: str
 
 
 class KnowledgeOutline(BaseModel):
@@ -86,6 +101,7 @@ class QuestionResponse(BaseModel):
     answer: str = Field(..., description="Generated answer")
     sources: list[KnowledgeSource] = Field(default_factory=list)
     used_evidence: list[UsedEvidence] = Field(default_factory=list)
+    support_assessment: SupportAssessmentResponse | None = None
     knowledge_outline: KnowledgeOutline | None = None
 
 

@@ -365,6 +365,7 @@ def knowledge_item_to_source(item: dict) -> dict:
         "evidence_type": str(item.get("evidence_type") or ""),
         "certainty": str(item.get("certainty") or ""),
         "source_refs": list(item.get("source_refs") or []),
+        "supporting": bool(item.get("supporting", False)),
     }
 
 

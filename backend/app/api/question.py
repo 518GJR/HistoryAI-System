@@ -15,13 +15,20 @@ from app.schemas import (
     QuestionResponse,
     KnowledgeSource,
 )
-from app.services.ai_service import generate_answer_result
+from app.services.ai_service import generate_answer_result, template_answer
 from app.services.knowledge_service import build_knowledge_outline
 from app.services.rag_service import (
     KnowledgeDataError,
+    get_knowledge_mode,
     knowledge_item_to_source,
+    load_textbook_knowledge_from_json,
     retrieve_history_knowledge,
     get_retrieval_mode,
+)
+from app.services.support_assessment import (
+    assess_support,
+    evidence_covers_assessment,
+    supporting_answer_items,
 )
 
 
@@ -76,18 +83,57 @@ def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
         knowledge_items = retrieve_history_knowledge(request.question)
     except KnowledgeDataError as exc:
         raise HTTPException(status_code=503, detail=f"检索不可用：{exc}") from exc
+    retrieval_mode = get_retrieval_mode()
+    support_assessment = None
+    answer_items = knowledge_items
+    if get_knowledge_mode() == "textbook":
+        textbook_points = load_textbook_knowledge_from_json()
+        support_assessment = assess_support(
+            request.question, retrieval_mode, knowledge_items, textbook_points
+        )
+        answer_items = (
+            supporting_answer_items(knowledge_items, support_assessment)
+            if support_assessment.status == "sufficient"
+            else []
+        )
+
     answer, answer_mode, used_evidence = generate_answer_result(
-        request.question, knowledge_items
+        request.question, answer_items
     )
+    if support_assessment is not None:
+        if support_assessment.status != "sufficient" or not evidence_covers_assessment(
+            support_assessment, used_evidence
+        ):
+            answer = template_answer(request.question, [])
+            answer_mode = "insufficient_support"
+            used_evidence = []
 
     sources = [knowledge_item_to_source(item) for item in knowledge_items]
-    sources_by_id = {source["knowledge_id"]: source for source in sources}
+    supporting_source_ids = (
+        set(support_assessment.supporting_source_ids) if support_assessment else set()
+    )
+    for source in sources:
+        source["supporting"] = any(
+            reference.get("source_id") in supporting_source_ids
+            for reference in source.get("source_refs", [])
+        )
+    sources_by_id = {
+        knowledge_id: source
+        for source in sources
+        for knowledge_id in source.get("knowledge_ids") or [source["knowledge_id"]]
+    }
     for evidence in used_evidence:
         for knowledge_id in evidence.get("knowledge_ids", []):
             source = sources_by_id.get(knowledge_id)
             if source is not None:
                 source.setdefault("used_evidence", []).append(evidence)
-    outline = build_knowledge_outline(request.question, knowledge_items)
+    outline = build_knowledge_outline(request.question, answer_items)
+    if outline is not None:
+        outline["sources"] = [
+            source
+            for source in sources
+            if support_assessment is None or source.get("supporting")
+        ]
 
     question_history = QuestionHistory(
         user_id=None,
@@ -112,8 +158,9 @@ def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
         sources=sources,
         history_saved=history_saved,
         answer_mode=answer_mode,
-        retrieval_mode=get_retrieval_mode(),
+        retrieval_mode=retrieval_mode,
         used_evidence=used_evidence,
+        support_assessment=(support_assessment.public() if support_assessment else None),
         knowledge_outline=outline,
     )
 

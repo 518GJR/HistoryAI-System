@@ -1,0 +1,103 @@
+{
+  "frozen_at": "2026-10-22T10:10:00+08:00",
+  "prepared_by": "same developer who runs the verification",
+  "label": "冻结后的新题验证（非严格独立盲测）",
+  "textbook_data_sha256": "c7b206d12fe315664389a1516f8c822b62d90c32229836f9f5f2417d81b1eeb5",
+  "scoring_policy": {
+    "answer_expected": "回答必须由实际 used_evidence 支持所问主题和全部必需维度；比较题必须实际覆盖双方。",
+    "refusal_expected": "answer_mode 必须为 insufficient_support，used_evidence 必须为空。",
+    "false_reject": "教材资料充分且候选/证据预算足以覆盖，但系统拒答。",
+    "false_allow": "教材资料不足、缺少比较一方或缺少所问维度，系统仍进入回答。",
+    "semantic_review": "人工逐题对照教材原文和 used_evidence；候选命中、关键词命中或自动测试通过均不单独算语义正确。"
+  },
+  "cases": [
+    {
+      "id": "FN-01",
+      "category": "textbook_fact",
+      "question": "北京人生活在距今什么年代？",
+      "expected": "answer",
+      "reference_points": ["距今约70万—20万年"],
+      "required_subjects": ["北京人"],
+      "required_topics": ["年代"],
+      "supporting_knowledge_ids": ["H7A-L01-006"],
+      "supporting_source_ids": ["H7A-P005-A"]
+    },
+    {
+      "id": "FN-02",
+      "category": "paraphrase_alias",
+      "question": "周口店龙骨山顶部洞穴中的晚期智人掌握了哪些制作技术？",
+      "expected": "answer",
+      "reference_points": ["山顶洞人制作骨器", "掌握磨光和钻孔技术"],
+      "required_subjects": ["山顶洞人（别称描述）"],
+      "required_topics": ["制作技术"],
+      "supporting_knowledge_ids": ["H7A-L01-013"],
+      "supporting_source_ids": ["H7A-P007-A"]
+    },
+    {
+      "id": "FN-03",
+      "category": "comparison_complete",
+      "question": "元谋人和蓝田人的发现地点与年代有何不同？",
+      "expected": "answer",
+      "reference_points": ["元谋人：云南元谋，距今约170万年", "蓝田人：陕西蓝田，距今约160万年"],
+      "required_subjects": ["元谋人", "蓝田人"],
+      "required_topics": ["地点", "年代"],
+      "supporting_knowledge_ids": ["H7A-L01-002", "H7A-L01-003"],
+      "supporting_source_ids": ["H7A-P004-A", "H7A-P004-B"]
+    },
+    {
+      "id": "FN-04",
+      "category": "comparison_missing_dimension",
+      "question": "北京人与山顶洞人的迁徙原因有什么不同？",
+      "expected": "refuse",
+      "reference_points": ["当前教材原文未提供双方迁徙原因"],
+      "required_subjects": ["北京人", "山顶洞人"],
+      "required_topics": ["迁徙原因"],
+      "supporting_knowledge_ids": [],
+      "supporting_source_ids": []
+    },
+    {
+      "id": "FN-05",
+      "category": "certainty_qualifier",
+      "question": "能否确定陶寺古城就是尧都？",
+      "expected": "answer",
+      "reference_points": ["不能确定", "教材表述为有学者推论陶寺很有可能是尧都"],
+      "required_subjects": ["陶寺古城"],
+      "required_topics": ["尧都", "可能性限定词"],
+      "supporting_knowledge_ids": ["H7A-L03-009"],
+      "supporting_source_ids": ["H7A-P017-B", "H7A-P017-C"]
+    },
+    {
+      "id": "FN-06",
+      "category": "same_subject_wrong_topic",
+      "question": "北京人如何发明文字？",
+      "expected": "refuse",
+      "reference_points": ["教材虽有北京人资料，但没有北京人发明文字的证据"],
+      "required_subjects": ["北京人"],
+      "required_topics": ["发明文字"],
+      "supporting_knowledge_ids": [],
+      "supporting_source_ids": []
+    },
+    {
+      "id": "FN-07",
+      "category": "out_of_scope_history",
+      "question": "汉武帝推恩令有什么作用？",
+      "expected": "refuse",
+      "reference_points": ["当前教材库仅含前三课，未收录汉武帝推恩令资料"],
+      "required_subjects": ["汉武帝推恩令"],
+      "required_topics": ["作用"],
+      "supporting_knowledge_ids": [],
+      "supporting_source_ids": []
+    },
+    {
+      "id": "FN-08",
+      "category": "non_history",
+      "question": "光合作用为什么需要阳光？",
+      "expected": "refuse",
+      "reference_points": ["非历史问题，当前教材库无支持资料"],
+      "required_subjects": ["光合作用"],
+      "required_topics": ["原因"],
+      "supporting_knowledge_ids": [],
+      "supporting_source_ids": []
+    }
+  ]
+}

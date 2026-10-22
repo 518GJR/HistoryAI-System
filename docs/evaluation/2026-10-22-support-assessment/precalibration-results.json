@@ -1,0 +1,547 @@
+{
+  "verification_type": "support_assessment_frozen_independent_cases",
+  "generated_at": "2026-10-22T01:58:23.481560+00:00",
+  "default_retrieval_mode_unchanged": "keyword",
+  "providers": {
+    "ai": "disabled",
+    "asr": "disabled",
+    "tts": "disabled"
+  },
+  "database": "test-owned temporary SQLite (removed after run)",
+  "cases_were_not_used_to_modify_this_version": true,
+  "runs": {
+    "keyword": {
+      "total": 9,
+      "passed": 9,
+      "false_rejects": 0,
+      "false_allows": 0,
+      "cases": [
+        {
+          "id": "SA-I01",
+          "category": "fact",
+          "expected": "answer",
+          "question": "北京人遗址有何研究价值？",
+          "passed": true,
+          "elapsed_ms": 22.299,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：北京人遗址有何研究价值？\n根据当前历史知识库，找到以下相关内容：\n直接回答：周口店北京人遗址是迄今所知世界上内涵最丰富、材料最齐全的直立人遗址之一。包括北京人在内的我国境内直立人遗存的发现，对研究人类起源和古人类演化的历史具有重要意义。\n1. 北京人遗址价值（史前时期，时间未标注）\n事件：周口店北京人遗址是迄今所知世界上内涵最丰富、材料最齐全的直立人遗址之一。包括北京人在内的我国境内直立人遗存的发现，对研究人类起源和古人类演化的历史具有重要意义。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：周口店北京人遗址是迄今所知世界上内涵最丰富、材料最齐全的直立人遗址之一。包括北京人在内的我国境内直立人遗存的发现，对研究人类起源和古人类演化的历史具有重要意义。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：北京人、北京人遗址、研究价值；相关度分数：26。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 1,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [
+              "subject:北京人",
+              "aspect:result_impact"
+            ],
+            "supporting_source_ids": [
+              "H7A-P006-C"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-011"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "北京人遗址价值",
+              "score": 26.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-011"
+              ],
+              "source_ids": [
+                "H7A-P006-C"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "北京人的地点与年代",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "supporting": false
+            },
+            {
+              "title": "北京人的发现",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "supporting": false
+            }
+          ]
+        },
+        {
+          "id": "SA-I02",
+          "category": "fact",
+          "expected": "answer",
+          "question": "最早的栽培水稻、粟和黍在哪里发现？",
+          "passed": true,
+          "elapsed_ms": 13.819,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：最早的栽培水稻、粟和黍在哪里发现？\n根据当前历史知识库，找到以下相关内容：\n直接回答：距今约2万年，他们开始对一些野生的植物进行管理。距今约1万年，我国南北方都出现了人工栽培的农作物。目前已知世界上最早的栽培水稻、粟和黍均发现于我国。农业的起源和发展促进了人类的定居生活。\n通常将人类有文字记载的历史之前称为“史前”。主要使用磨制石器的时代称为“新石器时代”。水稻、粟和黍的人工栽培，是我们的祖先为人类文明作出的重要贡献。原始农业为古代文明社会的形成奠定了重要基础。\n1. 早期栽培作物（史前时期，距今约1万年）\n事件：距今约2万年，他们开始对一些野生的植物进行管理。距今约1万年，我国南北方都出现了人工栽培的农作物。目前已知世界上最早的栽培水稻、粟和黍均发现于我国。农业的起源和发展促进了人类的定居生活。\n通常将人类有文字记载的历史之前称为“史前”。主要使用磨制石器的时代称为“新石器时代”。水稻、粟和黍的人工栽培，是我们的祖先为人类文明作出的重要贡献。原始农业为古代文明社会的形成奠定了重要基础。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：距今约2万年，他们开始对一些野生的植物进行管理。距今约1万年，我国南北方都出现了人工栽培的农作物。目前已知世界上最早的栽培水稻、粟和黍均发现于我国。农业的起源和发展促进了人类的定居生活。\n通常将人类有文字记载的历史之前称为“史前”。主要使用磨制石器的时代称为“新石器时代”。水稻、粟和黍的人工栽培，是我们的祖先为人类文明作出的重要贡献。原始农业为古代文明社会的形成奠定了重要基础。\n来源：义务教育教科书·中国历史 七年级上册 · 第2课 · 农业的起源与定居生活 · 教材第9页 · PDF页序14\n匹配关键词：水稻、粟、黍、最早、早的、的栽、栽培、培水、粟和、和黍、发现；相关度分数：21。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 2,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:place"
+            ],
+            "covered_facets": [
+              "subject:textbook_topic",
+              "aspect:place"
+            ],
+            "supporting_source_ids": [
+              "H7A-P009-A",
+              "H7A-P009-B"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L02-003"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "早期栽培作物",
+              "score": 21.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-003"
+              ],
+              "source_ids": [
+                "H7A-P009-A",
+                "H7A-P009-B"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "半坡生产与生活",
+              "score": 14.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-012"
+              ],
+              "source_ids": [
+                "H7A-P012-B"
+              ],
+              "supporting": false
+            }
+          ]
+        },
+        {
+          "id": "SA-I03",
+          "category": "certainty",
+          "expected": "answer",
+          "question": "山顶洞人的人工取火是教材已经确认的吗？",
+          "passed": true,
+          "elapsed_ms": 12.406,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：山顶洞人的人工取火是教材已经确认的吗？\n根据当前历史知识库，找到以下相关内容：\n直接回答：山顶洞人有爱美意识，也有埋葬死者的行为。山顶洞人过着集体生活。他们居住在一起，使用共有的工具，共同劳动，共同分配食物，没有贫富贵贱的差别。\n系统确定性说明：根据当前教材证据，不能肯定这一说法；教材使用的是“可能”。\n1. 山顶洞人的社会与意识（史前时期，距今约3万年）\n事件：山顶洞人有爱美意识，也有埋葬死者的行为。山顶洞人过着集体生活。他们居住在一起，使用共有的工具，共同劳动，共同分配食物，没有贫富贵贱的差别。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：山顶洞人有爱美意识，也有埋葬死者的行为。山顶洞人过着集体生活。他们居住在一起，使用共有的工具，共同劳动，共同分配食物，没有贫富贵贱的差别。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 山顶洞人 · 教材第7页 · PDF页序12\n匹配关键词：山顶洞人、教材；相关度分数：12。\n2. 山顶洞人的技术与生活（史前时期，距今约3万年）\n事件：距今约3万年，北京人活动过的地区，又生活着一群远古人类。他们的模样和现代人相同，属于晚期智人。山顶洞人在继续使用打制石器的同时，也开始制作骨器，掌握了磨光和钻孔技术。他们可能已经知道人工取火。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：距今约3万年，北京人活动过的地区，又生活着一群远古人类。他们的模样和现代人相同，属于晚期智人。山顶洞人在继续使用打制石器的同时，也开始制作骨器，掌握了磨光和钻孔技术。他们可能已经知道人工取火。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 山顶洞人 · 教材第7页 · PDF页序12\n匹配关键词：山顶洞人、人工取火；相关度分数：19。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 2,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:山顶洞人",
+              "aspect:certainty"
+            ],
+            "covered_facets": [
+              "subject:山顶洞人",
+              "aspect:certainty"
+            ],
+            "supporting_source_ids": [
+              "H7A-P007-B",
+              "H7A-P007-A"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L01-013",
+              "H7A-L01-014"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "山顶洞人的社会与意识",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-014"
+              ],
+              "source_ids": [
+                "H7A-P007-B"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "北京人用火",
+              "score": 7.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "supporting": false
+            },
+            {
+              "title": "山顶洞人的技术与生活",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-013"
+              ],
+              "source_ids": [
+                "H7A-P007-A"
+              ],
+              "supporting": true
+            }
+          ]
+        },
+        {
+          "id": "SA-I04",
+          "category": "comparison",
+          "expected": "answer",
+          "question": "河姆渡人与半坡人的住房形式分别是什么？",
+          "passed": true,
+          "elapsed_ms": 12.753,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：河姆渡人与半坡人的住房形式分别是什么？\n根据当前历史知识库，找到以下相关内容：\n直接回答：浙江余姚河姆渡遗址位于长江下游地区，距今约7000年。河姆渡人的房屋主要是干栏式建筑，以木桩插于地下，上面用木板等构筑成屋。考古学家还在遗址中发现了木结构水井，这是迄今发现年代最早的木结构水井之一。遗址中还有大量水稻遗存。骨耜作为一种先进的农业生产工具得到广泛使用。稻作农业已经具有相当的规模。\n1. 河姆渡地点与年代（史前时期，距今约7000年）\n事件：浙江余姚河姆渡遗址位于长江下游地区，距今约7000年。河姆渡人的房屋主要是干栏式建筑，以木桩插于地下，上面用木板等构筑成屋。考古学家还在遗址中发现了木结构水井，这是迄今发现年代最早的木结构水井之一。遗址中还有大量水稻遗存。骨耜作为一种先进的农业生产工具得到广泛使用。稻作农业已经具有相当的规模。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：浙江余姚河姆渡遗址位于长江下游地区，距今约7000年。河姆渡人的房屋主要是干栏式建筑，以木桩插于地下，上面用木板等构筑成屋。考古学家还在遗址中发现了木结构水井，这是迄今发现年代最早的木结构水井之一。遗址中还有大量水稻遗存。骨耜作为一种先进的农业生产工具得到广泛使用。稻作农业已经具有相当的规模。\n来源：义务教育教科书·中国历史 七年级上册 · 第2课 · 河姆渡人与稻作农业的繁荣 · 教材第11页 · PDF页序16\n匹配关键词：河姆渡人、河姆渡；相关度分数：11。\n2. 半坡地点与年代（史前时期，距今约6000年）\n事件：仰韶文化主要分布在黄河中游地区，距今约7000—5000年。仰韶先民主要从事粟作农业生产，过着定居生活。半坡遗址位于陕西西安东部半坡村，距今约6000年，是一处重要的仰韶文化遗址。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：仰韶文化主要分布在黄河中游地区，距今约7000—5000年。仰韶先民主要从事粟作农业生产，过着定居生活。半坡遗址位于陕西西安东部半坡村，距今约6000年，是一处重要的仰韶文化遗址。\n来源：义务教育教科书·中国历史 七年级上册 · 第2课 · 仰韶文化和大汶口文化 · 教材第12页 · PDF页序17\n匹配关键词：半坡人；相关度分数：4。\n3. 河姆渡农业与建筑（史前时期，距今约7000年）\n事件：浙江余姚河姆渡遗址位于长江下游地区，距今约7000年。河姆渡人的房屋主要是干栏式建筑，以木桩插于地下，上面用木板等构筑成屋。考古学家还在遗址中发现了木结构水井，这是迄今发现年代最早的木结构水井之一。遗址中还有大量水稻遗存。骨耜作为一种先进的农业生产工具得到广泛使用。稻作农业已经具有相当的规模。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：浙江余姚河姆渡遗址位于长江下游地区，距今约7000年。河姆渡人的房屋主要是干栏式建筑，以木桩插于地下，上面用木板等构筑成屋。考古学家还在遗址中发现了木结构水井，这是迄今发现年代最早的木结构水井之一。遗址中还有大量水稻遗存。骨耜作为一种先进的农业生产工具得到广泛使用。稻作农业已经具有相当的规模。\n来源：义务教育教科书·中国历史 七年级上册 · 第2课 · 河姆渡人与稻作农业的繁荣 · 教材第11页 · PDF页序16\n匹配关键词：河姆渡人；相关度分数：4。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 2,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:河姆渡人",
+              "subject:半坡人",
+              "aspect:content",
+              "comparison:all_subjects"
+            ],
+            "covered_facets": [
+              "subject:河姆渡人",
+              "subject:半坡人",
+              "aspect:content",
+              "comparison:all_subjects"
+            ],
+            "supporting_source_ids": [
+              "H7A-P011-A",
+              "H7A-P012-A"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L02-006",
+              "H7A-L02-007",
+              "H7A-L02-011"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "河姆渡地点与年代",
+              "score": 11.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-006"
+              ],
+              "source_ids": [
+                "H7A-P011-A"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "半坡地点与年代",
+              "score": 4.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-011"
+              ],
+              "source_ids": [
+                "H7A-P012-A"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "河姆渡农业与建筑",
+              "score": 4.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L02-007"
+              ],
+              "source_ids": [
+                "H7A-P011-A"
+              ],
+              "supporting": true
+            }
+          ]
+        },
+        {
+          "id": "SA-I05",
+          "category": "paraphrase",
+          "expected": "answer",
+          "question": "良渚古城的水利系统有什么作用？",
+          "passed": true,
+          "elapsed_ms": 12.12,
+          "answer_mode": "fallback",
+          "answer": "你提出的问题是：良渚古城的水利系统有什么作用？\n根据当前历史知识库，找到以下相关内容：\n直接回答：良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。\n1. 良渚经济与组织能力（史前时期，距今约5300—4300年）\n事件：良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：良渚古城遗址位于浙江余杭，距今约5300—4300年。古城由宫殿区、内城和外城组成。这些发现反映了良渚社会较高的经济发展水平和统治者较强的调动、组织能力。\n来源：义务教育教科书·中国历史 七年级上册 · 第3课 · 良渚古城与陶寺古城 · 教材第16页 · PDF页序21\n匹配关键词：水利系统；相关度分数：7。\n你可以继续追问某个事件的原因、影响或时间线。",
+          "used_evidence_count": 1,
+          "support_assessment": {
+            "status": "sufficient",
+            "reason_codes": [
+              "all_required_facets_covered"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "supporting_source_ids": [
+              "H7A-P016-A"
+            ],
+            "supporting_knowledge_ids": [
+              "H7A-L03-005"
+            ],
+            "unsupported_facets": [],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "良渚地点与年代",
+              "score": 7.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L03-004"
+              ],
+              "source_ids": [
+                "H7A-P016-A"
+              ],
+              "supporting": true
+            },
+            {
+              "title": "良渚经济与组织能力",
+              "score": 7.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L03-005"
+              ],
+              "source_ids": [
+                "H7A-P016-A"
+              ],
+              "supporting": true
+            }
+          ]
+        },
+        {
+          "id": "SA-O01",
+          "category": "out_of_scope",
+          "expected": "refuse",
+          "question": "唐太宗实行了哪些治国措施？",
+          "passed": true,
+          "elapsed_ms": 11.254,
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：唐太宗实行了哪些治国措施？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence_count": 0,
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_candidates"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:process"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:process"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": []
+        },
+        {
+          "id": "SA-O02",
+          "category": "out_of_scope",
+          "expected": "refuse",
+          "question": "丝绸之路开通后产生了什么影响？",
+          "passed": true,
+          "elapsed_ms": 11.691,
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：丝绸之路开通后产生了什么影响？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence_count": 0,
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_candidates"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:result_impact"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": []
+        },
+        {
+          "id": "SA-O03",
+          "category": "unsupported_facet",
+          "expected": "refuse",
+          "question": "北京人迁徙的原因是什么？",
+          "passed": true,
+          "elapsed_ms": 11.061,
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：北京人迁徙的原因是什么？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence_count": 0,
+          "support_assessment": {
+            "status": "partial",
+            "reason_codes": [
+              "required_facets_missing"
+            ],
+            "required_facets": [
+              "subject:北京人",
+              "aspect:reason"
+            ],
+            "covered_facets": [
+              "subject:北京人"
+            ],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "aspect:reason"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": [
+            {
+              "title": "北京人的地点与年代",
+              "score": 19.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "supporting": false
+            },
+            {
+              "title": "北京人的发现",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-007"
+              ],
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "supporting": false
+            },
+            {
+              "title": "北京人的体质",
+              "score": 12.0,
+              "retrieval_mode": "keyword",
+              "retrieval_unit": "knowledge_point",
+              "knowledge_ids": [
+                "H7A-L01-008"
+              ],
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "supporting": false
+            }
+          ]
+        },
+        {
+          "id": "SA-O04",
+          "category": "ambiguous_reference",
+          "expected": "refuse",
+          "question": "他们为什么迁到了这里？",
+          "passed": true,
+          "elapsed_ms": 11.334,
+          "answer_mode": "insufficient_support",
+          "answer": "你提出的问题是：他们为什么迁到了这里？。当前检索资料中暂时没有匹配到足以回答这一问题的知识点。这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。",
+          "used_evidence_count": 0,
+          "support_assessment": {
+            "status": "insufficient",
+            "reason_codes": [
+              "no_candidates"
+            ],
+            "required_facets": [
+              "subject:textbook_topic",
+              "aspect:reason"
+            ],
+            "covered_facets": [],
+            "supporting_source_ids": [],
+            "supporting_knowledge_ids": [],
+            "unsupported_facets": [
+              "subject:textbook_topic",
+              "aspect:reason"
+            ],
+            "method": "interpretable-v1",
+            "calibration_version": "development-set-v1"
+          },
+          "sources": []
+        }
+      ]
+    }
+  }
+}

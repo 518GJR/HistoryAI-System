@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-22",
+  "branch": "feat/textbook-vector-retrieval",
+  "base_commit": "2357af3d3812a0c5e9bdce3440bf4007443d9ba2",
+  "working_tree": "dirty; requested changes intentionally left uncommitted",
+  "support_method": "interpretable-v1",
+  "calibration_version": "development-set-v1",
+  "default_retrieval_mode": "keyword",
+  "textbook_data_sha256": "c7b206d12fe315664389a1516f8c822b62d90c32229836f9f5f2417d81b1eeb5",
+  "vector_index_sha256": "5d66ebf1ab39dcad631e230bf38b4abc7b1cf43a379ca9f4988e32004370aafa",
+  "frozen_case_file_sha256": "e80eb122329c26856565857f642628381da32699e93a4bf3bea1f12ae46e93e1",
+  "first_result_file_sha256": "4b6d6a4e7e9e9c97bb90c1837dce211638c30c7eee4d01738293cdedab9c9c6e",
+  "backend_tests": {"passed": 73, "failed": 0, "exit_code": 0, "duration_seconds": 2.09},
+  "providers": {"ai": "disabled", "asr": "disabled", "tts": "disabled"},
+  "external_http": "blocked during automated verification",
+  "database": "test-owned SQLite; frozen verification DB was temporary and removed",
+  "runtime_rule_files": [
+    "backend/app/services/support_assessment.py",
+    "backend/app/api/question.py",
+    "backend/app/schemas.py",
+    "backend/app/services/rag_service.py"
+  ],
+  "prohibited_actions_confirmed": {
+    "prompt_changed": false,
+    "textbook_expanded": false,
+    "ui_changed": false,
+    "auto_committed": false,
+    "pushed": false,
+    "merged_master": false
+  }
+}
