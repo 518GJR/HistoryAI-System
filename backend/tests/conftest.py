@@ -5,6 +5,7 @@ from app.services import rag_service
 @pytest.fixture(autouse=True)
 def isolate_external_services(monkeypatch):
     monkeypatch.setenv("KNOWLEDGE_MODE", "demo")
+    monkeypatch.setenv("RETRIEVAL_MODE", "keyword")
     for prefix in ("AI", "ASR", "TTS"):
         monkeypatch.setenv(f"{prefix}_PROVIDER", "disabled")
         monkeypatch.setenv(f"{prefix}_API_KEY", "")

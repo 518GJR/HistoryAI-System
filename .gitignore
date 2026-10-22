@@ -30,3 +30,7 @@ tmp/
 *.sqlite
 *.sqlite3
 *.log
+
+# Local embedding model cache and generated vector indexes.
+.cache/
+data/vector_index/

@@ -150,6 +150,8 @@ def load_textbook_knowledge_from_json() -> list[dict]:
             raise KnowledgeDataError(f"Duplicate textbook source_id: {source_id}")
         source_map[source_id] = {
             "source_id": source_id,
+            "lesson_id": _required_text(source.get("lesson_id"), "sources.lesson_id"),
+            "section_id": _required_text(source.get("section_id"), "sources.section_id"),
             "material_type": _required_text(
                 source.get("material_type"), "sources.material_type"
             ),
@@ -341,8 +343,13 @@ def knowledge_item_to_source(item: dict) -> dict:
     return {
         "title": str(item.get("title") or ""),
         "dynasty": str(item.get("dynasty") or ""),
-        "score": int(item.get("score", 0) or 0),
+        "score": float(item.get("score", 0) or 0),
+        "retrieval_mode": str(item.get("retrieval_mode") or "keyword"),
+        "retrieval_unit": str(item.get("retrieval_unit") or "knowledge_point"),
         "knowledge_id": str(item.get("knowledge_id") or ""),
+        "knowledge_ids": _normalize_list(item.get("knowledge_ids")) or (
+            [str(item.get("knowledge_id"))] if item.get("knowledge_id") else []
+        ),
         "book_id": str(item.get("book_id") or ""),
         "book_title": str(item.get("book_title") or ""),
         "unit_id": str(item.get("unit_id") or ""),
@@ -474,7 +481,7 @@ def _aspect_matches(item: dict, aspect_terms: list[str]) -> list[str]:
     return [term for term in aspect_terms if term in searchable_text]
 
 
-def retrieve_history_knowledge(question: str) -> list[dict]:
+def _retrieve_keyword_history_knowledge(question: str) -> list[dict]:
     """根据用户问题检索相关历史知识。
 
     Demo mode keeps the original database/JSON behavior. Textbook mode reads
@@ -501,6 +508,8 @@ def retrieve_history_knowledge(question: str) -> list[dict]:
                     "matched_terms": list(dict.fromkeys(matched_terms + aspect_matches)),
                     "score": score,
                     "aspect_score": len(aspect_matches),
+                    "retrieval_mode": "keyword",
+                    "retrieval_unit": "knowledge_point",
                 }
             )
             matched_items.append(matched_item)
@@ -536,3 +545,34 @@ def retrieve_history_knowledge(question: str) -> list[dict]:
         if len(selected) >= TOP_K:
             break
     return selected[:TOP_K]
+
+
+def get_retrieval_mode() -> str:
+    """Return the explicitly configured retrieval strategy."""
+    mode = os.getenv("RETRIEVAL_MODE", "keyword").strip().lower()
+    if mode not in {"keyword", "vector"}:
+        raise KnowledgeDataError(
+            "RETRIEVAL_MODE must be either 'keyword' or 'vector'"
+        )
+    return mode
+
+
+def retrieve_history_knowledge(question: str) -> list[dict]:
+    """Dispatch to the configured strategy without silent fallback."""
+    mode = get_retrieval_mode()
+    if mode == "keyword":
+        return _retrieve_keyword_history_knowledge(question)
+    if get_knowledge_mode() != "textbook":
+        raise KnowledgeDataError(
+            "Vector retrieval requires KNOWLEDGE_MODE=textbook"
+        )
+
+    # Imported lazily so the stable keyword baseline does not import or load
+    # the embedding runtime.
+    from app.services.vector_service import retrieve_textbook_vectors
+    from app.services.vector_service import VectorIndexError
+
+    try:
+        return retrieve_textbook_vectors(question, top_k=TOP_K)
+    except VectorIndexError as exc:
+        raise KnowledgeDataError(str(exc)) from exc

@@ -24,6 +24,9 @@ def _build_evidence_lines(items: list[dict]) -> list[dict]:
     lines_by_source_text = {}
     for source_index, item in enumerate(items, start=1):
         knowledge_id = str(item.get("knowledge_id") or "")
+        knowledge_ids = [
+            str(value) for value in (item.get("knowledge_ids") or [knowledge_id]) if value
+        ]
         source_title = str(item.get("title") or "")
         for reference in item.get("source_refs", []):
             if not isinstance(reference, dict):
@@ -36,8 +39,9 @@ def _build_evidence_lines(items: list[dict]) -> list[dict]:
             dedupe_key = (source_id, text)
             existing = lines_by_source_text.get(dedupe_key)
             if existing is not None:
-                if knowledge_id and knowledge_id not in existing["knowledge_ids"]:
-                    existing["knowledge_ids"].append(knowledge_id)
+                for associated_id in knowledge_ids:
+                    if associated_id not in existing["knowledge_ids"]:
+                        existing["knowledge_ids"].append(associated_id)
                 if source_title and source_title not in existing["source_titles"]:
                     existing["source_titles"].append(source_title)
                 continue
@@ -46,7 +50,7 @@ def _build_evidence_lines(items: list[dict]) -> list[dict]:
                 "id": f"E{len(lines) + 1}",
                 "text": text,
                 "knowledge_id": knowledge_id,
-                "knowledge_ids": [knowledge_id] if knowledge_id else [],
+                "knowledge_ids": knowledge_ids,
                 "source_ids": [source_id],
                 "source_index": source_index,
                 "source_title": source_title,

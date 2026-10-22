@@ -40,8 +40,11 @@ class KnowledgeSource(BaseModel):
 
     title: str = Field(..., description="Knowledge title")
     dynasty: str = Field("", description="Dynasty or historical period")
-    score: int = Field(0, description="RAG match score")
+    score: float = Field(0, description="Strategy-specific retrieval score")
+    retrieval_mode: str = "keyword"
+    retrieval_unit: str = "knowledge_point"
     knowledge_id: str = ""
+    knowledge_ids: list[str] = Field(default_factory=list)
     book_id: str = ""
     book_title: str = ""
     unit_id: str = ""
@@ -79,6 +82,7 @@ class QuestionResponse(BaseModel):
 
     history_saved: bool = True
     answer_mode: str = "fallback"
+    retrieval_mode: str = "keyword"
     answer: str = Field(..., description="Generated answer")
     sources: list[KnowledgeSource] = Field(default_factory=list)
     used_evidence: list[UsedEvidence] = Field(default_factory=list)

@@ -1,0 +1,573 @@
+{
+  "verification_type": "running_api_real_local_embedding_integration",
+  "generated_at": "2026-10-22T01:01:54.086208+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "database_url": "sqlite:///D:/Graduation-Design/HistoryAI-System/tmp/vector_api_integration_20261022_01.db",
+  "providers": {
+    "ai": "disabled",
+    "asr": "disabled",
+    "tts": "disabled"
+  },
+  "embedding_execution": "real_local_cpu_cached_offline",
+  "health": {
+    "message": "HistoryAI-System 后端服务已启动"
+  },
+  "cases": [
+    {
+      "id": "API-V01",
+      "category": "in_scope",
+      "question": "北京人用火有什么作用？",
+      "elapsed_ms": 13792.872,
+      "checks": {
+        "actual_mode_is_vector": true,
+        "all_sources_marked_vector": true,
+        "sources_have_traceable_excerpt_and_pages": true,
+        "used_evidence_present": false
+      },
+      "response": {
+        "history_saved": true,
+        "answer_mode": "fallback",
+        "retrieval_mode": "vector",
+        "answer": "你提出的问题是：北京人用火有什么作用？\n根据当前历史知识库，找到以下相关内容：\n直接回答：北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。\n1. 北京人用火（史前时期，时间未标注）\n事件：北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：无；相关度分数：0.6822893619537354。\n2. 北京人的体质 / 北京人的生产与生活（史前时期，时间未标注）\n事件：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第6页 · PDF页序11\n匹配关键词：无；相关度分数：0.5045784711837769。\n3. 北京人的地点与年代 / 北京人的发现（史前时期，时间未标注）\n事件：北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。\n来源：义务教育教科书·中国历史 七年级上册 · 第1课 · 北京人 · 教材第5—6页 · PDF页序10—11\n匹配关键词：无；相关度分数：0.4618651866912842。\n你可以继续追问某个事件的原因、影响或时间线。",
+        "sources": [
+          {
+            "title": "北京人用火",
+            "dynasty": "史前时期",
+            "score": 0.6822893619537354,
+            "retrieval_mode": "vector",
+            "retrieval_unit": "source_excerpt",
+            "knowledge_id": "H7A-L01-010",
+            "knowledge_ids": [
+              "H7A-L01-010"
+            ],
+            "book_id": "H7A",
+            "book_title": "义务教育教科书·中国历史 七年级上册",
+            "unit_id": "H7A-U01",
+            "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+            "lesson_id": "H7A-L01",
+            "lesson_number": 1,
+            "lesson_title": "远古时期的人类活动",
+            "section_title": "北京人",
+            "material_types": [
+              "正文"
+            ],
+            "textbook_pages": "6",
+            "pdf_pages": "11",
+            "qualifiers": [],
+            "evidence_type": "textbook_excerpt",
+            "certainty": "会使用火已证实；人工取火未获本页证实",
+            "source_refs": [
+              {
+                "source_id": "H7A-P006-B",
+                "material_type": "正文",
+                "textbook_pages": "6",
+                "pdf_pages": "11",
+                "excerpt": "北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。",
+                "locator": "北京人用火和遗址价值"
+              }
+            ],
+            "used_evidence": []
+          },
+          {
+            "title": "北京人的体质 / 北京人的生产与生活",
+            "dynasty": "史前时期",
+            "score": 0.5045784711837769,
+            "retrieval_mode": "vector",
+            "retrieval_unit": "source_excerpt",
+            "knowledge_id": "H7A-L01-008",
+            "knowledge_ids": [
+              "H7A-L01-008",
+              "H7A-L01-009"
+            ],
+            "book_id": "H7A",
+            "book_title": "义务教育教科书·中国历史 七年级上册",
+            "unit_id": "H7A-U01",
+            "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+            "lesson_id": "H7A-L01",
+            "lesson_number": 1,
+            "lesson_title": "远古时期的人类活动",
+            "section_title": "北京人",
+            "material_types": [
+              "正文、脚注"
+            ],
+            "textbook_pages": "6",
+            "pdf_pages": "11",
+            "qualifiers": [
+              "平均"
+            ],
+            "evidence_type": "textbook_excerpt",
+            "certainty": "教材明确说明",
+            "source_refs": [
+              {
+                "source_id": "H7A-P006-A",
+                "material_type": "正文、脚注",
+                "textbook_pages": "6",
+                "pdf_pages": "11",
+                "excerpt": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                "locator": "北京人的体质和生产生活"
+              }
+            ],
+            "used_evidence": []
+          },
+          {
+            "title": "北京人的地点与年代 / 北京人的发现",
+            "dynasty": "史前时期",
+            "score": 0.4618651866912842,
+            "retrieval_mode": "vector",
+            "retrieval_unit": "source_excerpt",
+            "knowledge_id": "H7A-L01-006",
+            "knowledge_ids": [
+              "H7A-L01-006",
+              "H7A-L01-007"
+            ],
+            "book_id": "H7A",
+            "book_title": "义务教育教科书·中国历史 七年级上册",
+            "unit_id": "H7A-U01",
+            "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+            "lesson_id": "H7A-L01",
+            "lesson_number": 1,
+            "lesson_title": "远古时期的人类活动",
+            "section_title": "北京人",
+            "material_types": [
+              "正文"
+            ],
+            "textbook_pages": "5—6",
+            "pdf_pages": "10—11",
+            "qualifiers": [
+              "约"
+            ],
+            "evidence_type": "textbook_excerpt",
+            "certainty": "教材明确说明",
+            "source_refs": [
+              {
+                "source_id": "H7A-P005-A",
+                "material_type": "正文",
+                "textbook_pages": "5—6",
+                "pdf_pages": "10—11",
+                "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                "locator": "北京人的发现"
+              }
+            ],
+            "used_evidence": []
+          }
+        ],
+        "used_evidence": [],
+        "knowledge_outline": {
+          "topic": "北京人用火",
+          "time": "",
+          "people": [],
+          "event": "北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。",
+          "reason": "",
+          "process": "北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。",
+          "result_impact": "",
+          "related_points": [
+            "北京人的体质 / 北京人的生产与生活",
+            "北京人的地点与年代 / 北京人的发现"
+          ],
+          "sources": [
+            {
+              "title": "北京人用火",
+              "dynasty": "史前时期",
+              "score": 0.6822893619537354,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_id": "H7A-L01-010",
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "book_id": "H7A",
+              "book_title": "义务教育教科书·中国历史 七年级上册",
+              "unit_id": "H7A-U01",
+              "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+              "lesson_id": "H7A-L01",
+              "lesson_number": 1,
+              "lesson_title": "远古时期的人类活动",
+              "section_title": "北京人",
+              "material_types": [
+                "正文"
+              ],
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "qualifiers": [],
+              "evidence_type": "textbook_excerpt",
+              "certainty": "会使用火已证实；人工取火未获本页证实",
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-B",
+                  "material_type": "正文",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人遗址中发现有灰烬、烧石和烧骨等，这反映出北京人已经会使用火。北京人用火烧烤食物、防寒、照明、驱兽，从而改善了生存条件。学会用火是人类演化史上的里程碑。",
+                  "locator": "北京人用火和遗址价值"
+                }
+              ],
+              "used_evidence": []
+            },
+            {
+              "title": "北京人的体质 / 北京人的生产与生活",
+              "dynasty": "史前时期",
+              "score": 0.5045784711837769,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_id": "H7A-L01-008",
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "book_id": "H7A",
+              "book_title": "义务教育教科书·中国历史 七年级上册",
+              "unit_id": "H7A-U01",
+              "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+              "lesson_id": "H7A-L01",
+              "lesson_number": 1,
+              "lesson_title": "远古时期的人类活动",
+              "section_title": "北京人",
+              "material_types": [
+                "正文、脚注"
+              ],
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "qualifiers": [
+                "平均"
+              ],
+              "evidence_type": "textbook_excerpt",
+              "certainty": "教材明确说明",
+              "source_refs": [
+                {
+                  "source_id": "H7A-P006-A",
+                  "material_type": "正文、脚注",
+                  "textbook_pages": "6",
+                  "pdf_pages": "11",
+                  "excerpt": "北京人的头骨，前额低平，眉骨粗大，颧骨突出，鼻骨扁平，吻部前伸，脑容量比现代人小。他们身高平均为157厘米，上肢与现代人相似，下肢较上肢略长，能够直立行走。北京人用石块、兽骨和鹿角等制作工具。他们制作石器的技术比较成熟，能够制成不同类型的工具，如砍砸器、尖状器、刮削器等。北京人使用这些工具猎取动物，采集植物果实。他们结成群体，生活在一起，共同从事获取食物的劳动。",
+                  "locator": "北京人的体质和生产生活"
+                }
+              ],
+              "used_evidence": []
+            },
+            {
+              "title": "北京人的地点与年代 / 北京人的发现",
+              "dynasty": "史前时期",
+              "score": 0.4618651866912842,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_id": "H7A-L01-006",
+              "knowledge_ids": [
+                "H7A-L01-006",
+                "H7A-L01-007"
+              ],
+              "book_id": "H7A",
+              "book_title": "义务教育教科书·中国历史 七年级上册",
+              "unit_id": "H7A-U01",
+              "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+              "lesson_id": "H7A-L01",
+              "lesson_number": 1,
+              "lesson_title": "远古时期的人类活动",
+              "section_title": "北京人",
+              "material_types": [
+                "正文"
+              ],
+              "textbook_pages": "5—6",
+              "pdf_pages": "10—11",
+              "qualifiers": [
+                "约"
+              ],
+              "evidence_type": "textbook_excerpt",
+              "certainty": "教材明确说明",
+              "source_refs": [
+                {
+                  "source_id": "H7A-P005-A",
+                  "material_type": "正文",
+                  "textbook_pages": "5—6",
+                  "pdf_pages": "10—11",
+                  "excerpt": "北京人遗址位于北京周口店龙骨山上，遗址堆积层厚40多米。这处遗址最先于1921年发现，后来古人类学家根据在遗址中发现的3颗牙齿化石，将活动在这里的古人类命名为‘北京直立人’或‘北京人’。1929年，我国学者裴文中发现第一个北京人头盖骨化石，同年又发现用火遗迹。此后，北京人遗址又相继发掘出5个头盖骨化石，共出土40多个个体的直立人化石，以及大量的动物化石和约10万件打制石器。这些化石和石器的发现，为复原北京人的体质特征和生活状况提供了重要证据。经测定，北京人生活在距今约70万—20万年。",
+                  "locator": "北京人的发现"
+                }
+              ],
+              "used_evidence": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "API-V02",
+      "category": "out_of_scope",
+      "question": "秦始皇统一六国采取了哪些措施？",
+      "elapsed_ms": 38.085,
+      "checks": {
+        "actual_mode_is_vector": true,
+        "all_sources_marked_vector": true,
+        "sources_have_traceable_excerpt_and_pages": true,
+        "used_evidence_present": false,
+        "out_of_scope_answer_refuses": false,
+        "out_of_scope_has_no_adopted_evidence": true
+      },
+      "response": {
+        "history_saved": true,
+        "answer_mode": "fallback",
+        "retrieval_mode": "vector",
+        "answer": "你提出的问题是：秦始皇统一六国采取了哪些措施？\n根据当前历史知识库，找到以下相关内容：\n直接回答：考古学家在山西、河南的仰韶文化遗址中相继发现了蚕茧、丝织品残片，以及骨雕、牙雕或石雕的蚕蛹、蚕形象遗物，表明仰韶先民已经能够养蚕缫丝，制作丝织品。丝织品的发明是我们的祖先为人类文明作出的重大贡献。\n1. 养蚕与丝织（史前时期，时间未标注）\n事件：考古学家在山西、河南的仰韶文化遗址中相继发现了蚕茧、丝织品残片，以及骨雕、牙雕或石雕的蚕蛹、蚕形象遗物，表明仰韶先民已经能够养蚕缫丝，制作丝织品。丝织品的发明是我们的祖先为人类文明作出的重大贡献。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：考古学家在山西、河南的仰韶文化遗址中相继发现了蚕茧、丝织品残片，以及骨雕、牙雕或石雕的蚕蛹、蚕形象遗物，表明仰韶先民已经能够养蚕缫丝，制作丝织品。丝织品的发明是我们的祖先为人类文明作出的重大贡献。\n来源：义务教育教科书·中国历史 七年级上册 · 第2课 · 仰韶文化和大汶口文化 · 教材第12页 · PDF页序17\n匹配关键词：无；相关度分数：0.478468120098114。\n2. 大禹治水（远古传说时期，时间未标注）\n事件：相传，当时洪水滔天，禹的父亲鲧受尧之命治理水患。他采用封堵的方法，过了许多年都没有成功，后被处死。禹接替父亲治水，总结教训，采用疏导的方法，开凿河渠引洪水入海。经过10多年的努力，终于消除了水患。禹竭尽全力治水，公而忘私，‘三过其门而不入’，后来人们以此形容舍小家为大家的奉献精神。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：相传，当时洪水滔天，禹的父亲鲧受尧之命治理水患。他采用封堵的方法，过了许多年都没有成功，后被处死。禹接替父亲治水，总结教训，采用疏导的方法，开凿河渠引洪水入海。经过10多年的努力，终于消除了水患。禹竭尽全力治水，公而忘私，‘三过其门而不入’，后来人们以此形容舍小家为大家的奉献精神。\n来源：义务教育教科书·中国历史 七年级上册 · 第3课 · 远古的传说 · 教材第18—19页 · PDF页序23—24\n匹配关键词：无；相关度分数：0.46045592427253723。\n3. 仰韶文化 / 半坡地点与年代（史前时期，时间未标注）\n事件：仰韶文化主要分布在黄河中游地区，距今约7000—5000年。仰韶先民主要从事粟作农业生产，过着定居生活。半坡遗址位于陕西西安东部半坡村，距今约6000年，是一处重要的仰韶文化遗址。\n原因：当前知识库暂未补充原因说明。\n影响：当前知识库暂未补充影响说明。\n补充：仰韶文化主要分布在黄河中游地区，距今约7000—5000年。仰韶先民主要从事粟作农业生产，过着定居生活。半坡遗址位于陕西西安东部半坡村，距今约6000年，是一处重要的仰韶文化遗址。\n来源：义务教育教科书·中国历史 七年级上册 · 第2课 · 仰韶文化和大汶口文化 · 教材第12页 · PDF页序17\n匹配关键词：无；相关度分数：0.4539823830127716。\n你可以继续追问某个事件的原因、影响或时间线。",
+        "sources": [
+          {
+            "title": "养蚕与丝织",
+            "dynasty": "史前时期",
+            "score": 0.478468120098114,
+            "retrieval_mode": "vector",
+            "retrieval_unit": "source_excerpt",
+            "knowledge_id": "H7A-L02-013",
+            "knowledge_ids": [
+              "H7A-L02-013"
+            ],
+            "book_id": "H7A",
+            "book_title": "义务教育教科书·中国历史 七年级上册",
+            "unit_id": "H7A-U01",
+            "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+            "lesson_id": "H7A-L02",
+            "lesson_number": 2,
+            "lesson_title": "原始农业与史前社会",
+            "section_title": "仰韶文化和大汶口文化",
+            "material_types": [
+              "相关史事"
+            ],
+            "textbook_pages": "12",
+            "pdf_pages": "17",
+            "qualifiers": [],
+            "evidence_type": "textbook_excerpt",
+            "certainty": "教材明确说明",
+            "source_refs": [
+              {
+                "source_id": "H7A-P012-C",
+                "material_type": "相关史事",
+                "textbook_pages": "12",
+                "pdf_pages": "17",
+                "excerpt": "考古学家在山西、河南的仰韶文化遗址中相继发现了蚕茧、丝织品残片，以及骨雕、牙雕或石雕的蚕蛹、蚕形象遗物，表明仰韶先民已经能够养蚕缫丝，制作丝织品。丝织品的发明是我们的祖先为人类文明作出的重大贡献。",
+                "locator": "养蚕与丝织"
+              }
+            ],
+            "used_evidence": []
+          },
+          {
+            "title": "大禹治水",
+            "dynasty": "远古传说时期",
+            "score": 0.46045592427253723,
+            "retrieval_mode": "vector",
+            "retrieval_unit": "source_excerpt",
+            "knowledge_id": "H7A-L03-015",
+            "knowledge_ids": [
+              "H7A-L03-015"
+            ],
+            "book_id": "H7A",
+            "book_title": "义务教育教科书·中国历史 七年级上册",
+            "unit_id": "H7A-U01",
+            "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+            "lesson_id": "H7A-L03",
+            "lesson_number": 3,
+            "lesson_title": "中华文明的起源",
+            "section_title": "远古的传说",
+            "material_types": [
+              "学史崇德（传说）"
+            ],
+            "textbook_pages": "18—19",
+            "pdf_pages": "23—24",
+            "qualifiers": [
+              "相传",
+              "10多年"
+            ],
+            "evidence_type": "textbook_excerpt",
+            "certainty": "治水细节为传说叙述",
+            "source_refs": [
+              {
+                "source_id": "H7A-P019-A",
+                "material_type": "学史崇德（传说）",
+                "textbook_pages": "18—19",
+                "pdf_pages": "23—24",
+                "excerpt": "相传，当时洪水滔天，禹的父亲鲧受尧之命治理水患。他采用封堵的方法，过了许多年都没有成功，后被处死。禹接替父亲治水，总结教训，采用疏导的方法，开凿河渠引洪水入海。经过10多年的努力，终于消除了水患。禹竭尽全力治水，公而忘私，‘三过其门而不入’，后来人们以此形容舍小家为大家的奉献精神。",
+                "locator": "大禹治水"
+              }
+            ],
+            "used_evidence": []
+          },
+          {
+            "title": "仰韶文化 / 半坡地点与年代",
+            "dynasty": "史前时期",
+            "score": 0.4539823830127716,
+            "retrieval_mode": "vector",
+            "retrieval_unit": "source_excerpt",
+            "knowledge_id": "H7A-L02-010",
+            "knowledge_ids": [
+              "H7A-L02-010",
+              "H7A-L02-011"
+            ],
+            "book_id": "H7A",
+            "book_title": "义务教育教科书·中国历史 七年级上册",
+            "unit_id": "H7A-U01",
+            "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+            "lesson_id": "H7A-L02",
+            "lesson_number": 2,
+            "lesson_title": "原始农业与史前社会",
+            "section_title": "仰韶文化和大汶口文化",
+            "material_types": [
+              "正文"
+            ],
+            "textbook_pages": "12",
+            "pdf_pages": "17",
+            "qualifiers": [
+              "约",
+              "主要"
+            ],
+            "evidence_type": "textbook_excerpt",
+            "certainty": "教材明确说明",
+            "source_refs": [
+              {
+                "source_id": "H7A-P012-A",
+                "material_type": "正文",
+                "textbook_pages": "12",
+                "pdf_pages": "17",
+                "excerpt": "仰韶文化主要分布在黄河中游地区，距今约7000—5000年。仰韶先民主要从事粟作农业生产，过着定居生活。半坡遗址位于陕西西安东部半坡村，距今约6000年，是一处重要的仰韶文化遗址。",
+                "locator": "仰韶文化与半坡遗址"
+              }
+            ],
+            "used_evidence": []
+          }
+        ],
+        "used_evidence": [],
+        "knowledge_outline": {
+          "topic": "养蚕与丝织",
+          "time": "",
+          "people": [],
+          "event": "考古学家在山西、河南的仰韶文化遗址中相继发现了蚕茧、丝织品残片，以及骨雕、牙雕或石雕的蚕蛹、蚕形象遗物，表明仰韶先民已经能够养蚕缫丝，制作丝织品。丝织品的发明是我们的祖先为人类文明作出的重大贡献。",
+          "reason": "",
+          "process": "考古学家在山西、河南的仰韶文化遗址中相继发现了蚕茧、丝织品残片，以及骨雕、牙雕或石雕的蚕蛹、蚕形象遗物，表明仰韶先民已经能够养蚕缫丝，制作丝织品。丝织品的发明是我们的祖先为人类文明作出的重大贡献。",
+          "result_impact": "",
+          "related_points": [
+            "大禹治水",
+            "仰韶文化 / 半坡地点与年代"
+          ],
+          "sources": [
+            {
+              "title": "养蚕与丝织",
+              "dynasty": "史前时期",
+              "score": 0.478468120098114,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_id": "H7A-L02-013",
+              "knowledge_ids": [
+                "H7A-L02-013"
+              ],
+              "book_id": "H7A",
+              "book_title": "义务教育教科书·中国历史 七年级上册",
+              "unit_id": "H7A-U01",
+              "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+              "lesson_id": "H7A-L02",
+              "lesson_number": 2,
+              "lesson_title": "原始农业与史前社会",
+              "section_title": "仰韶文化和大汶口文化",
+              "material_types": [
+                "相关史事"
+              ],
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "qualifiers": [],
+              "evidence_type": "textbook_excerpt",
+              "certainty": "教材明确说明",
+              "source_refs": [
+                {
+                  "source_id": "H7A-P012-C",
+                  "material_type": "相关史事",
+                  "textbook_pages": "12",
+                  "pdf_pages": "17",
+                  "excerpt": "考古学家在山西、河南的仰韶文化遗址中相继发现了蚕茧、丝织品残片，以及骨雕、牙雕或石雕的蚕蛹、蚕形象遗物，表明仰韶先民已经能够养蚕缫丝，制作丝织品。丝织品的发明是我们的祖先为人类文明作出的重大贡献。",
+                  "locator": "养蚕与丝织"
+                }
+              ],
+              "used_evidence": []
+            },
+            {
+              "title": "大禹治水",
+              "dynasty": "远古传说时期",
+              "score": 0.46045592427253723,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_id": "H7A-L03-015",
+              "knowledge_ids": [
+                "H7A-L03-015"
+              ],
+              "book_id": "H7A",
+              "book_title": "义务教育教科书·中国历史 七年级上册",
+              "unit_id": "H7A-U01",
+              "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+              "lesson_id": "H7A-L03",
+              "lesson_number": 3,
+              "lesson_title": "中华文明的起源",
+              "section_title": "远古的传说",
+              "material_types": [
+                "学史崇德（传说）"
+              ],
+              "textbook_pages": "18—19",
+              "pdf_pages": "23—24",
+              "qualifiers": [
+                "相传",
+                "10多年"
+              ],
+              "evidence_type": "textbook_excerpt",
+              "certainty": "治水细节为传说叙述",
+              "source_refs": [
+                {
+                  "source_id": "H7A-P019-A",
+                  "material_type": "学史崇德（传说）",
+                  "textbook_pages": "18—19",
+                  "pdf_pages": "23—24",
+                  "excerpt": "相传，当时洪水滔天，禹的父亲鲧受尧之命治理水患。他采用封堵的方法，过了许多年都没有成功，后被处死。禹接替父亲治水，总结教训，采用疏导的方法，开凿河渠引洪水入海。经过10多年的努力，终于消除了水患。禹竭尽全力治水，公而忘私，‘三过其门而不入’，后来人们以此形容舍小家为大家的奉献精神。",
+                  "locator": "大禹治水"
+                }
+              ],
+              "used_evidence": []
+            },
+            {
+              "title": "仰韶文化 / 半坡地点与年代",
+              "dynasty": "史前时期",
+              "score": 0.4539823830127716,
+              "retrieval_mode": "vector",
+              "retrieval_unit": "source_excerpt",
+              "knowledge_id": "H7A-L02-010",
+              "knowledge_ids": [
+                "H7A-L02-010",
+                "H7A-L02-011"
+              ],
+              "book_id": "H7A",
+              "book_title": "义务教育教科书·中国历史 七年级上册",
+              "unit_id": "H7A-U01",
+              "unit_title": "第一单元 史前时期：原始社会与中华文明的起源",
+              "lesson_id": "H7A-L02",
+              "lesson_number": 2,
+              "lesson_title": "原始农业与史前社会",
+              "section_title": "仰韶文化和大汶口文化",
+              "material_types": [
+                "正文"
+              ],
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "qualifiers": [
+                "约",
+                "主要"
+              ],
+              "evidence_type": "textbook_excerpt",
+              "certainty": "教材明确说明",
+              "source_refs": [
+                {
+                  "source_id": "H7A-P012-A",
+                  "material_type": "正文",
+                  "textbook_pages": "12",
+                  "pdf_pages": "17",
+                  "excerpt": "仰韶文化主要分布在黄河中游地区，距今约7000—5000年。仰韶先民主要从事粟作农业生产，过着定居生活。半坡遗址位于陕西西安东部半坡村，距今约6000年，是一处重要的仰韶文化遗址。",
+                  "locator": "仰韶文化与半坡遗址"
+                }
+              ],
+              "used_evidence": []
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

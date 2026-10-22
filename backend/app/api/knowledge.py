@@ -18,7 +18,7 @@ def get_knowledge_outline(
     try:
         items = retrieve_history_knowledge(topic)
     except KnowledgeDataError as exc:
-        raise HTTPException(status_code=503, detail="所选知识库不可用，请检查配置和数据文件") from exc
+        raise HTTPException(status_code=503, detail=f"检索不可用：{exc}") from exc
     outline = build_knowledge_outline(topic, items)
     if not outline:
         raise HTTPException(status_code=404, detail="当前知识库未找到相关历史知识")

@@ -1,0 +1,633 @@
+{
+  "verification_type": "real_local_embedding_retrieval",
+  "generated_at": "2026-10-22T00:49:07.620494+00:00",
+  "ai_provider": "disabled",
+  "asr_provider": "disabled",
+  "tts_provider": "disabled",
+  "model_id": "BAAI/bge-small-zh-v1.5",
+  "model_revision": "7999e1d3359715c523056ef9478215996d62a620",
+  "index_file": "D:\\Graduation-Design\\HistoryAI-System\\data\\vector_index\\textbook_bge_small_zh_v1_5.npz",
+  "index_format_version": "historyai-textbook-vector-v1",
+  "vector_count": 35,
+  "vector_dimension": 512,
+  "textbook_data_sha256": "c7b206d12fe315664389a1516f8c822b62d90c32229836f9f5f2417d81b1eeb5",
+  "similarity": "cosine_via_dot_product",
+  "normalization": "l2_unit_length",
+  "top_k": 3,
+  "top_k_unit_note": {
+    "keyword": "knowledge_point",
+    "vector": "deduplicated_source_excerpt"
+  },
+  "score_warning": "Vector cosine similarity is a ranking score, not answer correctness probability or a validated sufficiency threshold.",
+  "questions": [
+    {
+      "id": "V01",
+      "category": "fact",
+      "question": "北京人用火有什么作用？",
+      "comparison_source_ids": [],
+      "runs": {
+        "keyword": {
+          "actual_mode": "keyword",
+          "elapsed_ms": 6.038,
+          "results": [
+            {
+              "rank": 1,
+              "score": 29.0,
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "title": "北京人用火",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 2,
+              "score": 19.0,
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "title": "北京人的地点与年代",
+              "textbook_pages": "5—6",
+              "pdf_pages": "10—11",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 3,
+              "score": 12.0,
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-007"
+              ],
+              "title": "北京人的发现",
+              "textbook_pages": "5—6",
+              "pdf_pages": "10—11",
+              "retrieval_unit": "knowledge_point"
+            }
+          ],
+          "comparison_both_sides_in_candidates": null
+        },
+        "vector": {
+          "actual_mode": "vector",
+          "elapsed_ms": 16293.686,
+          "results": [
+            {
+              "rank": 1,
+              "score": 0.6822893619537354,
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "title": "北京人用火",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 2,
+              "score": 0.5045784711837769,
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "title": "北京人的体质 / 北京人的生产与生活",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 3,
+              "score": 0.4618651866912842,
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-006",
+                "H7A-L01-007"
+              ],
+              "title": "北京人的地点与年代 / 北京人的发现",
+              "textbook_pages": "5—6",
+              "pdf_pages": "10—11",
+              "retrieval_unit": "source_excerpt"
+            }
+          ],
+          "comparison_both_sides_in_candidates": null
+        }
+      }
+    },
+    {
+      "id": "V02",
+      "category": "paraphrase",
+      "question": "掌握火给北京人的生存带来了哪些好处？",
+      "comparison_source_ids": [],
+      "runs": {
+        "keyword": {
+          "actual_mode": "keyword",
+          "elapsed_ms": 9.455,
+          "results": [
+            {
+              "rank": 1,
+              "score": 12.0,
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-009"
+              ],
+              "title": "北京人的生产与生活",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 2,
+              "score": 12.0,
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "title": "北京人用火",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 3,
+              "score": 19.0,
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-006"
+              ],
+              "title": "北京人的地点与年代",
+              "textbook_pages": "5—6",
+              "pdf_pages": "10—11",
+              "retrieval_unit": "knowledge_point"
+            }
+          ],
+          "comparison_both_sides_in_candidates": null
+        },
+        "vector": {
+          "actual_mode": "vector",
+          "elapsed_ms": 20.954,
+          "results": [
+            {
+              "rank": 1,
+              "score": 0.6205753087997437,
+              "source_ids": [
+                "H7A-P006-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-010"
+              ],
+              "title": "北京人用火",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 2,
+              "score": 0.5084574818611145,
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "title": "北京人的体质 / 北京人的生产与生活",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 3,
+              "score": 0.47853970527648926,
+              "source_ids": [
+                "H7A-P005-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-006",
+                "H7A-L01-007"
+              ],
+              "title": "北京人的地点与年代 / 北京人的发现",
+              "textbook_pages": "5—6",
+              "pdf_pages": "10—11",
+              "retrieval_unit": "source_excerpt"
+            }
+          ],
+          "comparison_both_sides_in_candidates": null
+        }
+      }
+    },
+    {
+      "id": "V03",
+      "category": "fact",
+      "question": "仰韶文化分布在哪里，距今多少年？",
+      "comparison_source_ids": [],
+      "runs": {
+        "keyword": {
+          "actual_mode": "keyword",
+          "elapsed_ms": 4.133,
+          "results": [
+            {
+              "rank": 1,
+              "score": 17.0,
+              "source_ids": [
+                "H7A-P012-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-010"
+              ],
+              "title": "仰韶文化",
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 2,
+              "score": 7.0,
+              "source_ids": [
+                "H7A-P012-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-011"
+              ],
+              "title": "半坡地点与年代",
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 3,
+              "score": 7.0,
+              "source_ids": [
+                "H7A-P014-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-017"
+              ],
+              "title": "彩陶及文化交流",
+              "textbook_pages": "14",
+              "pdf_pages": "19",
+              "retrieval_unit": "knowledge_point"
+            }
+          ],
+          "comparison_both_sides_in_candidates": null
+        },
+        "vector": {
+          "actual_mode": "vector",
+          "elapsed_ms": 19.664,
+          "results": [
+            {
+              "rank": 1,
+              "score": 0.6765345335006714,
+              "source_ids": [
+                "H7A-P012-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-010",
+                "H7A-L02-011"
+              ],
+              "title": "仰韶文化 / 半坡地点与年代",
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 2,
+              "score": 0.6392991542816162,
+              "source_ids": [
+                "H7A-P013-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-014"
+              ],
+              "title": "氏族社会与分化",
+              "textbook_pages": "13",
+              "pdf_pages": "18",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 3,
+              "score": 0.5979049801826477,
+              "source_ids": [
+                "H7A-P014-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-017"
+              ],
+              "title": "彩陶及文化交流",
+              "textbook_pages": "14",
+              "pdf_pages": "19",
+              "retrieval_unit": "source_excerpt"
+            }
+          ],
+          "comparison_both_sides_in_candidates": null
+        }
+      }
+    },
+    {
+      "id": "V04",
+      "category": "comparison",
+      "question": "北京人与山顶洞人在工具制作方面有什么不同？",
+      "comparison_source_ids": [
+        "H7A-P006-A",
+        "H7A-P007-A"
+      ],
+      "runs": {
+        "keyword": {
+          "actual_mode": "keyword",
+          "elapsed_ms": 4.278,
+          "results": [
+            {
+              "rank": 1,
+              "score": 12.0,
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-009"
+              ],
+              "title": "北京人的生产与生活",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 2,
+              "score": 12.0,
+              "source_ids": [
+                "H7A-P007-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-013"
+              ],
+              "title": "山顶洞人的技术与生活",
+              "textbook_pages": "7",
+              "pdf_pages": "12",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 3,
+              "score": 7.0,
+              "source_ids": [
+                "H7A-P004-A",
+                "H7A-P004-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-001"
+              ],
+              "title": "古人类研究证据",
+              "textbook_pages": "4",
+              "pdf_pages": "9",
+              "retrieval_unit": "knowledge_point"
+            }
+          ],
+          "comparison_both_sides_in_candidates": true
+        },
+        "vector": {
+          "actual_mode": "vector",
+          "elapsed_ms": 20.062,
+          "results": [
+            {
+              "rank": 1,
+              "score": 0.6381560564041138,
+              "source_ids": [
+                "H7A-P007-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-012",
+                "H7A-L01-013"
+              ],
+              "title": "山顶洞人的地点与年代 / 山顶洞人的技术与生活",
+              "textbook_pages": "7",
+              "pdf_pages": "12",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 2,
+              "score": 0.5390969514846802,
+              "source_ids": [
+                "H7A-P006-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-008",
+                "H7A-L01-009"
+              ],
+              "title": "北京人的体质 / 北京人的生产与生活",
+              "textbook_pages": "6",
+              "pdf_pages": "11",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 3,
+              "score": 0.5090399384498596,
+              "source_ids": [
+                "H7A-P007-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L01-014"
+              ],
+              "title": "山顶洞人的社会与意识",
+              "textbook_pages": "7",
+              "pdf_pages": "12",
+              "retrieval_unit": "source_excerpt"
+            }
+          ],
+          "comparison_both_sides_in_candidates": true
+        }
+      }
+    },
+    {
+      "id": "V05",
+      "category": "comparison",
+      "question": "河姆渡人与半坡人的主要农作物和房屋有什么不同？",
+      "comparison_source_ids": [
+        "H7A-P011-A",
+        "H7A-P012-B"
+      ],
+      "runs": {
+        "keyword": {
+          "actual_mode": "keyword",
+          "elapsed_ms": 4.332,
+          "results": [
+            {
+              "rank": 1,
+              "score": 4.0,
+              "source_ids": [
+                "H7A-P011-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-007"
+              ],
+              "title": "河姆渡农业与建筑",
+              "textbook_pages": "11",
+              "pdf_pages": "16",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 2,
+              "score": 4.0,
+              "source_ids": [
+                "H7A-P012-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-012"
+              ],
+              "title": "半坡生产与生活",
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "retrieval_unit": "knowledge_point"
+            },
+            {
+              "rank": 3,
+              "score": 11.0,
+              "source_ids": [
+                "H7A-P011-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-006"
+              ],
+              "title": "河姆渡地点与年代",
+              "textbook_pages": "11",
+              "pdf_pages": "16",
+              "retrieval_unit": "knowledge_point"
+            }
+          ],
+          "comparison_both_sides_in_candidates": true
+        },
+        "vector": {
+          "actual_mode": "vector",
+          "elapsed_ms": 20.418,
+          "results": [
+            {
+              "rank": 1,
+              "score": 0.6229658722877502,
+              "source_ids": [
+                "H7A-P012-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-012"
+              ],
+              "title": "半坡生产与生活",
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 2,
+              "score": 0.6164501905441284,
+              "source_ids": [
+                "H7A-P011-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-006",
+                "H7A-L02-007"
+              ],
+              "title": "河姆渡地点与年代 / 河姆渡农业与建筑",
+              "textbook_pages": "11",
+              "pdf_pages": "16",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 3,
+              "score": 0.5664515495300293,
+              "source_ids": [
+                "H7A-P011-B"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-008"
+              ],
+              "title": "河姆渡手工业",
+              "textbook_pages": "11",
+              "pdf_pages": "16",
+              "retrieval_unit": "source_excerpt"
+            }
+          ],
+          "comparison_both_sides_in_candidates": true
+        }
+      }
+    },
+    {
+      "id": "V06",
+      "category": "out_of_scope",
+      "question": "秦始皇统一六国采取了哪些措施？",
+      "comparison_source_ids": [],
+      "runs": {
+        "keyword": {
+          "actual_mode": "keyword",
+          "elapsed_ms": 4.08,
+          "results": [],
+          "comparison_both_sides_in_candidates": null
+        },
+        "vector": {
+          "actual_mode": "vector",
+          "elapsed_ms": 19.684,
+          "results": [
+            {
+              "rank": 1,
+              "score": 0.478468120098114,
+              "source_ids": [
+                "H7A-P012-C"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-013"
+              ],
+              "title": "养蚕与丝织",
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 2,
+              "score": 0.46045592427253723,
+              "source_ids": [
+                "H7A-P019-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L03-015"
+              ],
+              "title": "大禹治水",
+              "textbook_pages": "18—19",
+              "pdf_pages": "23—24",
+              "retrieval_unit": "source_excerpt"
+            },
+            {
+              "rank": 3,
+              "score": 0.4539823830127716,
+              "source_ids": [
+                "H7A-P012-A"
+              ],
+              "knowledge_ids": [
+                "H7A-L02-010",
+                "H7A-L02-011"
+              ],
+              "title": "仰韶文化 / 半坡地点与年代",
+              "textbook_pages": "12",
+              "pdf_pages": "17",
+              "retrieval_unit": "source_excerpt"
+            }
+          ],
+          "comparison_both_sides_in_candidates": null
+        }
+      }
+    }
+  ]
+}

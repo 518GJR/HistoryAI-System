@@ -44,7 +44,7 @@
 
 - 后端：Python、FastAPI、SQLAlchemy、MySQL
 - 前端：Vue 3、Vite
-- RAG：字段加权关键词 Top 3 基线；演示模式为 MySQL 优先、`data/history_knowledge.json` 回退，教材模式只读 `data/textbook_history_knowledge.json`
+- RAG：默认字段加权关键词 Top 3 基线；教材模式可显式切换为本地 BGE 语义向量 Top 3（按去重来源片段计数）
 - 外部服务：OpenAI-compatible Chat Completions；OpenAI-compatible 或阿里云百炼 ASR/TTS
 - 测试：pytest、FastAPI TestClient、httpx MockTransport
 
@@ -132,6 +132,74 @@ Copy-Item .env.example .env
 - `KNOWLEDGE_MODE=demo`：默认模式，MySQL 有数据时优先读取，否则回退原有 15 条演示 JSON。
 - `KNOWLEDGE_MODE=textbook`：仅读取项目内 `data/textbook_history_knowledge.json`；文件缺失、格式错误或无匹配时都不会静默切换到演示库。
 
+检索模式：
+
+- `RETRIEVAL_MODE=keyword`：默认值，保留原字段加权知识点检索基线。
+- `RETRIEVAL_MODE=vector`：仅支持 `KNOWLEDGE_MODE=textbook`，使用预先构建的本地来源片段向量索引；索引缺失、损坏或数据/模型/预处理版本不一致时明确报错，不回退 keyword。
+- 问答响应的顶层 `retrieval_mode` 与每条来源的 `retrieval_mode`、`retrieval_unit` 会记录实际执行模式和计数单元。keyword 的 Top K 是知识点，vector 的 Top K 是去重来源片段，两者相同 K 不代表完全相同的证据预算。
+
+### 本地教材向量索引
+
+第一版使用 [`BAAI/bge-small-zh-v1.5`](https://huggingface.co/BAAI/bge-small-zh-v1.5)，固定修订 `7999e1d3359715c523056ef9478215996d62a620`。该模型为中文、24M 参数、512 维、MIT 许可证。查询按官方模型卡增加 `为这个句子生成表示以用于检索相关文章：` 前缀，文档不加该前缀；向量做 L2 归一化后以内积实现余弦排序。模型和索引仅保存在本机并由 Git 忽略，教材文本不会发送到付费接口或外部 Embedding 服务。
+
+在 PowerShell 中使用项目虚拟环境显式建库（工作目录必须是 `backend`）：
+
+```powershell
+Set-Location D:\Graduation-Design\HistoryAI-System\backend
+$env:HF_HOME = 'D:\Graduation-Design\HistoryAI-System\.cache\huggingface'
+$env:HF_HUB_DISABLE_XET = '1'
+$env:KNOWLEDGE_MODE = 'textbook'
+$env:RETRIEVAL_MODE = 'vector'
+$env:EMBEDDING_MODEL = 'BAAI/bge-small-zh-v1.5'
+$env:EMBEDDING_MODEL_REVISION = '7999e1d3359715c523056ef9478215996d62a620'
+$env:VECTOR_INDEX_PATH = 'data/vector_index/textbook_bge_small_zh_v1_5.npz'
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m app.scripts.build_textbook_vector_index
+```
+
+建库不是问答启动时的隐式操作。建库命令会校验 tokenizer 长度、向量数量/维度、有限值、非零范数和来源元数据，再原子替换索引。索引记录模型修订、数据 SHA-256、预处理规则、相似度、归一化、格式版本和 UTC 构建时间。
+
+启动 vector 模式后端：
+
+```powershell
+Set-Location D:\Graduation-Design\HistoryAI-System\backend
+$env:DATABASE_URL = 'sqlite:///D:/Graduation-Design/HistoryAI-System/tmp/acceptance_a_offline.db'
+$env:HF_HOME = 'D:\Graduation-Design\HistoryAI-System\.cache\huggingface'
+$env:HF_HUB_OFFLINE = '1'
+$env:TRANSFORMERS_OFFLINE = '1'
+$env:KNOWLEDGE_MODE = 'textbook'
+$env:RETRIEVAL_MODE = 'vector'
+$env:EMBEDDING_MODEL = 'BAAI/bge-small-zh-v1.5'
+$env:EMBEDDING_MODEL_REVISION = '7999e1d3359715c523056ef9478215996d62a620'
+$env:VECTOR_INDEX_PATH = 'data/vector_index/textbook_bge_small_zh_v1_5.npz'
+$env:AI_PROVIDER = 'disabled'
+$env:ASR_PROVIDER = 'disabled'
+$env:TTS_PROVIDER = 'disabled'
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+以上命令显式使用原 A 阶段验收 SQLite；专项测试必须改用独立测试数据库，不能写入该验收文件。`HF_HUB_OFFLINE=1` 和 `TRANSFORMERS_OFFLINE=1` 要求模型已存在于 `HF_HOME` 缓存，并阻止启动时联网补文件。实际模式可从问答响应的 `retrieval_mode` 核对，不能只根据进程环境变量推断。
+
+切回稳定关键词模式只需设置 `$env:RETRIEVAL_MODE = 'keyword'` 并重启后端；keyword 模式不会导入或加载 Embedding 模型，也不要求索引存在。
+
+离线复现真实检索结果（不调用问答模型、不写问答历史）：
+
+```powershell
+Set-Location D:\Graduation-Design\HistoryAI-System\backend
+$env:HF_HOME = 'D:\Graduation-Design\HistoryAI-System\.cache\huggingface'
+$env:HF_HUB_OFFLINE = '1'
+$env:KNOWLEDGE_MODE = 'textbook'
+$env:EMBEDDING_MODEL = 'BAAI/bge-small-zh-v1.5'
+$env:EMBEDDING_MODEL_REVISION = '7999e1d3359715c523056ef9478215996d62a620'
+$env:VECTOR_INDEX_PATH = 'data/vector_index/textbook_bge_small_zh_v1_5.npz'
+$env:AI_PROVIDER = 'disabled'
+$env:ASR_PROVIDER = 'disabled'
+$env:TTS_PROVIDER = 'disabled'
+.\.venv\Scripts\python.exe -m app.scripts.verify_textbook_retrieval --output ..\docs\evaluation\2026-10-22-vector-retrieval\real-retrieval-results.json
+```
+
+向量相似度只用于相对排序，不是答案正确概率，也没有在本轮校准成资料充分性阈值。范围外问题仍会返回最近邻，因此候选来源不能自动视为可回答依据。
+
 AI 当前使用 `openai_compatible`。ASR/TTS 可使用 `openai_compatible` 或代码已支持的 `aliyun_bailian`，可以为三个能力配置同一家或不同供应商。API Key 只放在本地 `.env`，不要提交到 Git。
 
 ## 安装与启动
@@ -161,7 +229,7 @@ cd backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
 接口文档：<http://localhost:8000/docs>
@@ -202,6 +270,8 @@ npm run build
 
 2026-10-21历史侧边栏与“新建对话”前端改动完成后，`npm run build`通过（Vite 6.4.3，10个模块转换），`git diff --check`通过。未修改后端，因此本轮未重复完整后端测试。独立滚动、历史点击、网络请求、忙碌禁用和窄屏表现仍需浏览器人工验收；真实MySQL时间语义也仍未验证。
 
+2026-10-22第一版向量检索收尾后，新增 Mock 与 API 测试并执行完整后端离线回归：`64 passed in 2.18s`，退出码 0。测试显式禁用 AI、ASR、TTS 并阻断外部 HTTP；真实本地 Embedding 检索另行执行和记录，不能与 Mock 结果混写。本轮未修改前端，因此未重复前端生产构建。
+
 ## 后续范围
 
-A 阶段的七上第 1—3 课教材数据和可追溯来源接入已完成代码与离线测试验证，30题修复前初评基线已经归档。E20错误拒答和E10、E25、E26缺少直接回应的问题尚未修复，修复后复测必须单独保存，不覆盖基线。轻量向量检索、知识点标注、覆盖统计、小测掌握统计和正式实验尚未实施，后续按 [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md) 分阶段开展。
+A 阶段的七上第 1—3 课教材数据和可追溯来源接入已完成代码与离线测试验证，30题修复前初评基线已经归档。第一版本地向量检索代码、真实索引和小规模检索验证已经完成；正式检索对照实验、教材约束自然语言生成、知识点标注、覆盖统计及小测掌握统计仍未完成。E20错误拒答和E10、E25、E26缺少直接回应的问题尚未修复，修复后复测必须单独保存，不覆盖基线。后续按 [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md) 分阶段开展。

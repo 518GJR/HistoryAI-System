@@ -241,7 +241,45 @@ def test_textbook_data_error_returns_503(monkeypatch, tmp_path):
     response = client.post("/api/question", json={"question": "北京人"})
 
     assert response.status_code == 503
-    assert response.json()["detail"] == "所选知识库不可用，请检查配置和数据文件"
+    assert response.json()["detail"].startswith("检索不可用：")
+
+
+def test_question_api_exposes_actual_vector_mode(monkeypatch):
+    monkeypatch.setenv("KNOWLEDGE_MODE", "textbook")
+    monkeypatch.setenv("RETRIEVAL_MODE", "vector")
+
+    def fake_vector_results(question, top_k):
+        return [
+            {
+                "knowledge_id": "H7A-L01-010",
+                "knowledge_ids": ["H7A-L01-010"],
+                "title": "北京人用火",
+                "dynasty": "史前时期",
+                "score": 0.8123,
+                "retrieval_mode": "vector",
+                "retrieval_unit": "source_excerpt",
+                "source_refs": [
+                    {
+                        "source_id": "H7A-P006-B",
+                        "excerpt": "北京人已经会使用火。",
+                        "textbook_pages": "6",
+                        "pdf_pages": "11",
+                    }
+                ],
+            }
+        ]
+
+    monkeypatch.setattr(
+        "app.services.vector_service.retrieve_textbook_vectors", fake_vector_results
+    )
+    response = client.post("/api/question", json={"question": "北京人用火"})
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["retrieval_mode"] == "vector"
+    assert data["sources"][0]["retrieval_mode"] == "vector"
+    assert data["sources"][0]["retrieval_unit"] == "source_excerpt"
+    assert data["sources"][0]["score"] == pytest.approx(0.8123)
 
 
 def test_question_history_api_can_query_record_after_post():

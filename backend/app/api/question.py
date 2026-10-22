@@ -21,6 +21,7 @@ from app.services.rag_service import (
     KnowledgeDataError,
     knowledge_item_to_source,
     retrieve_history_knowledge,
+    get_retrieval_mode,
 )
 
 
@@ -56,7 +57,7 @@ def _parse_sources(sources_text: str | None) -> list[dict]:
 
         source_snapshot = dict(source)
         try:
-            source_snapshot["score"] = int(source.get("score", 0) or 0)
+            source_snapshot["score"] = float(source.get("score", 0) or 0)
         except (TypeError, ValueError):
             source_snapshot["score"] = 0
 
@@ -74,7 +75,7 @@ def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
     try:
         knowledge_items = retrieve_history_knowledge(request.question)
     except KnowledgeDataError as exc:
-        raise HTTPException(status_code=503, detail="所选知识库不可用，请检查配置和数据文件") from exc
+        raise HTTPException(status_code=503, detail=f"检索不可用：{exc}") from exc
     answer, answer_mode, used_evidence = generate_answer_result(
         request.question, knowledge_items
     )
@@ -111,6 +112,7 @@ def ask_question(request: QuestionRequest, db: Session = Depends(get_db)):
         sources=sources,
         history_saved=history_saved,
         answer_mode=answer_mode,
+        retrieval_mode=get_retrieval_mode(),
         used_evidence=used_evidence,
         knowledge_outline=outline,
     )
