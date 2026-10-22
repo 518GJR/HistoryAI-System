@@ -61,6 +61,8 @@
 
 ### 已通过
 
+- 2026-10-22 fallback 实际证据追溯修复：模板字面和排序不变，仅将完整出现在模板教材字段中的 `excerpt` 记为 `used_evidence`；保留来源 ID、知识点关联和双页码，同源同文去重
+- fallback 追溯专项测试：**27 passed in 1.44s，退出码 0**；完整后端离线回归：**67 passed in 1.89s，退出码 0**
 - 2026-10-22向量阶段最终完整后端离线回归：**64 passed in 2.18s，退出码 0**；AI、ASR、TTS 均 disabled，外部 HTTP 被测试夹具阻断
 - 真实本地 Embedding 建库：35 个去重来源片段、512 维，最大文档 281 tokens / 模型上限 512，无切分和截断
 - 索引模型：`BAAI/bge-small-zh-v1.5`，revision `7999e1d3359715c523056ef9478215996d62a620`，MIT
@@ -91,7 +93,7 @@
 - keyword Top 3 以知识点计数，vector Top 3 以去重来源片段计数，相同 K 的证据预算不完全等价。
 - 范围外题在 vector 模式仍得到近邻候选；余弦分数不是正确率或资料充分性阈值，本轮未凭单题设置拒答阈值。
 - 实际 API 已确认范围外秦始皇题会把无关史前近邻组装成回答，未正确拒答；这是待修复问题，本轮按边界未修改生成或回答策略。
-- AI disabled 时 `used_evidence` 为空；本轮 API 只证明候选原文和来源页码贯通，不能宣称实际采用证据贯通。
+- 原向量 API 报告中 AI disabled 的 `used_evidence` 为空，该原始失败结果保留不变。后续 fallback 追溯修复已通过 Mock/API 离线测试，但本轮没有重跑并改写原始真实 Embedding API 报告。
 
 - 本轮外部 AI、ASR、TTS 使用 MockTransport 或 SDK mock，问答历史使用内存 SQLite。
 - 30题结果属于ChatGPT辅助的浏览器初评，不是系统整体准确率，也不替代教材PDF核对和第二人评分。
@@ -116,6 +118,7 @@
 - 30题生成路径截图仍待逐题核对，不能依据回答形式推断后补。
 - 新向量方案下真实语音链路尚未复测。
 - vector 最近邻缺少已验证的资料充分性判断，范围外问题可能进入 fallback 并生成无关答案；需用通用方案修复，不设置题目特判。
+- 资料充分性判断已完成最小设计，但尚未接入运行时；设计见 `docs/evaluation/2026-10-22-fallback-traceability/support-assessment-design.md`。
 
 ### 后续开发与论文实验主线（均待完成）
 

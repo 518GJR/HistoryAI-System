@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-22",
+  "base_commit": "13f7c8175c07e89f783e7b5675605772b0b86e66",
+  "scope": "fallback evidence traceability",
+  "providers": {
+    "ai": "disabled",
+    "asr": "disabled",
+    "tts": "disabled"
+  },
+  "database": "test-owned in-memory SQLite",
+  "external_http": "blocked by the autouse test fixture",
+  "related_tests": {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest tests/test_ai_service.py tests/test_question_api.py -q -o faulthandler_timeout=30",
+    "working_directory": "D:\\Graduation-Design\\HistoryAI-System\\backend",
+    "passed": 27,
+    "failed": 0,
+    "duration_seconds": 1.44,
+    "exit_code": 0
+  },
+  "full_backend_regression": {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest tests -q -o faulthandler_timeout=30",
+    "working_directory": "D:\\Graduation-Design\\HistoryAI-System\\backend",
+    "passed": 67,
+    "failed": 0,
+    "duration_seconds": 1.89,
+    "exit_code": 0
+  },
+  "traceability_checks": {
+    "rendered_excerpt_matches_used_evidence": true,
+    "source_and_page_metadata_preserved": true,
+    "same_source_same_text_deduplicated": true,
+    "knowledge_point_associations_merged": true,
+    "refusal_has_no_used_evidence": true,
+    "model_selection_path_regression_passed": true,
+    "keyword_mode_regression_passed": true
+  },
+  "known_unresolved_behavior": {
+    "vector_out_of_scope_nearest_neighbors_can_reach_fallback": true,
+    "out_of_scope_wrong_answer_fixed": false,
+    "support_assessment_runtime_implemented": false
+  },
+  "notes": [
+    "The first restricted TestClient run blocked in Windows socketpair before application code; the diagnostic stack is summarized in README.md.",
+    "No real external AI, ASR, or TTS service was called.",
+    "The existing vector retrieval and 30-question baseline reports were not overwritten."
+  ]
+}

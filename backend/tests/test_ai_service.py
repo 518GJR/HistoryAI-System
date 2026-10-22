@@ -118,8 +118,125 @@ def test_invalid_ai_evidence_selection_falls_back(monkeypatch):
     )
 
     assert mode == "fallback"
-    assert used_evidence == []
+    assert used_evidence == [
+        {
+            "evidence_id": "E1",
+            "text": "秦灭六国。",
+            "knowledge_id": "",
+            "knowledge_ids": [],
+            "source_ids": ["SRC-QIN"],
+            "source_title": "秦始皇统一六国",
+            "source_titles": ["秦始皇统一六国"],
+            "textbook_pages": "",
+            "pdf_pages": "",
+        }
+    ]
     assert "秦灭六国" in answer
+
+
+def test_fallback_tracks_only_verbatim_excerpt_actually_rendered(monkeypatch):
+    monkeypatch.setenv("AI_PROVIDER", "disabled")
+    rendered_excerpt = "北京人用火烧烤食物、防寒、照明、驱兽。"
+    unused_excerpt = "这段教材原文没有进入模板回答。"
+
+    answer, mode, used_evidence = ai_service.generate_answer_result(
+        "北京人用火有什么作用？",
+        [
+            {
+                "knowledge_id": "K-FIRE",
+                "knowledge_ids": ["K-FIRE", "K-SURVIVAL"],
+                "title": "北京人用火",
+                "event": rendered_excerpt,
+                "content": rendered_excerpt,
+                "source_refs": [
+                    {
+                        "source_id": "S-FIRE",
+                        "excerpt": rendered_excerpt,
+                        "textbook_pages": "6",
+                        "pdf_pages": "11",
+                    }
+                ],
+            },
+            {
+                "knowledge_id": "K-UNUSED",
+                "title": "未直接引用的候选",
+                "content": "这是结构化摘要，不是来源原文。",
+                "source_refs": [
+                    {
+                        "source_id": "S-UNUSED",
+                        "excerpt": unused_excerpt,
+                        "textbook_pages": "7",
+                        "pdf_pages": "12",
+                    }
+                ],
+            },
+        ],
+    )
+
+    assert mode == "fallback"
+    assert rendered_excerpt in answer
+    assert unused_excerpt not in answer
+    assert used_evidence == [
+        {
+            "evidence_id": "E1",
+            "text": rendered_excerpt,
+            "knowledge_id": "K-FIRE",
+            "knowledge_ids": ["K-FIRE", "K-SURVIVAL"],
+            "source_ids": ["S-FIRE"],
+            "source_title": "北京人用火",
+            "source_titles": ["北京人用火"],
+            "textbook_pages": "6",
+            "pdf_pages": "11",
+        }
+    ]
+
+
+def test_fallback_deduplicates_same_source_text_and_merges_traceability(monkeypatch):
+    monkeypatch.setenv("AI_PROVIDER", "disabled")
+    excerpt = "同一段教材原文。"
+    shared_reference = {
+        "source_id": "S-1",
+        "excerpt": excerpt,
+        "textbook_pages": "7",
+        "pdf_pages": "12",
+    }
+
+    answer, mode, used_evidence = ai_service.generate_answer_result(
+        "这段材料说明了什么？",
+        [
+            {
+                "knowledge_id": "K-1",
+                "title": "知识点一",
+                "content": excerpt,
+                "source_refs": [shared_reference],
+            },
+            {
+                "knowledge_id": "K-2",
+                "title": "知识点二",
+                "content": excerpt,
+                "source_refs": [shared_reference],
+            },
+        ],
+    )
+
+    assert mode == "fallback"
+    assert excerpt in answer
+    assert len(used_evidence) == 1
+    assert used_evidence[0]["source_ids"] == ["S-1"]
+    assert used_evidence[0]["knowledge_ids"] == ["K-1", "K-2"]
+    assert used_evidence[0]["source_titles"] == ["知识点一", "知识点二"]
+    assert used_evidence[0]["textbook_pages"] == "7"
+    assert used_evidence[0]["pdf_pages"] == "12"
+
+
+def test_fallback_refusal_has_no_used_evidence(monkeypatch):
+    monkeypatch.setenv("AI_PROVIDER", "disabled")
+
+    answer, mode, used_evidence = ai_service.generate_answer_result("范围外问题", [])
+
+    assert mode == "fallback"
+    assert "当前检索资料中暂时没有匹配到" in answer
+    assert used_evidence == []
 
 
 def test_multi_source_selection_preserves_point_source_and_page_mapping(monkeypatch):

@@ -152,19 +152,7 @@ def _answer_from_selected_evidence(
         selected_key = (tuple(line["source_ids"]), line["text"])
         if selected_key not in selected_keys:
             selected_keys.add(selected_key)
-            selected_lines.append(
-                {
-                    "evidence_id": line["id"],
-                    "text": line["text"],
-                    "knowledge_id": line["knowledge_id"],
-                    "knowledge_ids": line["knowledge_ids"],
-                    "source_ids": line["source_ids"],
-                    "source_title": line["source_title"],
-                    "source_titles": line["source_titles"],
-                    "textbook_pages": line["textbook_pages"],
-                    "pdf_pages": line["pdf_pages"],
-                }
-            )
+            selected_lines.append(_evidence_snapshot(line))
     if not selected_lines:
         raise ValueError("AI provider selected no evidence")
 
@@ -177,18 +165,37 @@ def _answer_from_selected_evidence(
     return f"教材原文：\n{body}", selected_lines
 
 
-def template_answer(question: str, knowledge_items: list[dict]) -> str:
-    """根据检索到的历史知识生成回答，作为未配置模型或模型调用失败时的 fallback。"""
+def _evidence_snapshot(line: dict) -> dict:
+    """Return the stable public shape for one verbatim textbook excerpt."""
+    return {
+        "evidence_id": line["id"],
+        "text": line["text"],
+        "knowledge_id": line["knowledge_id"],
+        "knowledge_ids": list(line["knowledge_ids"]),
+        "source_ids": list(line["source_ids"]),
+        "source_title": line["source_title"],
+        "source_titles": list(line["source_titles"]),
+        "textbook_pages": line["textbook_pages"],
+        "pdf_pages": line["pdf_pages"],
+    }
+
+
+def _render_template_answer(
+    question: str, knowledge_items: list[dict]
+) -> tuple[str, list[str]]:
+    """Render the unchanged fallback text and return its material text fields."""
     if not knowledge_items:
-        return (
+        answer = (
             f"你提出的问题是：{question}。"
             "当前检索资料中暂时没有匹配到足以回答这一问题的知识点。"
             "这不表示整本教材或知识库没有相关内容；可以换用教材中的人物、遗址、课次或事件名称继续检索。"
         )
+        return answer, []
 
     main_item = knowledge_items[0]
     direct_answer = main_item.get("content") or main_item.get("event") or ""
     certainty_note = _certainty_note(question, knowledge_items, None)
+    rendered_material_texts = []
 
     answer_parts = [
         f"你提出的问题是：{question}",
@@ -196,6 +203,7 @@ def template_answer(question: str, knowledge_items: list[dict]) -> str:
     ]
     if direct_answer:
         answer_parts.append(f"直接回答：{direct_answer}")
+        rendered_material_texts.append(str(direct_answer))
     if certainty_note:
         answer_parts.append(f"系统确定性说明：{certainty_note}")
 
@@ -227,9 +235,40 @@ def template_answer(question: str, knowledge_items: list[dict]) -> str:
             f"来源：{locator or '当前演示知识库'}\n"
             f"匹配关键词：{matched_terms or '无'}；相关度分数：{score}。"
         )
+        rendered_material_texts.extend(
+            str(value)
+            for value in (
+                event,
+                item.get("reason") or "",
+                item.get("impact") or "",
+                content,
+            )
+            if value
+        )
 
     answer_parts.append("你可以继续追问某个事件的原因、影响或时间线。")
-    return "\n".join(answer_parts)
+    return "\n".join(answer_parts), rendered_material_texts
+
+
+def _template_answer_result(
+    question: str, knowledge_items: list[dict]
+) -> tuple[str, list[dict]]:
+    """Return fallback text and only verbatim excerpts actually rendered in it."""
+    answer, rendered_material_texts = _render_template_answer(question, knowledge_items)
+    if not rendered_material_texts:
+        return answer, []
+
+    used_evidence = []
+    for line in _build_evidence_lines(knowledge_items):
+        excerpt = line["text"]
+        if any(excerpt in rendered_text for rendered_text in rendered_material_texts):
+            used_evidence.append(_evidence_snapshot(line))
+    return answer, used_evidence
+
+
+def template_answer(question: str, knowledge_items: list[dict]) -> str:
+    """根据检索到的历史知识生成回答，作为未配置模型或模型调用失败时的 fallback。"""
+    return _render_template_answer(question, knowledge_items)[0]
 
 
 def _create_client(timeout: float) -> httpx.Client:
@@ -243,13 +282,15 @@ def generate_answer_result(
     """Return answer, generation path, and the evidence actually used."""
     config = provider_config("AI")
     if not knowledge_items or not config:
-        return template_answer(question, knowledge_items), "fallback", []
+        answer, used_evidence = _template_answer_result(question, knowledge_items)
+        return answer, "fallback", used_evidence
 
     # The model selects from verbatim evidence attached to all retrieved
     # points. The backend, not the model, assembles the final answer text.
     evidence_lines = _build_evidence_lines(knowledge_items)
     if not evidence_lines:
-        return template_answer(question, knowledge_items), "fallback", []
+        answer, used_evidence = _template_answer_result(question, knowledge_items)
+        return answer, "fallback", used_evidence
     try:
         with _create_client(config["timeout"]) as client:
             response = client.post(
@@ -293,7 +334,8 @@ def generate_answer_result(
             return assembled_answer, "evidence_selection", selected_evidence
     except (httpx.HTTPError, ValueError, KeyError, IndexError, TypeError) as exc:
         logger.warning("AI request failed; using knowledge template: %s", exc)
-        return template_answer(question, knowledge_items), "fallback", []
+        answer, used_evidence = _template_answer_result(question, knowledge_items)
+        return answer, "fallback", used_evidence
 
 
 def generate_answer(question: str, knowledge_items: list[dict]) -> str:

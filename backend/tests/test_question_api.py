@@ -247,6 +247,7 @@ def test_textbook_data_error_returns_503(monkeypatch, tmp_path):
 def test_question_api_exposes_actual_vector_mode(monkeypatch):
     monkeypatch.setenv("KNOWLEDGE_MODE", "textbook")
     monkeypatch.setenv("RETRIEVAL_MODE", "vector")
+    excerpt = "北京人已经会使用火。"
 
     def fake_vector_results(question, top_k):
         return [
@@ -255,13 +256,17 @@ def test_question_api_exposes_actual_vector_mode(monkeypatch):
                 "knowledge_ids": ["H7A-L01-010"],
                 "title": "北京人用火",
                 "dynasty": "史前时期",
+                "event": excerpt,
+                "content": excerpt,
                 "score": 0.8123,
                 "retrieval_mode": "vector",
                 "retrieval_unit": "source_excerpt",
+                "textbook_pages": "6",
+                "pdf_pages": "11",
                 "source_refs": [
                     {
                         "source_id": "H7A-P006-B",
-                        "excerpt": "北京人已经会使用火。",
+                        "excerpt": excerpt,
                         "textbook_pages": "6",
                         "pdf_pages": "11",
                     }
@@ -280,6 +285,24 @@ def test_question_api_exposes_actual_vector_mode(monkeypatch):
     assert data["sources"][0]["retrieval_mode"] == "vector"
     assert data["sources"][0]["retrieval_unit"] == "source_excerpt"
     assert data["sources"][0]["score"] == pytest.approx(0.8123)
+    assert excerpt in data["answer"]
+    assert data["used_evidence"] == [
+        {
+            "evidence_id": "E1",
+            "text": excerpt,
+            "knowledge_id": "H7A-L01-010",
+            "knowledge_ids": ["H7A-L01-010"],
+            "source_ids": ["H7A-P006-B"],
+            "source_title": "北京人用火",
+            "source_titles": ["北京人用火"],
+            "textbook_pages": "6",
+            "pdf_pages": "11",
+        }
+    ]
+    assert data["sources"][0]["used_evidence"] == data["used_evidence"]
+
+    history = client.get("/api/question/history").json()["histories"][0]
+    assert history["sources"][0]["used_evidence"] == data["used_evidence"]
 
 
 def test_question_history_api_can_query_record_after_post():
